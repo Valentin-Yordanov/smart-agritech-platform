@@ -1,0 +1,212 @@
+{
+  "detection_classes": {
+    "0": "leaf",
+    "1": "leaf_spot",
+    "2": "stem",
+    "3": "fruit",
+    "4": "aphid",
+    "5": "whitefly",
+    "6": "caterpillar",
+    "7": "spider_mite"
+  },
+  "classification_classes": [
+    {
+      "id": 0,
+      "class_name": "Apple___Apple_scab",
+      "species": "Apple",
+      "disease": "Apple Scab",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply sulfur or myclobutanil early in the spring. Clear fallen leaf debris to prevent fungal ascospore overwintering."
+    },
+    {
+      "id": 1,
+      "class_name": "Apple___Black_rot",
+      "species": "Apple",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Prune out dead or diseased wood. Spray captan or thiophanate-methyl starting from petal fall through harvest."
+    },
+    {
+      "id": 2,
+      "class_name": "Apple___Cedar_apple_rust",
+      "species": "Apple",
+      "disease": "Cedar Apple Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Eradicate nearby red cedar / juniper galls if feasible. Apply preventative sterol inhibitor fungicides."
+    },
+    {
+      "id": 3,
+      "class_name": "Apple___healthy",
+      "species": "Apple",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Continue standard irrigation, canopy management, and integrated pest monitoring."
+    },
+    {
+      "id": 4,
+      "class_name": "Corn___Common_rust",
+      "species": "Corn",
+      "disease": "Common Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Deploy rust-tolerant hybrids. If pustules appear before tasseling, consider azoxystrobin/propiconazole application."
+    },
+    {
+      "id": 5,
+      "class_name": "Corn___Northern_Leaf_Blight",
+      "species": "Corn",
+      "disease": "Northern Leaf Blight",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Rotate crops with non-grasses. Apply strobilurin or triazole fungicides if lesions spread to the ear leaf during pollination."
+    },
+    {
+      "id": 6,
+      "class_name": "Corn___healthy",
+      "species": "Corn",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Maintain balanced nitrogen/phosphorus supply and optimize plant population density."
+    },
+    {
+      "id": 7,
+      "class_name": "Grape___Black_rot",
+      "species": "Grape",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Apply mancozeb or ziram starting when shoots reach 1-3 inches. Remove mummified berries from trellises."
+    },
+    {
+      "id": 8,
+      "class_name": "Grape___Esca_(Black_Measles)",
+      "species": "Grape",
+      "disease": "Esca (Black Measles)",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Sanitize pruning shears. Avoid large pruning wounds in wet weather; seal cuts with wound protectant fungicides."
+    },
+    {
+      "id": 9,
+      "class_name": "Grape___healthy",
+      "species": "Grape",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Continue canopy hedging to ensure adequate cluster aeration and sunlight penetration."
+    },
+    {
+      "id": 10,
+      "class_name": "Pepper_bell___Bacterial_spot",
+      "species": "Pepper",
+      "disease": "Bacterial Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply copper hydroxide mixed with mancozeb. Avoid overhead irrigation and work only when leaves are dry."
+    },
+    {
+      "id": 11,
+      "class_name": "Pepper_bell___healthy",
+      "species": "Pepper",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Maintain steady drip fertigation and ensure uniform soil moisture to avoid blossom end rot."
+    },
+    {
+      "id": 12,
+      "class_name": "Potato___Early_blight",
+      "species": "Potato",
+      "disease": "Early Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Maintain balanced potassium and nitrogen. Apply chlorothalonil or azoxystrobin upon initial target-spot detection."
+    },
+    {
+      "id": 13,
+      "class_name": "Potato___Late_blight",
+      "species": "Potato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "High urgency: Destroy infected foliage immediately. Apply mandipropamid, cyazofamid, or fluopicolide promptly."
+    },
+    {
+      "id": 14,
+      "class_name": "Potato___healthy",
+      "species": "Potato",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Monitor canopy for early signs of blight and maintain standard hilling practices."
+    },
+    {
+      "id": 15,
+      "class_name": "Tomato___Early_blight",
+      "species": "Tomato",
+      "disease": "Early Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Prune lower 12 inches of foliage. Apply copper octanoate or difenoconazole spray on a 7-10 day schedule."
+    },
+    {
+      "id": 16,
+      "class_name": "Tomato___Late_blight",
+      "species": "Tomato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "Urgent phytosanitary intervention: Isolate row and spray translaminar oomycete fungicides (mefenoxam or fluopicolide)."
+    },
+    {
+      "id": 17,
+      "class_name": "Tomato___Leaf_Mold",
+      "species": "Tomato",
+      "disease": "Leaf Mold",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Lower greenhouse relative humidity below 85% via horizontal ventilation fans. Apply preventative biofungicide."
+    },
+    {
+      "id": 18,
+      "class_name": "Tomato___Septoria_leaf_spot",
+      "species": "Tomato",
+      "disease": "Septoria Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Mulch soil around plants to block spore splashing. Remove spotted bottom leaves and apply copper fungicide."
+    },
+    {
+      "id": 19,
+      "class_name": "Tomato___Spider_mites",
+      "species": "Tomato",
+      "disease": "Two-Spotted Spider Mites",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Release predatory mites (Phytoseiulus persimilis) or apply horticultural neem oil/insecticidal soap on undersides of leaves."
+    },
+    {
+      "id": 20,
+      "class_name": "Tomato___Yellow_Leaf_Curl_Virus",
+      "species": "Tomato",
+      "disease": "Yellow Leaf Curl Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "Vector control: Control whitefly populations with systemic imidacloprid or insect nets. Rogue out infected stunt plants."
+    },
+    {
+      "id": 21,
+      "class_name": "Tomato___healthy",
+      "species": "Tomato",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological status. Maintain automated drip schedule and scout weekly."
+    }
+  ]
+}
