@@ -1,0 +1,143 @@
+# ==============================================================================
+# Smart AgriTech Platform - Global Git Ignore
+# Production hygiene standard conforming to NOIT / John Atanasoff evaluation rules
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Python & Virtual Environments
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+*.venv/
+.venv/
+
+# ------------------------------------------------------------------------------
+# Testing, Coverage & Linters
+# ------------------------------------------------------------------------------
+.pytest_cache/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+dmypy.json
+
+# ------------------------------------------------------------------------------
+# Large / Heavy Binary Model Artifacts & Datasets
+# Raw heavy weights should never be tracked directly in Git
+# ------------------------------------------------------------------------------
+*.pt
+*.pth
+*.pwf
+*.ckpt
+*.h5
+*.pkl
+*.pickle
+*.safetensors
+*.engine
+
+# ONNX weights - ignore generic raw weights, allow committed lightweight test graphs
+*.onnx
+!apps/ai-service/app/models/*.onnx
+
+# Training runs, checkpoints & datasets
+runs/
+wandb/
+data/
+datasets/
+models_cache/
+weights/
+
+# Archives & Large Compressed Bundles
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.iso
+
+# ------------------------------------------------------------------------------
+# Node.js / Web Applications (Monorepo readiness)
+# ------------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.next/
+out/
+.turbo/
+.nuxt/
+.svelte-kit/
+coverage/
+
+# ------------------------------------------------------------------------------
+# Environment Variables & Secrets
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+
+# ------------------------------------------------------------------------------
+# Operating System & Filesystem Metadata
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ------------------------------------------------------------------------------
+# IDEs & Text Editors
+# ------------------------------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
