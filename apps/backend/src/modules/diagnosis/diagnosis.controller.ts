@@ -1,5 +1,18 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import type { AuthenticatedUser } from '../auth/interfaces/authenticated-user.interface';
 import { DiagnosisService, EnqueueResponse } from './diagnosis.service';
 import { CreateDiagnosisJobDto } from './dto/create-diagnosis-job.dto';
 
@@ -10,10 +23,11 @@ export class DiagnosisController {
   constructor(private readonly diagnosisService: DiagnosisService) {}
 
   @Post('queue')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({
-    summary: 'Queue leaf diagnosis job for asynchronous AI inference',
-    description: 'Creates a pending diagnosis record in PostgreSQL and enqueues the job into Redis/BullMQ.',
+    summary: 'Queue leaf diagnosis job for asynchronous AI inference (Authenticated)',
+    description: 'Creates a pending diagnosis record associated with the authenticated user and enqueues the job into Redis/BullMQ.',
   })
   @ApiResponse({
     status: HttpStatus.ACCEPTED,
@@ -27,9 +41,13 @@ export class DiagnosisController {
       },
     },
   })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Authentication required.' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid payload or coordinates out of range.' })
-  async queueDiagnosis(@Body() dto: CreateDiagnosisJobDto): Promise<EnqueueResponse> {
-    return await this.diagnosisService.enqueueDiagnosis(dto);
+  async queueDiagnosis(
+    @Body() dto: CreateDiagnosisJobDto,
+    @CurrentUser() user: AuthenticatedUser,
+  ): Promise<EnqueueResponse> {
+    return await this.diagnosisService.enqueueDiagnosis(dto, user?.id);
   }
 
   @Get('outbreaks')

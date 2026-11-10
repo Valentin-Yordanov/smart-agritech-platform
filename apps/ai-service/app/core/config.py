@@ -82,6 +82,14 @@ class Settings(BaseSettings):
     CROP_PADDING_RATIO: float = 0.10  # 10% bounding box margin to preserve context edges
     LATENCY_BUDGET_MS: float = 100.0  # Competition benchmark target
 
+    # Groq & ChromaDB RAG Configuration
+    GROQ_API_KEY: str = Field(default="", description="Groq Cloud API Key for LLM advisory")
+    GROQ_MODEL: str = Field(default="openai/gpt-oss-120b", description="Fast inference LLM model")
+    CHROMA_PERSIST_DIR: Path = BASE_DIR / "data" / "chroma_db"
+    CHROMA_COLLECTION_NAME: str = "agronomy_knowledge"
+    EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
+    RAG_TOP_K: int = 3
+
 
 @lru_cache()
 def get_settings() -> Settings:

@@ -69,8 +69,8 @@ export class DiagnosisService {
   /**
    * Creates a pending Diagnosis record in Prisma and enqueues the inference job into BullMQ.
    */
-  async enqueueDiagnosis(dto: CreateDiagnosisJobDto): Promise<EnqueueResponse> {
-    const assignedUserId = await this.resolveUserId(dto.userId);
+  async enqueueDiagnosis(dto: CreateDiagnosisJobDto, userId?: string): Promise<EnqueueResponse> {
+    const assignedUserId = await this.resolveUserId(userId || dto.userId);
 
     // Create the pending Diagnosis entry with initial baseline values
     const pendingDiagnosis = await this.prisma.diagnosis.create({
