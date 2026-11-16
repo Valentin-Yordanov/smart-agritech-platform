@@ -23,7 +23,10 @@ export class StorageService {
     const secretAccessKey = this.configService.get<string>('R2_SECRET_ACCESS_KEY', 'placeholder-secret-key');
 
     this.bucketName = this.configService.get<string>('R2_BUCKET_NAME', 'agritech-uploads');
-    this.publicDomain = this.configService.get<string>('R2_PUBLIC_DOMAIN', 'https://pub-placeholder.r2.dev');
+    this.publicDomain =
+      this.configService.get<string>('R2_PUBLIC_DOMAIN') ||
+      this.configService.get<string>('R2_PUBLIC_URL') ||
+      'https://pub-placeholder.r2.dev';
 
     this.s3Client = new S3Client({
       region: 'auto',

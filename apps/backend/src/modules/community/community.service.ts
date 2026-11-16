@@ -223,4 +223,34 @@ export class CommunityService {
       message: 'Post deleted successfully',
     };
   }
+
+  async deleteComment(
+    commentId: string,
+    userId: string,
+    userRole: Role,
+  ): Promise<{ success: boolean; message: string }> {
+    const comment = await this.prisma.comment.findUnique({
+      where: { id: commentId },
+      select: { id: true, authorId: true },
+    });
+
+    if (!comment) {
+      throw new NotFoundException(`Comment with ID ${commentId} not found`);
+    }
+
+    if (comment.authorId !== userId && userRole !== Role.ADMIN) {
+      throw new ForbiddenException(
+        'You do not have permission to delete this comment. Only the author or an administrator can delete it.',
+      );
+    }
+
+    await this.prisma.comment.delete({
+      where: { id: commentId },
+    });
+
+    return {
+      success: true,
+      message: 'Comment deleted successfully',
+    };
+  }
 }

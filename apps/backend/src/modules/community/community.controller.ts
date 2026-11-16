@@ -127,4 +127,24 @@ export class CommunityController {
   ): Promise<{ success: boolean; message: string }> {
     return await this.communityService.deletePost(postId, user.id, user.role);
   }
+
+  @Delete('comments/:id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT-auth')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Delete a community comment',
+    description: 'Deletes a comment. Permitted only for the original comment author or users with ADMIN role.',
+  })
+  @ApiParam({ name: 'id', description: 'UUID of the comment to delete' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Comment deleted successfully.' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Authentication required.' })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Unauthorized to delete this comment.' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Comment not found.' })
+  async deleteComment(
+    @Param('id', ParseUUIDPipe) commentId: string,
+    @CurrentUser() user: AuthenticatedUser,
+  ): Promise<{ success: boolean; message: string }> {
+    return await this.communityService.deleteComment(commentId, user.id, user.role);
+  }
 }

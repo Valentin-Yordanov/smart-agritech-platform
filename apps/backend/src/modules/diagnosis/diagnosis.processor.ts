@@ -76,7 +76,7 @@ export class DiagnosisProcessor extends WorkerHost {
   }
 
   /**
-   * Resolves the image bytes from an HTTP URL, local file path, or synthetic fallback.
+   * Resolves the image bytes from an HTTP URL, Cloudflare R2 public bucket, local file path, or synthetic fallback.
    */
   private async resolveImageBuffer(imageKey: string): Promise<Buffer> {
     // 1. If imageKey is a direct HTTP/HTTPS URL
@@ -90,7 +90,31 @@ export class DiagnosisProcessor extends WorkerHost {
       return Buffer.from(arrayBuf);
     }
 
-    // 2. Check direct absolute or relative filesystem path
+    // 2. Check Cloudflare R2 public URL if configured
+    const r2PublicDomain = (
+      this.configService.get<string>('R2_PUBLIC_DOMAIN') ||
+      this.configService.get<string>('R2_PUBLIC_URL') ||
+      ''
+    ).replace(/\/+$/, '');
+
+    if (
+      r2PublicDomain &&
+      !r2PublicDomain.includes('pub-placeholder.r2.dev')
+    ) {
+      const cleanKey = imageKey.replace(/^\/+/, '');
+      const remoteUrl = `${r2PublicDomain}/${cleanKey}`;
+      this.logger.debug(`Fetching uploaded image from Cloudflare R2: ${remoteUrl}`);
+      const res = await fetch(remoteUrl);
+      if (!res.ok) {
+        throw new Error(
+          `Failed to fetch image from R2 (${remoteUrl}): ${res.status} ${res.statusText}`,
+        );
+      }
+      const arrayBuf = await res.arrayBuffer();
+      return Buffer.from(arrayBuf);
+    }
+
+    // 3. Check direct absolute or relative filesystem path
     const candidatePaths = [
       imageKey,
       path.resolve(process.cwd(), imageKey),
@@ -104,7 +128,7 @@ export class DiagnosisProcessor extends WorkerHost {
       }
     }
 
-    // 3. Fallback: Minimal valid JPEG binary buffer for simulated keys in dev/test
+    // 4. Fallback: Minimal valid JPEG binary buffer for simulated keys in dev/test
     this.logger.warn(
       `Image file "${imageKey}" not found on disk or remote. Using simulated valid leaf specimen buffer.`,
     );
@@ -119,10 +143,12 @@ export class DiagnosisProcessor extends WorkerHost {
    */
   async process(job: Job<DiagnosisJobPayload>): Promise<AiServiceDiagnosisResponse> {
     const { diagnosisId, imageKey } = job.data;
-    const aiServiceUrl = this.configService.get<string>(
-      'AI_SERVICE_URL',
-      'http://localhost:8000/api/v1/diagnose',
-    );
+    const baseAiUrl = this.configService
+      .get<string>('AI_SERVICE_URL', 'http://localhost:8000')
+      .replace(/\/+$/, '');
+    const aiServiceUrl = baseAiUrl.endsWith('/api/v1/diagnose')
+      ? baseAiUrl
+      : `${baseAiUrl}/api/v1/diagnose`;
 
     this.logger.log(`Processing Job ${job.id} for Diagnosis ${diagnosisId} (Image: ${imageKey})`);
 
@@ -161,6 +187,25 @@ export class DiagnosisProcessor extends WorkerHost {
           ? aiResult.regions[0].classification.top_prediction.confidence
           : Math.min(1.0, Math.max(0.0, (aiResult.overall_health_score ?? 100) / 100));
 
+      const normalizedDetections = (aiResult.regions ?? []).map((region) => ({
+        ...region,
+        bbox: [
+          region.box.x_min,
+          region.box.y_min,
+          region.box.x_max,
+          region.box.y_max,
+        ] as [number, number, number, number],
+        confidence:
+          region.classification?.top_prediction?.confidence ??
+          region.detection_confidence,
+        class_name:
+          region.classification?.top_prediction?.class_name ??
+          region.detection_label,
+        species: region.classification?.top_prediction?.species,
+        disease: region.classification?.top_prediction?.disease,
+        is_healthy: region.classification?.top_prediction?.is_healthy,
+      }));
+
       await this.prisma.diagnosis.update({
         where: { id: diagnosisId },
         data: {
@@ -168,7 +213,7 @@ export class DiagnosisProcessor extends WorkerHost {
           diseaseName: aiResult.primary_disease || (aiResult.status === 'HEALTHY' ? 'None' : 'Pathology Detected'),
           confidence: calculatedConfidence,
           isHealthy: aiResult.status === 'HEALTHY',
-          rawDetections: (aiResult.regions ?? []) as unknown as Prisma.InputJsonValue,
+          rawDetections: normalizedDetections as unknown as Prisma.InputJsonValue,
           treatmentPlan: {
             status: aiResult.status,
             severityLevel: aiResult.severity_level,
@@ -181,10 +226,13 @@ export class DiagnosisProcessor extends WorkerHost {
       });
 
       return aiResult;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorStack = error instanceof Error ? error.stack : undefined;
+
       this.logger.error(
-        `Inference processing failed for Diagnosis ${diagnosisId} (Job ${job.id}): ${error.message}`,
-        error.stack,
+        `Inference processing failed for Diagnosis ${diagnosisId} (Job ${job.id}): ${errorMessage}`,
+        errorStack,
       );
 
       // Update database record to reflect failure state
@@ -194,12 +242,13 @@ export class DiagnosisProcessor extends WorkerHost {
           diseaseName: 'FAILED',
           treatmentPlan: {
             status: 'FAILED',
-            error: error.message,
+            error: errorMessage,
             failedAt: new Date().toISOString(),
           } as unknown as Prisma.InputJsonValue,
         },
-      }).catch((dbErr) => {
-        this.logger.error(`Could not persist failure status for Diagnosis ${diagnosisId}: ${dbErr.message}`);
+      }).catch((dbErr: unknown) => {
+        const dbMessage = dbErr instanceof Error ? dbErr.message : String(dbErr);
+        this.logger.error(`Could not persist failure status for Diagnosis ${diagnosisId}: ${dbMessage}`);
       });
 
       throw error;

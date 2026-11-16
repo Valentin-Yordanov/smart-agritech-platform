@@ -1,0 +1,356 @@
+{
+  "detection_classes": {
+    "0": "leaf",
+    "1": "leaf_spot",
+    "2": "stem",
+    "3": "fruit",
+    "4": "aphid",
+    "5": "whitefly",
+    "6": "caterpillar",
+    "7": "spider_mite"
+  },
+  "classification_classes": [
+    {
+      "id": 0,
+      "class_name": "Apple___Apple_scab",
+      "species": "Apple",
+      "disease": "Apple Scab",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Spray captan or myclobutanil at green tip through petal fall. Clear leaf litter in autumn."
+    },
+    {
+      "id": 1,
+      "class_name": "Apple___Black_rot",
+      "species": "Apple",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 2,
+      "class_name": "Apple___Cedar_apple_rust",
+      "species": "Apple",
+      "disease": "Cedar Apple Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Deploy rust-tolerant hybrids. Apply preventative azoxystrobin/propiconazole upon early pustule emergence."
+    },
+    {
+      "id": 3,
+      "class_name": "Apple___healthy",
+      "species": "Apple",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 4,
+      "class_name": "Blueberry___healthy",
+      "species": "Blueberry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 5,
+      "class_name": "Cherry_(including_sour)___Powdery_mildew",
+      "species": "Cherry (Including Sour)",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 6,
+      "class_name": "Cherry_(including_sour)___healthy",
+      "species": "Cherry (Including Sour)",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 7,
+      "class_name": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "species": "Corn (Maize)",
+      "disease": "Cercospora Leaf Spot Gray Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 8,
+      "class_name": "Corn_(maize)___Common_rust_",
+      "species": "Corn (Maize)",
+      "disease": "Common Rust ",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Deploy rust-tolerant hybrids. Apply preventative azoxystrobin/propiconazole upon early pustule emergence."
+    },
+    {
+      "id": 9,
+      "class_name": "Corn_(maize)___Northern_Leaf_Blight",
+      "species": "Corn (Maize)",
+      "disease": "Northern Leaf Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 10,
+      "class_name": "Corn_(maize)___healthy",
+      "species": "Corn (Maize)",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 11,
+      "class_name": "Grape___Black_rot",
+      "species": "Grape",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 12,
+      "class_name": "Grape___Esca_(Black_Measles)",
+      "species": "Grape",
+      "disease": "Esca (Black Measles)",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 13,
+      "class_name": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+      "species": "Grape",
+      "disease": "Leaf Blight (Isariopsis Leaf Spot)",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 14,
+      "class_name": "Grape___healthy",
+      "species": "Grape",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 15,
+      "class_name": "Orange___Haunglongbing_(Citrus_greening)",
+      "species": "Orange",
+      "disease": "Haunglongbing (Citrus Greening)",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 16,
+      "class_name": "Peach___Bacterial_spot",
+      "species": "Peach",
+      "disease": "Bacterial Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Spray fixed copper mixed with mancozeb. Refrain from overhead irrigation; work only when canopy is dry."
+    },
+    {
+      "id": 17,
+      "class_name": "Peach___healthy",
+      "species": "Peach",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 18,
+      "class_name": "Pepper,_bell___Bacterial_spot",
+      "species": "Pepper, Bell",
+      "disease": "Bacterial Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Spray fixed copper mixed with mancozeb. Refrain from overhead irrigation; work only when canopy is dry."
+    },
+    {
+      "id": 19,
+      "class_name": "Pepper,_bell___healthy",
+      "species": "Pepper, Bell",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 20,
+      "class_name": "Potato___Early_blight",
+      "species": "Potato",
+      "disease": "Early Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Prune lower foliage (12 inches) to prevent splash contamination. Apply chlorothalonil on a 7-10 day cycle."
+    },
+    {
+      "id": 21,
+      "class_name": "Potato___Late_blight",
+      "species": "Potato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "URGENT: Rogue out severely infected tissue. Spray translaminar oomycete fungicide (mefenoxam or fluopicolide)."
+    },
+    {
+      "id": 22,
+      "class_name": "Potato___healthy",
+      "species": "Potato",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 23,
+      "class_name": "Raspberry___healthy",
+      "species": "Raspberry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 24,
+      "class_name": "Soybean___healthy",
+      "species": "Soybean",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 25,
+      "class_name": "Squash___Powdery_mildew",
+      "species": "Squash",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 26,
+      "class_name": "Strawberry___Leaf_scorch",
+      "species": "Strawberry",
+      "disease": "Leaf Scorch",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 27,
+      "class_name": "Strawberry___healthy",
+      "species": "Strawberry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 28,
+      "class_name": "Tomato___Bacterial_spot",
+      "species": "Tomato",
+      "disease": "Bacterial Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Spray fixed copper mixed with mancozeb. Refrain from overhead irrigation; work only when canopy is dry."
+    },
+    {
+      "id": 29,
+      "class_name": "Tomato___Early_blight",
+      "species": "Tomato",
+      "disease": "Early Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Prune lower foliage (12 inches) to prevent splash contamination. Apply chlorothalonil on a 7-10 day cycle."
+    },
+    {
+      "id": 30,
+      "class_name": "Tomato___Late_blight",
+      "species": "Tomato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "URGENT: Rogue out severely infected tissue. Spray translaminar oomycete fungicide (mefenoxam or fluopicolide)."
+    },
+    {
+      "id": 31,
+      "class_name": "Tomato___Leaf_Mold",
+      "species": "Tomato",
+      "disease": "Leaf Mold",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 32,
+      "class_name": "Tomato___Septoria_leaf_spot",
+      "species": "Tomato",
+      "disease": "Septoria Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 33,
+      "class_name": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "species": "Tomato",
+      "disease": "Spider Mites Two-Spotted Spider Mite",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Release biological predators (Phytoseiulus persimilis) or apply horticultural neem oil/abamectin."
+    },
+    {
+      "id": 34,
+      "class_name": "Tomato___Target_Spot",
+      "species": "Tomato",
+      "disease": "Target Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+    },
+    {
+      "id": 35,
+      "class_name": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "species": "Tomato",
+      "disease": "Tomato Yellow Leaf Curl Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "Vector control: Eradicate whiteflies/aphids using imidacloprid or insect screens. Rogue infected plants immediately."
+    },
+    {
+      "id": 36,
+      "class_name": "Tomato___Tomato_mosaic_virus",
+      "species": "Tomato",
+      "disease": "Tomato Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "Vector control: Eradicate whiteflies/aphids using imidacloprid or insect screens. Rogue infected plants immediately."
+    },
+    {
+      "id": 37,
+      "class_name": "Tomato___healthy",
+      "species": "Tomato",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    }
+  ]
+}
