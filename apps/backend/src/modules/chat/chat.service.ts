@@ -175,9 +175,10 @@ export class ChatService {
     });
 
     // 5. Query Python AI RAG Microservice
-    const aiBaseUrl =
+    const rawAiUrl =
       this.configService.get<string>('AI_SERVICE_URL') || 'http://localhost:8000';
-    const ragUrl = `${aiBaseUrl}/api/v1/rag/chat`;
+    const cleanAiUrl = rawAiUrl.replace(/\/+$/, '').replace(/\/api\/v1\/(diagnose|rag\/chat)$/, '');
+    const ragUrl = `${cleanAiUrl}/api/v1/rag/chat`;
 
     let ragResponse: RAGApiResponse;
     try {

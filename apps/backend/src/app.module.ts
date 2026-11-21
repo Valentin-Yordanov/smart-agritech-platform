@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './modules/users/users.module';
@@ -19,11 +19,73 @@ import { AppService } from './app.service';
       envFilePath: ['.env'],
     }),
 
-    // BullMQ Redis connection configuration
-    BullModule.forRoot({
-      connection: {
-        host: process.env.REDIS_HOST || 'localhost',
-        port: parseInt(process.env.REDIS_PORT || '6379', 10),
+    // BullMQ Redis connection configuration with Upstash & TLS support
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const redisUrl =
+          configService.get<string>('REDIS_URL') || process.env.REDIS_URL;
+
+        if (redisUrl) {
+          try {
+            const parsed = new URL(redisUrl);
+            const isTls =
+              parsed.protocol === 'rediss:' ||
+              configService.get<string>('REDIS_TLS') === 'true' ||
+              process.env.REDIS_TLS === 'true';
+
+            return {
+              connection: {
+                host: parsed.hostname,
+                port: parseInt(parsed.port || '6379', 10),
+                username:
+                  decodeURIComponent(parsed.username) ||
+                  configService.get<string>('REDIS_USERNAME') ||
+                  process.env.REDIS_USERNAME ||
+                  undefined,
+                password:
+                  decodeURIComponent(parsed.password) ||
+                  configService.get<string>('REDIS_PASSWORD') ||
+                  process.env.REDIS_PASSWORD ||
+                  undefined,
+                tls: isTls ? {} : undefined,
+                maxRetriesPerRequest: null,
+              },
+            };
+          } catch {
+            // fallback if URL parsing fails
+          }
+        }
+
+        const isTls =
+          configService.get<string>('REDIS_TLS') === 'true' ||
+          process.env.REDIS_TLS === 'true';
+
+        return {
+          connection: {
+            host:
+              configService.get<string>('REDIS_HOST') ||
+              process.env.REDIS_HOST ||
+              'localhost',
+            port: parseInt(
+              configService.get<string>('REDIS_PORT') ||
+                process.env.REDIS_PORT ||
+                '6379',
+              10,
+            ),
+            username:
+              configService.get<string>('REDIS_USERNAME') ||
+              process.env.REDIS_USERNAME ||
+              undefined,
+            password:
+              configService.get<string>('REDIS_PASSWORD') ||
+              process.env.REDIS_PASSWORD ||
+              undefined,
+            tls: isTls ? {} : undefined,
+            maxRetriesPerRequest: null,
+          },
+        };
       },
     }),
 

@@ -143,12 +143,11 @@ export class DiagnosisProcessor extends WorkerHost {
    */
   async process(job: Job<DiagnosisJobPayload>): Promise<AiServiceDiagnosisResponse> {
     const { diagnosisId, imageKey } = job.data;
-    const baseAiUrl = this.configService
+    const rawAiUrl = this.configService
       .get<string>('AI_SERVICE_URL', 'http://localhost:8000')
       .replace(/\/+$/, '');
-    const aiServiceUrl = baseAiUrl.endsWith('/api/v1/diagnose')
-      ? baseAiUrl
-      : `${baseAiUrl}/api/v1/diagnose`;
+    const cleanAiUrl = rawAiUrl.replace(/\/api\/v1\/(diagnose|rag\/chat)$/, '');
+    const aiServiceUrl = `${cleanAiUrl}/api/v1/diagnose`;
 
     this.logger.log(`Processing Job ${job.id} for Diagnosis ${diagnosisId} (Image: ${imageKey})`);
 

@@ -58,10 +58,10 @@ async function bootstrap() {
     },
   });
 
-  // 5. Bootstrap the app on port 3000
+  // 5. Bootstrap the app on port (defaults to 8080 in Cloud Run / container, 3000 locally)
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-  await app.listen(port);
-  logger.log(`Core API backend running on: http://localhost:${port}`);
+  await app.listen(port, '0.0.0.0');
+  logger.log(`Core API backend running on: http://0.0.0.0:${port}`);
   logger.log(`Swagger documentation available at: http://localhost:${port}/api/docs`);
 }
 
