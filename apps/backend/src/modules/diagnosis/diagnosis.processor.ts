@@ -165,7 +165,7 @@ export class DiagnosisProcessor extends WorkerHost {
       const response = await fetch(aiServiceUrl, {
         method: 'POST',
         body: formData,
-        signal: AbortSignal.timeout(20000), // 20s timeout
+        signal: AbortSignal.timeout(60000), 
       });
 
       if (!response.ok) {
@@ -234,7 +234,12 @@ export class DiagnosisProcessor extends WorkerHost {
         errorStack,
       );
 
-      // Update database record to reflect failure state
+      // Only mark FAILED once BullMQ has no retries left, otherwise the client gives up too early
+      const maxAttempts = job.opts.attempts ?? 1;
+      if (job.attemptsMade + 1 < maxAttempts) {
+        throw error;
+      }
+
       await this.prisma.diagnosis.update({
         where: { id: diagnosisId },
         data: {
