@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Sprout, Loader2, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from 'cn';
@@ -20,11 +21,25 @@ import {
 } from '@/components/ui/card';
 
 export default function RegisterPage() {
-  const { register } = useAuth();
+  const { user, register } = useAuth();
+  const router = useRouter();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  // If already logged in, redirect immediately away from register
+  useEffect(() => {
+    if (user) {
+      const params = new URLSearchParams(window.location.search);
+      const callbackUrl = params.get('callbackUrl');
+      const destination =
+        callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')
+          ? callbackUrl
+          : '/dashboard';
+      router.replace(destination);
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -9,6 +9,17 @@ export interface User {
   updatedAt: string;
 }
 
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  tokens: AuthTokens;
+  message?: string;
+}
+
 export interface RawDetection {
   bbox: [number, number, number, number]; // [x1, y1, x2, y2]
   confidence: number;

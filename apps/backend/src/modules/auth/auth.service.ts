@@ -144,10 +144,11 @@ export class AuthService {
    * Injects HTTP-only secure cookies into the response object.
    */
   setAuthCookies(res: Response, tokens: AuthTokens): void {
+    const isProd = this.isProduction;
     const cookieOptions = {
       httpOnly: true,
-      secure: this.isProduction,
-      sameSite: 'lax' as const,
+      secure: isProd,
+      sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
       path: '/',
     };
 
@@ -168,10 +169,11 @@ export class AuthService {
    * Clears auth cookies upon logout.
    */
   clearAuthCookies(res: Response): void {
+    const isProd = this.isProduction;
     const clearOptions = {
       httpOnly: true,
-      secure: this.isProduction,
-      sameSite: 'lax' as const,
+      secure: isProd,
+      sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
       path: '/',
     };
 

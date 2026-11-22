@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
-import { User } from '@/types/api';
+import { AuthResponse, User } from '@/types/api';
 
 interface LoginInput {
   email: string;
@@ -22,9 +22,26 @@ interface RegisterInput {
   password: string;
 }
 
-interface AuthResponse {
-  user: User;
-  message?: string;
+export function setClientAuthToken(token: string) {
+  if (typeof document === 'undefined') return;
+  const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  // 7 days cookie to ensure smooth session persistence across Vercel middleware navigation
+  document.cookie = `access_token=${encodeURIComponent(token)}; path=/; max-age=604800; SameSite=Lax${isSecure ? '; Secure' : ''}`;
+  try {
+    localStorage.setItem('access_token', token);
+  } catch {
+    // Ignore storage quota or disabled localStorage
+  }
+}
+
+export function clearClientAuthToken() {
+  if (typeof document === 'undefined') return;
+  document.cookie = 'access_token=; path=/; max-age=0; SameSite=Lax';
+  try {
+    localStorage.removeItem('access_token');
+  } catch {
+    // Ignore
+  }
 }
 
 interface AuthContextValue {
@@ -59,12 +76,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let active = true;
 
     const initAuth = async () => {
+      // Re-sync cookie from localStorage if present so middleware is primed
+      if (typeof window !== 'undefined') {
+        try {
+          const stored = localStorage.getItem('access_token');
+          if (stored) {
+            setClientAuthToken(stored);
+          }
+        } catch {
+          // Ignore
+        }
+      }
+
       try {
         const res = await apiFetch<User | { user: User }>('/auth/me');
         const resolvedUser = 'user' in res ? res.user : res;
         if (active) setUser(resolvedUser);
       } catch {
-        if (active) setUser(null);
+        if (active) {
+          setUser(null);
+          clearClientAuthToken();
+        }
       } finally {
         if (active) setIsLoading(false);
       }
@@ -83,6 +115,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       body: credentials,
     });
     setUser(res.user);
+    if (res.tokens?.accessToken) {
+      setClientAuthToken(res.tokens.accessToken);
+    }
     const params = new URLSearchParams(window.location.search);
     const callbackUrl = params.get('callbackUrl');
     const destination =
@@ -99,7 +134,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       body: payload,
     });
     setUser(res.user);
-    router.push('/dashboard');
+    if (res.tokens?.accessToken) {
+      setClientAuthToken(res.tokens.accessToken);
+    }
+    const params = new URLSearchParams(window.location.search);
+    const callbackUrl = params.get('callbackUrl');
+    const destination =
+      callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')
+        ? callbackUrl
+        : '/dashboard';
+    router.push(destination);
     router.refresh();
   };
 
@@ -107,6 +151,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await apiFetch('/auth/logout', { method: 'POST' });
     } finally {
+      clearClientAuthToken();
       setUser(null);
       router.push('/login');
       router.refresh();
