@@ -64,7 +64,7 @@ export default function LoginPage() {
               Sign in to Smart AgriTech
             </CardTitle>
             <CardDescription>
-              Access AI leaf diagnostics, RAG advisory, and outbreak maps
+              Access AI crop diagnostics, RAG advisory, and outbreak maps
             </CardDescription>
           </CardHeader>
 

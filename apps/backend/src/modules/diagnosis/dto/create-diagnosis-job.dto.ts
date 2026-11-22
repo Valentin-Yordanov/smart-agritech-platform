@@ -3,8 +3,8 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from 'class-vali
 
 export class CreateDiagnosisJobDto {
   @ApiProperty({
-    description: 'Storage key, relative path, or URL for the leaf/canopy image to analyze',
-    example: 'uploads/plants/tomato-early-blight-sample.jpg',
+    description: 'Storage key, relative path, or URL for the plant, crop, or foliage image to analyze',
+    example: 'uploads/scans/tomato-early-blight-sample.jpg',
   })
   @IsString()
   @IsNotEmpty()

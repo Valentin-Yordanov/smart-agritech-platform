@@ -46,7 +46,7 @@ export class StorageService {
   async getPresignedUploadUrl(
     filename: string,
     mimeType: string,
-    folder: 'leaves' | 'community',
+    folder: 'scans' | 'leaves' | 'community',
   ): Promise<PresignedUrlResponse> {
     // Sanitize original filename (remove special chars/spaces)
     const sanitizedFilename = filename.toLowerCase().replace(/[^a-z0-9.-]/g, '_');

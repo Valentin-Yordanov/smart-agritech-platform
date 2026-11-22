@@ -130,7 +130,7 @@ export class DiagnosisProcessor extends WorkerHost {
 
     // 4. Fallback: Minimal valid JPEG binary buffer for simulated keys in dev/test
     this.logger.warn(
-      `Image file "${imageKey}" not found on disk or remote. Using simulated valid leaf specimen buffer.`,
+      `Image file "${imageKey}" not found on disk or remote. Using simulated valid crop specimen buffer.`,
     );
     // Base64-encoded valid 1x1 green pixel JPEG
     const fallbackBase64 =
@@ -139,7 +139,7 @@ export class DiagnosisProcessor extends WorkerHost {
   }
 
   /**
-   * Worker handler executed by BullMQ for each enqueued leaf diagnosis job.
+   * Worker handler executed by BullMQ for each enqueued crop pathology diagnosis job.
    */
   async process(job: Job<DiagnosisJobPayload>): Promise<AiServiceDiagnosisResponse> {
     const { diagnosisId, imageKey } = job.data;

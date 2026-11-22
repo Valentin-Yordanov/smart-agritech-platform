@@ -107,7 +107,7 @@ export function DetectionCanvas({
       const namePart =
         det.disease && det.disease !== 'None'
           ? det.disease
-          : det.species || det.class_name || 'Leaf';
+          : det.species || det.class_name || 'Specimen';
       const confPct = `${(det.confidence * 100).toFixed(1)}%`;
       const label = `${namePart} · ${confPct}`;
 
@@ -157,7 +157,7 @@ export function DetectionCanvas({
           src={imageUrl}
           alt={alt}
           onLoad={drawDetections}
-          className="block max-h-[460px] w-auto max-w-full object-contain select-none"
+          className="block max-h-115 w-auto max-w-full object-contain select-none"
         />
         <canvas
           ref={canvasRef}

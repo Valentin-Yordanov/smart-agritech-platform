@@ -106,7 +106,7 @@ function getServerOnlineSnapshot(): boolean {
 
 const CLOUD_PIPELINE_STEPS: { key: ScanStage; label: string }[] = [
   { key: 'uploading', label: '1. Uploading to Edge Storage' },
-  { key: 'localizing', label: '2. Localizing Leaf via YOLOv11' },
+  { key: 'localizing', label: '2. Localizing Specimen & Pests via YOLOv11' },
   { key: 'classifying', label: '3. Classifying Pathogen via MobileNetV4' },
 ];
 
@@ -290,7 +290,7 @@ export default function ScanPage() {
 
   const handleRunScan = async () => {
     if (!selectedFile || !previewUrl) {
-      toast.error('Please upload or capture a leaf image first.');
+      toast.error('Please upload or capture a crop or plant image first.');
       return;
     }
 
@@ -334,7 +334,7 @@ export default function ScanPage() {
           body: {
             filename: selectedFile.name,
             mimeType: selectedFile.type,
-            folder: 'leaves',
+            folder: 'scans',
           },
         }
       );
@@ -439,7 +439,7 @@ export default function ScanPage() {
           <CardHeader>
             <CardTitle className="text-lg">Specimen Capture</CardTitle>
             <CardDescription>
-              Upload a high-resolution leaf photo (JPEG, PNG, WebP up to 10MB)
+              Upload a high-resolution crop photo (leaves, stems, fruits, or pests; JPEG, PNG, WebP up to 10MB)
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
@@ -477,7 +477,7 @@ export default function ScanPage() {
               <p className="text-sm font-semibold text-slate-800">
                 {selectedFile
                   ? selectedFile.name
-                  : 'Drop leaf image here or click to browse'}
+                  : 'Drop crop image here or click to browse'}
               </p>
               <p className="mt-1 text-xs text-slate-500">
                 Supports mobile camera capture &amp; desktop drag-and-drop

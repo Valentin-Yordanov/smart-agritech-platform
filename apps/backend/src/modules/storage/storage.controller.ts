@@ -22,9 +22,9 @@ export class StorageController {
     description: 'Presigned upload URL generated successfully.',
     schema: {
       example: {
-        uploadUrl: 'https://placeholder-account-id.r2.cloudflarestorage.com/agritech-uploads/uploads/leaves/abc-123.jpg?...',
-        fileKey: 'uploads/leaves/abc-123.jpg',
-        publicUrl: 'https://pub-placeholder.r2.dev/uploads/leaves/abc-123.jpg',
+        uploadUrl: 'https://placeholder-account-id.r2.cloudflarestorage.com/agritech-uploads/uploads/scans/abc-123.jpg?...',
+        fileKey: 'uploads/scans/abc-123.jpg',
+        publicUrl: 'https://pub-placeholder.r2.dev/uploads/scans/abc-123.jpg',
       },
     },
   })

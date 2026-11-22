@@ -96,7 +96,7 @@ export class DiagnosisService {
 
     // Enqueue job into BullMQ
     const job = await this.diagnosisQueue.add(
-      'analyze-leaf',
+      'analyze-specimen',
       {
         diagnosisId: pendingDiagnosis.id,
         imageKey: dto.imageKey,

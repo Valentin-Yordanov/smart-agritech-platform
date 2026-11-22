@@ -26,7 +26,7 @@ export class DiagnosisController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({
-    summary: 'Queue leaf diagnosis job for asynchronous AI inference (Authenticated)',
+    summary: 'Queue crop/plant diagnosis job for asynchronous AI inference (Authenticated)',
     description: 'Creates a pending diagnosis record associated with the authenticated user and enqueues the job into Redis/BullMQ.',
   })
   @ApiResponse({

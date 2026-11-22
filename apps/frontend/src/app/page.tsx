@@ -34,7 +34,7 @@ export default function LandingPage() {
               Plant Pathology Diagnostics &amp; Agronomic Advisory
             </h1>
             <p className="text-base leading-relaxed text-slate-600">
-              Detect leaf lesions with YOLOv11 &amp; MobileNetV4 ONNX inference,
+              Detect crop pathologies &amp; foliar lesions with YOLOv11 &amp; MobileNetV4 ONNX inference,
               consult the ChromaDB-backed AI agronomist, and monitor regional
               crop outbreaks.
             </p>
@@ -110,7 +110,7 @@ export default function LandingPage() {
               Dual-Stage ONNX Inference
             </h2>
             <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
-              YOLOv11 localizes leaf foliage while MobileNetV4 classifies
+              YOLOv11 localizes foliage, stems &amp; pests while MobileNetV4 classifies
               pathogens, with in-browser WebAssembly fallback for offline fields.
             </p>
           </div>

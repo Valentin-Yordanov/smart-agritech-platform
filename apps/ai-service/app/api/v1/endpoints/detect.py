@@ -1,4 +1,4 @@
-"""Object detection endpoint for leaves, symptoms, and agricultural pests."""
+"""Object detection endpoint for plant organs (leaves, stems, fruits), symptoms, and agricultural pests."""
 
 from typing import Optional
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
@@ -15,11 +15,11 @@ router = APIRouter()
 @router.post(
     "/detect",
     response_model=DetectionResult,
-    summary="Detect leaves, lesions, and pests with YOLOv11-nano",
+    summary="Detect plant organs, lesions, and pests with YOLOv11-nano",
     status_code=status.HTTP_200_OK,
 )
 async def detect_objects(
-    file: UploadFile = File(..., description="Target leaf or canopy image (JPEG, PNG, WebP)"),
+    file: UploadFile = File(..., description="Target crop or plant canopy image showing leaves, stems, fruits, or pests (JPEG, PNG, WebP)"),
     conf_threshold: Optional[float] = Query(
         None,
         ge=0.01,

@@ -23,12 +23,12 @@ export class CreateUploadUrlDto {
 
   @ApiProperty({
     description: 'Storage target namespace folder',
-    example: 'leaves',
-    enum: ['leaves', 'community'],
+    example: 'scans',
+    enum: ['scans', 'leaves', 'community'],
   })
   @IsString()
-  @IsIn(['leaves', 'community'], {
-    message: 'Folder must be either "leaves" (for AI diagnosis) or "community" (for social feed).',
+  @IsIn(['scans', 'leaves', 'community'], {
+    message: 'Folder must be either "scans", "leaves" (legacy), or "community" (for social feed).',
   })
-  folder: 'leaves' | 'community';
+  folder: 'scans' | 'leaves' | 'community';
 }

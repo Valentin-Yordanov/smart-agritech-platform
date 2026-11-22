@@ -447,7 +447,7 @@ function AdvisorChatContent() {
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src={diagnosisContext.imageUrl}
-                    alt={diagnosisContext.speciesName ?? 'Scanned leaf'}
+                    alt={diagnosisContext.speciesName ?? 'Scanned crop specimen'}
                     className="h-full w-full object-cover"
                   />
                 ) : (

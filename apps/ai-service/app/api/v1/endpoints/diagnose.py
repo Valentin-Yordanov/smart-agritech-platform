@@ -19,7 +19,7 @@ router = APIRouter()
     status_code=status.HTTP_200_OK,
 )
 async def diagnose_plant(
-    file: UploadFile = File(..., description="High-resolution plant or leaf image (JPEG, PNG, WebP)"),
+    file: UploadFile = File(..., description="High-resolution plant specimen image showing leaves, stems, fruits, or pests (JPEG, PNG, WebP)"),
     conf_threshold: Optional[float] = Query(
         None,
         ge=0.01,
@@ -34,7 +34,7 @@ async def diagnose_plant(
     ),
     pipeline: DiagnosisPipeline = Depends(get_pipeline),
 ) -> DiagnosisResponse:
-    """Orchestrates leaf detection, context-padded ROI extraction, and disease classification.
+    """Orchestrates crop organ & pest localization, context-padded ROI extraction, and disease classification.
 
     Delivers comprehensive agronomic advice, health scores, and sub-100ms CPU latency benchmarking.
     """

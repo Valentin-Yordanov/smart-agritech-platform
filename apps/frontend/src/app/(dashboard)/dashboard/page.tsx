@@ -32,7 +32,7 @@ export default function DashboardOverviewPage() {
             Welcome back{user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''}
           </h1>
           <p className="text-sm text-slate-600">
-            Upload leaf imagery for YOLOv11 + MobileNetV4 diagnostics or consult
+            Upload crop imagery for YOLOv11 + MobileNetV4 diagnostics or consult
             the ChromaDB-backed AI agronomist.
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function DashboardOverviewPage() {
           )}
         >
           <ScanLine className="mr-2 h-4 w-4" />
-          New Leaf Scan
+          New Crop Scan
         </Link>
       </div>
 
@@ -55,7 +55,7 @@ export default function DashboardOverviewPage() {
             <ScanLine className="h-5 w-5 text-emerald-700" />
             <CardTitle className="pt-2 text-base">AI Scanner</CardTitle>
             <CardDescription>
-              Detect leaf lesions and classify crop diseases with offline WASM
+              Detect crop pathologies, lesions and pests with offline WASM
               support.
             </CardDescription>
           </CardHeader>

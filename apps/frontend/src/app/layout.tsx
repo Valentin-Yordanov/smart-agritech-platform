@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Smart AgriTech | AI Plant Pathology & Agronomy Platform',
   description:
-    'Dual-stage ONNX leaf diagnostics, RAG agronomic advisory, and regional disease outbreak intelligence.',
+    'Dual-stage ONNX plant pathology diagnostics, RAG agronomic advisory, and regional crop disease outbreak intelligence.',
 };
 
 export default function RootLayout({

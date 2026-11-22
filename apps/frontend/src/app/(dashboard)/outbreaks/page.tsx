@@ -322,7 +322,7 @@ export default function OutbreaksPage() {
                     )}
                   >
                     <ScanLine className="h-3.5 w-3.5" />
-                    Scan &amp; Geotag a Leaf
+                    Scan &amp; Geotag a Specimen
                   </Link>
                 </div>
               ) : (
