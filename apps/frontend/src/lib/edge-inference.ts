@@ -24,6 +24,8 @@ interface ClassesJsonPayload {
 const INPUT_SIZE = 224;
 const IMAGENET_MEAN: [number, number, number] = [0.485, 0.456, 0.406];
 const IMAGENET_STD: [number, number, number] = [0.229, 0.224, 0.225];
+const CONFIDENCE_THRESHOLD = 0.6;
+const UNKNOWN_CLASS_NAMES = ['unknown', 'not_a_plant_leaf'];
 
 let cachedSession: OrtType.InferenceSession | null = null;
 let cachedClasses: ClassificationClassEntry[] | null = null;
@@ -178,6 +180,19 @@ export async function runEdgeInference(
 
   if (!matchedClass) {
     throw new Error(`Predicted class index ${bestIndex} not found in classes.json`);
+  }
+
+  // Low confidence or the "unknown" class means the photo should be retaken
+  if (
+    bestProb < CONFIDENCE_THRESHOLD ||
+    UNKNOWN_CLASS_NAMES.includes(matchedClass.class_name.toLowerCase())
+  ) {
+    return {
+      speciesName: 'Unknown',
+      diseaseName: 'Uncertain - retake photo',
+      confidence: bestProb,
+      isHealthy: false,
+    };
   }
 
   return {

@@ -145,12 +145,18 @@ class DiagnosisPipeline:
         pest_labels = {"aphid", "whitefly", "caterpillar", "spider_mite"}
         has_pest = any(r.detection_label.lower() in pest_labels for r in diagnosed_regions)
 
-        # Check diseases across regions and full image
+        # Keep only predictions the classifier is confident about and that are not the "unknown" class
         active_pathologies = []
         highest_severity = "None"
         severity_rank = {"None": 0, "Low": 1, "Moderate": 2, "High": 3, "Critical": 4}
+        unknown_names = {n.lower() for n in self.settings.UNKNOWN_CLASS_NAMES}
 
-        candidates = [full_img_cls.top_prediction] + [r.classification.top_prediction for r in diagnosed_regions]
+        candidates = [
+            cand
+            for cand in [full_img_cls.top_prediction] + [r.classification.top_prediction for r in diagnosed_regions]
+            if cand.confidence >= self.settings.CLASSIFIER_CONF_THRESHOLD
+            and cand.class_name.lower() not in unknown_names
+        ]
 
         for cand in candidates:
             if not cand.is_healthy and cand.disease and cand.disease.lower() != "none":
@@ -160,7 +166,10 @@ class DiagnosisPipeline:
                     highest_severity = cand_sev
 
         # Determine overall status and species
-        dominant_species = full_img_cls.top_prediction.species or "Plant"
+        if candidates:
+            dominant_species = max(candidates, key=lambda x: x.confidence).species or "Plant"
+        else:
+            dominant_species = "Unknown"
 
         if has_pest:
             status = "PEST_INFESTATION"
@@ -173,6 +182,11 @@ class DiagnosisPipeline:
             # Health score inversely proportional to severity
             score_map = {"Critical": 25.0, "High": 45.0, "Moderate": 65.0, "Low": 80.0, "None": 90.0}
             health_score = score_map.get(highest_severity, 60.0)
+        elif not candidates:
+            status = "UNCERTAIN"
+            health_score = 50.0
+            primary_disease = "Uncertain - retake photo"
+            highest_severity = "None"
         else:
             status = "HEALTHY"
             health_score = 96.5
@@ -184,6 +198,9 @@ class DiagnosisPipeline:
         if status == "HEALTHY":
             recommendations.append("Canopy vigor is optimal. Maintain current irrigation and nutrient feeding cycles.")
             recommendations.append("Continue periodic scouting every 5 to 7 days for early prevention.")
+        elif status == "UNCERTAIN":
+            recommendations.append("The model is not confident about this photo. Retake it closer to a single leaf, in good light and in focus.")
+            recommendations.append("Make sure the plant is one of the supported crops.")
         elif status == "PEST_INFESTATION":
             recommendations.append("Apply targeted organic insecticidal soap or release biological controls (e.g. predatory mites).")
             recommendations.append("Inspect underside of surrounding leaves and place yellow sticky traps to track population density.")

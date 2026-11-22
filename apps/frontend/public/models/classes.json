@@ -1,13 +1,7 @@
 {
   "detection_classes": {
     "0": "leaf",
-    "1": "leaf_spot",
-    "2": "stem",
-    "3": "fruit",
-    "4": "aphid",
-    "5": "whitefly",
-    "6": "caterpillar",
-    "7": "spider_mite"
+    "1": "leaf_spot"
   },
   "classification_classes": [
     {
