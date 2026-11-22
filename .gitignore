@@ -75,6 +75,7 @@ dmypy.json
 # ONNX weights - ignore generic raw weights, allow committed lightweight test graphs
 *.onnx
 !apps/ai-service/app/models/*.onnx
+!apps/frontend/public/models/*.onnx
 
 # Training runs, checkpoints & datasets
 runs/
