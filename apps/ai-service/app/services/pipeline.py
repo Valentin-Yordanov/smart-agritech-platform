@@ -105,7 +105,9 @@ class DiagnosisPipeline:
         diagnosed_regions: List[DiagnosedRegion] = []
         crop_images: List[Tuple[np.ndarray, BoundingBox, str, float]] = []
 
-        for det in detection_result.detections:
+        # Classify only the most confident regions to keep latency bounded on crowded images
+        top_detections = sorted(detection_result.detections, key=lambda d: d.confidence, reverse=True)
+        for det in top_detections[: self.settings.CLASSIFIER_MAX_REGIONS]:
             crop, padded_box = self._extract_crop_with_padding(
                 image_bgr=image_bgr,
                 box=det.box,
@@ -142,18 +144,19 @@ class DiagnosisPipeline:
         prep_time_ms = max(0.0, total_time_ms - (det_time_ms + crop_time_ms + cls_time_ms))
 
         # Step 4: Agronomic Health Reasoning & Synthesis
-        pest_labels = {"aphid", "whitefly", "caterpillar", "spider_mite"}
+        pest_labels = {label.lower() for label in self.settings.PEST_DETECTION_LABELS}
         has_pest = any(r.detection_label.lower() in pest_labels for r in diagnosed_regions)
 
-        # Keep only predictions the classifier is confident about and that are not the "unknown" class
+        # Keep only confident, known-class predictions; pest boxes are not plant tissue, so they carry no disease label
         active_pathologies = []
         highest_severity = "None"
         severity_rank = {"None": 0, "Low": 1, "Moderate": 2, "High": 3, "Critical": 4}
         unknown_names = {n.lower() for n in self.settings.UNKNOWN_CLASS_NAMES}
+        plant_regions = [r for r in diagnosed_regions if r.detection_label.lower() not in pest_labels]
 
         candidates = [
             cand
-            for cand in [full_img_cls.top_prediction] + [r.classification.top_prediction for r in diagnosed_regions]
+            for cand in [full_img_cls.top_prediction] + [r.classification.top_prediction for r in plant_regions]
             if cand.confidence >= self.settings.CLASSIFIER_CONF_THRESHOLD
             and cand.class_name.lower() not in unknown_names
         ]
@@ -178,7 +181,8 @@ class DiagnosisPipeline:
         elif active_pathologies:
             status = "DISEASED"
             primary = max(active_pathologies, key=lambda x: x.confidence)
-            primary_disease = f"{primary.species} {primary.disease}".strip()
+            part = f" ({primary.plant_part})" if primary.plant_part and primary.plant_part != "leaf" else ""
+            primary_disease = f"{primary.species}{part} {primary.disease}".strip()
             # Health score inversely proportional to severity
             score_map = {"Critical": 25.0, "High": 45.0, "Moderate": 65.0, "Low": 80.0, "None": 90.0}
             health_score = score_map.get(highest_severity, 60.0)
@@ -199,7 +203,7 @@ class DiagnosisPipeline:
             recommendations.append("Canopy vigor is optimal. Maintain current irrigation and nutrient feeding cycles.")
             recommendations.append("Continue periodic scouting every 5 to 7 days for early prevention.")
         elif status == "UNCERTAIN":
-            recommendations.append("The model is not confident about this photo. Retake it closer to a single leaf, in good light and in focus.")
+            recommendations.append("The model is not confident about this photo. Retake it closer to a single leaf, fruit or ear, in good light and in focus.")
             recommendations.append("Make sure the plant is one of the supported crops.")
         elif status == "PEST_INFESTATION":
             recommendations.append("Apply targeted organic insecticidal soap or release biological controls (e.g. predatory mites).")

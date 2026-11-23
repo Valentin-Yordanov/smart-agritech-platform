@@ -26,6 +26,7 @@ const CATEGORIES: Array<'All' | PathogenCategory> = [
   'Fungal',
   'Oomycete',
   'Bacterial / Pest',
+  'Viral',
 ];
 
 export function KnowledgeIndexClient({ guides }: KnowledgeIndexClientProps) {

@@ -15,6 +15,7 @@ interface ClassificationClassEntry {
   is_healthy: boolean;
   severity?: string;
   treatment?: string;
+  plant_part?: string;
 }
 
 interface ClassesJsonPayload {
@@ -24,7 +25,7 @@ interface ClassesJsonPayload {
 const INPUT_SIZE = 224;
 const IMAGENET_MEAN: [number, number, number] = [0.485, 0.456, 0.406];
 const IMAGENET_STD: [number, number, number] = [0.229, 0.224, 0.225];
-const CONFIDENCE_THRESHOLD = 0.6;
+const CONFIDENCE_THRESHOLD = 0.75;
 const UNKNOWN_CLASS_NAMES = ['unknown', 'not_a_plant_leaf'];
 
 let cachedSession: OrtType.InferenceSession | null = null;
@@ -195,9 +196,14 @@ export async function runEdgeInference(
     };
   }
 
+  const part =
+    matchedClass.plant_part && matchedClass.plant_part !== 'leaf'
+      ? ` (${matchedClass.plant_part})`
+      : '';
+
   return {
     speciesName: matchedClass.species,
-    diseaseName: matchedClass.is_healthy ? 'Healthy' : matchedClass.disease,
+    diseaseName: (matchedClass.is_healthy ? 'Healthy' : matchedClass.disease) + part,
     confidence: bestProb,
     isHealthy: matchedClass.is_healthy,
   };

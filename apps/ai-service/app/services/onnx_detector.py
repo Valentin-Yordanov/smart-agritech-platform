@@ -42,6 +42,8 @@ class YOLO11Detector:
         self.output_name: str = outputs[0].name
         self.input_shape: List[int] = inputs[0].shape  # e.g., [1, 3, 640, 640]
         self.target_size: int = self.settings.DETECTOR_INPUT_SIZE
+        self.num_model_classes: Optional[int] = self._model_class_count(outputs[0].shape)
+        self._check_class_names()
 
         logger.info(
             f"Initialized YOLO11Detector: model={self.model_path.name}, "
@@ -53,7 +55,7 @@ class YOLO11Detector:
         """Loads detection class mappings from classes.json."""
         if not self.classes_path.exists():
             logger.warning(f"Classes JSON not found at {self.classes_path}. Using fallback classes.")
-            return {0: "leaf", 1: "leaf_spot", 2: "stem", 3: "fruit", 4: "aphid", 5: "whitefly", 6: "caterpillar", 7: "spider_mite"}
+            return {0: "leaf"}
 
         try:
             with open(self.classes_path, "r", encoding="utf-8") as f:
@@ -62,7 +64,26 @@ class YOLO11Detector:
                 return {int(k): str(v) for k, v in detection_classes.items()}
         except Exception as exc:
             logger.error(f"Failed to parse classes JSON from {self.classes_path}: {exc}")
-            return {0: "leaf", 1: "leaf_spot"}
+            return {0: "leaf"}
+
+    @staticmethod
+    def _model_class_count(output_shape: List) -> Optional[int]:
+        """YOLO output is (1, 4 + num_classes, anchors); returns None for dynamic shapes."""
+        dims = [d for d in output_shape[1:] if isinstance(d, int)]
+        if len(dims) != 2:
+            return None
+        return min(dims) - 4
+
+    def _check_class_names(self) -> None:
+        """classes.json must name exactly the classes the ONNX model outputs."""
+        n = self.num_model_classes
+        if n is None or n == len(self.class_names):
+            return
+        logger.error(
+            f"Detector outputs {n} classes but classes.json lists {len(self.class_names)}: "
+            f"{self.class_names}. Unnamed classes will be reported as class_<id>."
+        )
+        self.class_names = {i: self.class_names.get(i, f"class_{i}") for i in range(n)}
 
     def _init_session(self) -> ort.InferenceSession:
         """Configures ONNX Runtime with optimized CPU threadpools and graph rewrites."""

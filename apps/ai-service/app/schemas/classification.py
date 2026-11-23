@@ -17,6 +17,7 @@ class TopKPrediction(BaseModel):
     is_healthy: Optional[bool] = Field(None, description="True if no disease or pest is detected")
     severity: Optional[str] = Field(None, description="Risk level: 'None', 'Low', 'Moderate', 'Severe'")
     treatment: Optional[str] = Field(None, description="Recommended agronomic remedy or cultural control")
+    plant_part: Optional[str] = Field(None, description="Plant part the class refers to: leaf, fruit, ear, stem, tuber, ...")
 
 
 class ClassificationResult(BaseModel):

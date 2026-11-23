@@ -116,6 +116,16 @@ class MobileNetV4Classifier:
         return tensor
 
     @staticmethod
+    def _part_from_name(class_name: str) -> Optional[str]:
+        """v2 class names are `crop_part___condition`; v1 PlantVillage names carry no part (treated as leaf)."""
+        if not class_name or class_name.lower() in ("unknown", "not_a_plant_leaf"):
+            return None
+        head = class_name.split("___")[0]
+        if "_" in head and head.islower():
+            return head.rsplit("_", 1)[1]
+        return "leaf"
+
+    @staticmethod
     def softmax(x: np.ndarray) -> np.ndarray:
         """Numerically stable softmax."""
         shift_x = x - np.max(x, axis=-1, keepdims=True)
@@ -158,6 +168,7 @@ class MobileNetV4Classifier:
                     is_healthy=meta.get("is_healthy"),
                     severity=meta.get("severity"),
                     treatment=meta.get("treatment"),
+                    plant_part=meta.get("plant_part") or self._part_from_name(meta.get("class_name", "")),
                 )
             )
 

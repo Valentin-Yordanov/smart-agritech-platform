@@ -74,8 +74,10 @@ class Settings(BaseSettings):
     # MobileNetV4 Classifier Settings
     CLASSIFIER_INPUT_SIZE: int = 224
     CLASSIFIER_TOP_K: int = 5
-    CLASSIFIER_CONF_THRESHOLD: float = 0.60
+    CLASSIFIER_CONF_THRESHOLD: float = 0.75
     UNKNOWN_CLASS_NAMES: List[str] = ["unknown", "not_a_plant_leaf"]
+    CLASSIFIER_MAX_REGIONS: int = 8
+    PEST_DETECTION_LABELS: List[str] = ["pest", "aphid", "whitefly", "caterpillar", "spider_mite"]
     IMAGE_NET_MEAN: List[float] = [0.485, 0.456, 0.406]
     IMAGE_NET_STD: List[float] = [0.229, 0.224, 0.225]
 

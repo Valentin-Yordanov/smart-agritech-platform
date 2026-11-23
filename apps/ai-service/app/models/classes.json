@@ -1,7 +1,6 @@
 {
   "detection_classes": {
-    "0": "leaf",
-    "1": "leaf_spot"
+    "0": "leaf"
   },
   "classification_classes": [
     {
@@ -345,6 +344,15 @@
       "is_healthy": true,
       "severity": "None",
       "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+    },
+    {
+      "id": 38,
+      "class_name": "unknown",
+      "species": "Unknown",
+      "disease": "Unknown",
+      "is_healthy": false,
+      "severity": "None",
+      "treatment": "Not a supported plant leaf. Retake the photo of a single leaf in good light."
     }
   ]
 }

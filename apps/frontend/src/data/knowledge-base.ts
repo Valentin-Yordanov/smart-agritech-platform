@@ -1,4 +1,4 @@
-export type PathogenCategory = 'Fungal' | 'Oomycete' | 'Bacterial / Pest';
+export type PathogenCategory = 'Fungal' | 'Oomycete' | 'Bacterial / Pest' | 'Viral';
 
 export interface ChemicalProtocol {
   activeIngredient: string;
@@ -296,6 +296,194 @@ export const KNOWLEDGE_GUIDES: AgronomyGuide[] = [
       'Select hybrids rated high for Ht-gene polygenic NCLB resistance',
       'Rotate corn with soybean, sunflower, or winter wheat for at least 1–2 seasons',
       'Incorporate or shred heavily infected surface crop residue after harvest',
+    ],
+  },
+  {
+    slug: 'rice-blast',
+    title: 'Rice — Blast',
+    hostCrop: 'Rice',
+    scientificName: 'Magnaporthe oryzae',
+    pathogenType: 'Fungal',
+    severityRisk: 'High',
+    summary:
+      'The most damaging fungal disease of rice. It attacks leaves, nodes and the panicle neck; neck blast leaves white, empty panicles.',
+    optimalConditions:
+      '24°C–28°C with 10+ hours of leaf wetness, high humidity, excess nitrogen or drought stress.',
+    symptomsChecklist: [
+      'Spindle- or diamond-shaped leaf lesions with grey centres and brown margins',
+      'Blackened nodes that break easily',
+      'Grey-brown rot at the panicle neck with white, unfilled panicles',
+    ],
+    biologicalControls: [
+      'Seed treatment with Trichoderma or Pseudomonas fluorescens formulations',
+      'Silicon fertilisation to strengthen leaf tissue',
+    ],
+    chemicalProtocols: [
+      {
+        activeIngredient: 'Tricyclazole',
+        fracIracGroup: 'FRAC 16.1 (MBI-R)',
+        phiDays: 'See label',
+        notes: 'Preventive at late tillering and booting/heading.',
+      },
+      {
+        activeIngredient: 'Azoxystrobin + Difenoconazole',
+        fracIracGroup: 'FRAC 11 + FRAC 3',
+        phiDays: 'See label',
+        notes: 'When lesions are spreading; protect the neck at heading.',
+      },
+    ],
+    culturalPractices: [
+      'Grow blast-resistant varieties and use clean seed',
+      'Split nitrogen doses; avoid late heavy top-dressing',
+      'Keep fields flooded where possible and destroy infected straw',
+    ],
+  },
+  {
+    slug: 'wheat-yellow-rust',
+    title: 'Wheat — Yellow (Stripe) Rust',
+    hostCrop: 'Wheat',
+    scientificName: 'Puccinia striiformis f. sp. tritici',
+    pathogenType: 'Fungal',
+    severityRisk: 'High',
+    summary:
+      'An airborne rust that spreads across regions in cool, damp springs and strips green leaf area before grain fill.',
+    optimalConditions: '10°C–15°C with dew or light rain; survives on volunteer wheat.',
+    symptomsChecklist: [
+      'Yellow-orange pustules in stripes between leaf veins',
+      'Powdery yellow spores rub off on the fingers',
+      'Leaves dry out early under heavy infection',
+    ],
+    biologicalControls: ['No reliable biological control; rely on resistant varieties'],
+    chemicalProtocols: [
+      {
+        activeIngredient: 'Tebuconazole / Prothioconazole',
+        fracIracGroup: 'FRAC 3 (DMI)',
+        phiDays: '30–35 days',
+        notes: 'Spray at first pustules; protect the flag leaf (GS37–39).',
+      },
+      {
+        activeIngredient: 'Azoxystrobin + Propiconazole',
+        fracIracGroup: 'FRAC 11 + FRAC 3',
+        phiDays: '35 days',
+        notes: 'Longer protection where pressure is high.',
+      },
+    ],
+    culturalPractices: [
+      'Grow varieties with current resistance ratings and diversify varieties',
+      'Remove volunteer wheat to break the green bridge',
+      'Scout the top three leaves weekly from tillering',
+    ],
+  },
+  {
+    slug: 'cassava-mosaic-disease',
+    title: 'Cassava — Mosaic Disease',
+    hostCrop: 'Cassava',
+    scientificName: 'Cassava mosaic begomoviruses (ACMV, EACMV)',
+    pathogenType: 'Viral',
+    severityRisk: 'Critical',
+    summary:
+      'A virus disease spread by infected cuttings and whiteflies that can cut root yield by 20–90%.',
+    optimalConditions: 'High whitefly populations and planting of infected cuttings.',
+    symptomsChecklist: [
+      'Yellow or pale-green mosaic patches on leaves',
+      'Twisted, puckered and shrunken leaflets',
+      'Stunted plants with small roots',
+    ],
+    biologicalControls: ['Conserve whitefly natural enemies; neem products on young plants'],
+    chemicalProtocols: [],
+    culturalPractices: [
+      'Plant cuttings only from symptom-free or certified mother plants',
+      'Use CMD-resistant varieties',
+      'Rogue infected plants in the first 2–3 months',
+    ],
+  },
+  {
+    slug: 'banana-fusarium-wilt',
+    title: 'Banana — Fusarium Wilt (Panama Disease)',
+    hostCrop: 'Banana',
+    scientificName: 'Fusarium oxysporum f. sp. cubense (TR4)',
+    pathogenType: 'Fungal',
+    severityRisk: 'Critical',
+    summary:
+      'A soil-borne wilt that blocks water transport. The fungus survives in soil for decades and no fungicide cures it.',
+    optimalConditions: 'Moved by infested soil, water, tools and planting material.',
+    symptomsChecklist: [
+      'Yellowing of older leaves from the margins inward',
+      'Leaves collapse at the petiole and hang like a skirt',
+      'Reddish-brown streaks inside the pseudostem',
+    ],
+    biologicalControls: ['Trichoderma and Bacillus soil amendments may slow, but do not stop, disease'],
+    chemicalProtocols: [],
+    culturalPractices: [
+      'Destroy infected plants in place and quarantine the area',
+      'Disinfect boots, tools and vehicles; do not move soil',
+      'Plant certified tissue-culture plantlets and tolerant varieties',
+    ],
+  },
+  {
+    slug: 'coffee-leaf-rust',
+    title: 'Coffee — Leaf Rust',
+    hostCrop: 'Coffee',
+    scientificName: 'Hemileia vastatrix',
+    pathogenType: 'Fungal',
+    severityRisk: 'High',
+    summary:
+      'The main disease of arabica coffee; heavy infection causes leaf drop and lower yields the following season.',
+    optimalConditions: '21°C–25°C with free water on leaves during the rainy season.',
+    symptomsChecklist: [
+      'Pale yellow spots on the upper leaf surface',
+      'Orange powdery pustules on the leaf underside',
+      'Premature leaf drop',
+    ],
+    biologicalControls: ['Moderate shade and balanced nutrition reduce disease pressure'],
+    chemicalProtocols: [
+      {
+        activeIngredient: 'Copper hydroxide / oxychloride',
+        fracIracGroup: 'FRAC M01 (Contact)',
+        phiDays: 'See label',
+        notes: 'Protectant before and early in the rainy season.',
+      },
+      {
+        activeIngredient: 'Cyproconazole',
+        fracIracGroup: 'FRAC 3 (DMI)',
+        phiDays: 'See label',
+        notes: 'Where infection is established.',
+      },
+    ],
+    culturalPractices: [
+      'Plant rust-resistant varieties',
+      'Prune to open the canopy',
+      'Fertilise in balance with crop load',
+    ],
+  },
+  {
+    slug: 'citrus-greening',
+    title: 'Citrus — Greening (Huanglongbing)',
+    hostCrop: 'Citrus',
+    scientificName: 'Candidatus Liberibacter asiaticus',
+    pathogenType: 'Bacterial / Pest',
+    severityRisk: 'Critical',
+    summary:
+      'An incurable bacterial disease spread by citrus psyllids. Infected trees decline and produce small, bitter, lopsided fruit.',
+    optimalConditions: 'Psyllid feeding on new flush; infected budwood.',
+    symptomsChecklist: [
+      'Blotchy, asymmetric yellow mottle across the leaf midrib',
+      'Yellow shoots with corky veins',
+      'Small, lopsided fruit that stays green at the base',
+    ],
+    biologicalControls: ['Tamarixia radiata parasitoid wasps against the Asian citrus psyllid'],
+    chemicalProtocols: [
+      {
+        activeIngredient: 'Imidacloprid / Thiamethoxam',
+        fracIracGroup: 'IRAC 4A',
+        phiDays: 'See label',
+        notes: 'Psyllid control on young flush, coordinated across groves.',
+      },
+    ],
+    culturalPractices: [
+      'Plant certified disease-free trees from screened nurseries',
+      'Remove infected trees promptly',
+      'Report suspected cases to plant protection services',
     ],
   },
 ];
