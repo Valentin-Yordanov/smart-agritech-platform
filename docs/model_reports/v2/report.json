@@ -1,0 +1,871 @@
+{
+ "classes": 266,
+ "temperature": 0.6666425466537476,
+ "ece_before": 0.0792744979262352,
+ "ece_after": 0.2699781358242035,
+ "threshold": 0.3,
+ "test_cross_source": {
+  "n": 18101,
+  "top1": 0.15905198607811724,
+  "precision_at_threshold": 0.16821247892074198,
+  "coverage_at_threshold": 0.9172973868847025
+ },
+ "test_in_source": {
+  "n": 17565,
+  "top1": 0.9304298320523768,
+  "precision_at_threshold": 0.9328801553752999,
+  "coverage_at_threshold": 0.9966410475377171
+ },
+ "test_official": {
+  "n": 447,
+  "top1": 0.4809843400447427,
+  "precision_at_threshold": 0.5111111111111111,
+  "coverage_at_threshold": 0.9060402684563759
+ },
+ "test_negatives": {
+  "n": 1447,
+  "top1": 0.9979267449896337,
+  "precision_at_threshold": 0.0,
+  "coverage_at_threshold": 0.00138217000691085
+ },
+ "test_field_top1": 0.503235082674335,
+ "val_lab_top1": 0.8753353604006439,
+ "classifier_onnx_mb": 17.407893,
+ "classifier_cpu_ms_1thread": 17.565952599979937,
+ "classifier_cpu_ms_4threads": 44.29788407996966,
+ "detector": {
+  "leaf": {
+   "images": 494,
+   "map50": 0.9422633923896161,
+   "map50_95": 0.673884204716155
+  },
+  "fruit": {
+   "images": 1727,
+   "map50": 0.7048799723806458,
+   "map50_95": 0.3976414501976439
+  },
+  "ear": {
+   "images": 683,
+   "map50": 0.907501523508392,
+   "map50_95": 0.5616487425963207
+  },
+  "pest": {
+   "images": 157,
+   "map50": 0.7392098690087103,
+   "map50_95": 0.46706338947619097
+  }
+ },
+ "detector_onnx_mb": 10.666361,
+ "detector_cpu_ms_1thread": 101.47542080001585,
+ "crops": [
+  "Apple",
+  "Apricot",
+  "Banana",
+  "Bean",
+  "Bitter Gourd",
+  "Blueberry",
+  "Bottle Gourd",
+  "Cashew",
+  "Cassava",
+  "Cauliflower",
+  "Cherry",
+  "Citrus",
+  "Coffee",
+  "Corn (Maize)",
+  "Cotton",
+  "Cowpea",
+  "Cucumber",
+  "Date Palm",
+  "Eggplant",
+  "Fig",
+  "Grape",
+  "Groundnut",
+  "Guava",
+  "Jujube",
+  "Lentil",
+  "Lettuce",
+  "Loquat",
+  "Mango",
+  "Onion",
+  "Papaya",
+  "Peach",
+  "Pear",
+  "Pepper",
+  "Persimmon",
+  "Plum",
+  "Pomegranate",
+  "Potato",
+  "Quince",
+  "Raspberry",
+  "Rice",
+  "Soybean",
+  "Squash",
+  "Strawberry",
+  "Sugarcane",
+  "Sunflower",
+  "Tea",
+  "Tomato",
+  "Walnut",
+  "Watermelon",
+  "Wheat"
+ ],
+ "parts": [
+  "bulb",
+  "ear",
+  "fruit",
+  "head",
+  "leaf",
+  "nut",
+  "panicle",
+  "plant",
+  "stem",
+  "tuber"
+ ],
+ "dropped_small_classes": {
+  "cauliflower_head___black_rot": 77,
+  "cherry_leaf___shot_hole": 109,
+  "citrus_fruit___black_spot": 19,
+  "citrus_fruit___canker": 78,
+  "citrus_fruit___greening": 15,
+  "citrus_fruit___scab": 9,
+  "citrus_leaf___anthracnose": 100,
+  "citrus_leaf___bacterial_blight": 105,
+  "citrus_leaf___leaf_curl_virus": 114,
+  "citrus_leaf___melanose": 13,
+  "citrus_leaf___spider_mites": 114,
+  "coffee_leaf___cercospora_leaf_spot": 104,
+  "coffee_leaf___healthy": 16,
+  "cotton_leaf___variegation": 116,
+  "eggplant_fruit___phomopsis_blight": 146,
+  "eggplant_leaf___white_mold": 63,
+  "eggplant_leaf___wilt": 54,
+  "fig_leaf___rust": 125,
+  "grape_leaf___bacterial_leaf_spot": 100,
+  "grape_leaf___erineum_mite": 125,
+  "groundnut_leaf___rosette_virus": 95,
+  "groundnut_leaf___rust": 117,
+  "guava_fruit___scab": 118,
+  "lettuce_leaf___mosaic_virus": 128,
+  "loquat_leaf___healthy": 129,
+  "maize_leaf___holcus_leaf_spot": 108,
+  "maize_leaf___southern_leaf_blight": 82,
+  "okra_leaf___alternaria_leaf_spot": 72,
+  "okra_leaf___cercospora_leaf_spot": 46,
+  "okra_leaf___downy_mildew": 49,
+  "okra_leaf___healthy": 50,
+  "okra_leaf___leaf_curl_virus": 31,
+  "okra_leaf___phyllosticta_leaf_spot": 45,
+  "onion_leaf___stemphylium_blight": 90,
+  "pear_leaf___fire_blight": 95,
+  "pepper_leaf___mites_thrips": 107,
+  "pepper_leaf___nutrient_deficiency": 102,
+  "pepper_leaf___powdery_mildew": 101,
+  "potato_tuber___black_scurf": 49,
+  "potato_tuber___brown_rot": 105,
+  "potato_tuber___common_scab": 59,
+  "potato_tuber___pink_rot": 56,
+  "rice_leaf___narrow_brown_spot": 117,
+  "soybean_leaf___vein_necrosis": 98,
+  "tomato_fruit___blossom_end_rot": 114,
+  "tomato_fruit___damaged": 27,
+  "tomato_fruit___sunscald": 49,
+  "tomato_leaf___fusarium_wilt": 75,
+  "tomato_leaf___leaf_miner": 144,
+  "walnut_leaf___erineum_mite": 98
+ },
+ "weak_classes": [
+  "banana_leaf___healthy",
+  "bean_leaf___healthy",
+  "citrus_leaf___healthy",
+  "eggplant_leaf___healthy",
+  "citrus_leaf___canker",
+  "cauliflower_leaf___healthy",
+  "cauliflower_leaf___black_rot",
+  "bean_leaf___rust",
+  "eggplant_leaf___mosaic_virus",
+  "maize_leaf___curvularia_leaf_spot",
+  "rice_leaf___blast",
+  "tomato_leaf___verticillium_wilt",
+  "rice_leaf___tungro",
+  "rice_leaf___healthy",
+  "rice_leaf___bacterial_leaf_blight",
+  "apple_leaf___brown_spot",
+  "tomato_leaf___bacterial_spot",
+  "apple_leaf___alternaria_leaf_spot",
+  "maize_leaf___gray_leaf_spot",
+  "apple_leaf___healthy",
+  "onion_leaf___healthy",
+  "rice_leaf___brown_spot",
+  "tea_leaf___healthy",
+  "tea_leaf___helopeltis",
+  "potato_leaf___healthy",
+  "cherry_leaf___healthy",
+  "rice_leaf___leaf_scald",
+  "rice_leaf___hispa",
+  "soybean_leaf___septoria_brown_spot",
+  "tomato_leaf___spider_mites",
+  "tomato_leaf___early_blight",
+  "potato_leaf___late_blight",
+  "tomato_leaf___yellow_leaf_curl_virus",
+  "tomato_leaf___leaf_mold",
+  "grape_leaf___black_rot",
+  "tomato_leaf___healthy",
+  "soybean_leaf___healthy",
+  "tomato_leaf___septoria_leaf_spot",
+  "apple_leaf___scab",
+  "maize_leaf___fall_armyworm",
+  "maize_leaf___northern_leaf_blight",
+  "pepper_leaf___healthy",
+  "tomato_leaf___late_blight",
+  "grape_leaf___healthy",
+  "maize_leaf___common_rust",
+  "pepper_leaf___bacterial_spot",
+  "lettuce_leaf___bacterial_leaf_spot",
+  "lettuce_leaf___downy_mildew",
+  "apple_leaf___mosaic",
+  "lettuce_leaf___powdery_mildew",
+  "apple_leaf___rust",
+  "tomato_leaf___mosaic_virus",
+  "soybean_leaf___frogeye_leaf_spot",
+  "guava_leaf___dot",
+  "soybean_leaf___semilooper",
+  "sugarcane_leaf___brown_rust",
+  "wheat_leaf___healthy",
+  "sugarcane_leaf___pokkah_boeng"
+ ],
+ "top_confusions": [
+  "eggplant_leaf___healthy -> eggplant_leaf___cercospora_leaf_spot (732)",
+  "cauliflower_leaf___black_rot -> cauliflower_leaf___downy_mildew (546)",
+  "tomato_leaf___bacterial_spot -> tomato_leaf___spotted_wilt_virus (530)",
+  "rice_leaf___blast -> rice_leaf___stripe_virus (520)",
+  "cauliflower_leaf___healthy -> cauliflower_leaf___downy_mildew (493)",
+  "rice_leaf___healthy -> rice_leaf___stripe_virus (465)",
+  "tomato_leaf___healthy -> tomato_leaf___bacterial_wilt (450)",
+  "onion_leaf___healthy -> onion_leaf___iris_yellow_spot_virus (416)",
+  "tomato_leaf___yellow_leaf_curl_virus -> tomato_leaf___mosaic_virus (388)",
+  "tea_leaf___helopeltis -> tea_leaf___red_rust (383)",
+  "bean_leaf___healthy -> cowpea_leaf___healthy (339)",
+  "eggplant_leaf___mosaic_virus -> eggplant_leaf___cercospora_leaf_spot (336)",
+  "tea_leaf___healthy -> tea_leaf___red_rust (313)",
+  "bean_leaf___rust -> bean_leaf___mosaic_virus (278)",
+  "apple_leaf___healthy -> apple_leaf___rust (260)",
+  "potato_leaf___late_blight -> potato_leaf___viral_disease (249)",
+  "apple_leaf___alternaria_leaf_spot -> apple_leaf___grey_spot (247)",
+  "grape_leaf___healthy -> grape_leaf___anthracnose (227)",
+  "rice_leaf___tungro -> rice_leaf___stripe_virus (198)",
+  "rice_leaf___brown_spot -> rice_leaf___blast (192)",
+  "potato_leaf___healthy -> potato_leaf___viral_disease (191)",
+  "bean_leaf___rust -> cowpea_leaf___septoria_leaf_spot (185)",
+  "tomato_leaf___spider_mites -> tomato_leaf___bacterial_wilt (184)",
+  "tomato_leaf___septoria_leaf_spot -> tomato_leaf___bacterial_spot (182)",
+  "eggplant_leaf___mosaic_virus -> eggplant_leaf___verticillium_wilt (171)"
+ ],
+ "source_status": {
+  "paddy_doctor": {
+   "status": "OK",
+   "images": 10407,
+   "classes": 10,
+   "note": "restored from Drive"
+  },
+  "rice_india": {
+   "status": "OK",
+   "images": 5932,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "rice_bd": {
+   "status": "OK",
+   "images": 2472,
+   "classes": 6,
+   "note": "restored from Drive"
+  },
+  "rice_bact_fungal": {
+   "status": "OK",
+   "images": 1701,
+   "classes": 8,
+   "note": "restored from Drive"
+  },
+  "dhan_shomadhan": {
+   "status": "OK",
+   "images": 1106,
+   "classes": 5,
+   "note": "restored from Drive"
+  },
+  "rice_leaf_2": {
+   "status": "OK",
+   "images": 1914,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "wheat_jic": {
+   "status": "OK",
+   "images": 999,
+   "classes": 5,
+   "note": "restored from Drive"
+  },
+  "maize_tz": {
+   "status": "OK",
+   "images": 9356,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "ccmt": {
+   "status": "OK",
+   "images": 21609,
+   "classes": 19,
+   "note": "restored from Drive"
+  },
+  "tom2024": {
+   "status": "OK",
+   "images": 8680,
+   "classes": 20,
+   "note": "restored from Drive"
+  },
+  "corn_leaf": {
+   "status": "OK",
+   "images": 400,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "sugarcane": {
+   "status": "OK",
+   "images": 6405,
+   "classes": 10,
+   "note": "restored from Drive"
+  },
+  "cotton_bd2": {
+   "status": "OK",
+   "images": 2137,
+   "classes": 7,
+   "note": "restored from Drive"
+  },
+  "soya_mh": {
+   "status": "OK",
+   "images": 2782,
+   "classes": 6,
+   "note": "restored from Drive"
+  },
+  "soybean_leaf": {
+   "status": "OK",
+   "images": 936,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "potato_blight": {
+   "status": "OK",
+   "images": 12000,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "potato_leaf": {
+   "status": "OK",
+   "images": 1080,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "potato_tuber": {
+   "status": "OK",
+   "images": 3771,
+   "classes": 8,
+   "note": "restored from Drive"
+  },
+  "tomato_quality": {
+   "status": "OK",
+   "images": 1986,
+   "classes": 2,
+   "note": "restored from Drive"
+  },
+  "plantcity": {
+   "status": "OK",
+   "images": 8859,
+   "classes": 41,
+   "note": "restored from Drive"
+  },
+  "chili_cold": {
+   "status": "OK",
+   "images": 532,
+   "classes": 5,
+   "note": "restored from Drive"
+  },
+  "chili_virus": {
+   "status": "OK",
+   "images": 2460,
+   "classes": 2,
+   "note": "restored from Drive"
+  },
+  "vegnet_quality": {
+   "status": "OK",
+   "images": 2717,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "eggplant": {
+   "status": "OK",
+   "images": 4089,
+   "classes": 6,
+   "note": "restored from Drive"
+  },
+  "brinjal_fruit": {
+   "status": "OK",
+   "images": 1823,
+   "classes": 5,
+   "note": "restored from Drive"
+  },
+  "veg_leaf_bd": {
+   "status": "OK",
+   "images": 12786,
+   "classes": 21,
+   "note": "restored from Drive"
+  },
+  "watermelon": {
+   "status": "OK",
+   "images": 1155,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "vegnet_cauliflower": {
+   "status": "OK",
+   "images": 656,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "cauliflower_leaf": {
+   "status": "OK",
+   "images": 2661,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "onion_cold": {
+   "status": "OK",
+   "images": 815,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "ibeans": {
+   "status": "OK",
+   "images": 1295,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "bean_tz": {
+   "status": "OK",
+   "images": 12000,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "bean_cowpea": {
+   "status": "OK",
+   "images": 3957,
+   "classes": 7,
+   "note": "restored from Drive"
+  },
+  "appleleaf9": {
+   "status": "OK",
+   "images": 13172,
+   "classes": 9,
+   "note": "restored from Drive"
+  },
+  "apple_leaf": {
+   "status": "OK",
+   "images": 5612,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "gvlid": {
+   "status": "OK",
+   "images": 3477,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "grape_leaf": {
+   "status": "OK",
+   "images": 2726,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "lemon_leaf": {
+   "status": "OK",
+   "images": 1168,
+   "classes": 8,
+   "note": "restored from Drive"
+  },
+  "citrus_fruit_leaf": {
+   "status": "OK",
+   "images": 759,
+   "classes": 10,
+   "note": "restored from Drive"
+  },
+  "banana_tz": {
+   "status": "OK",
+   "images": 12000,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "banana_lsd": {
+   "status": "OK",
+   "images": 937,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "banana_leaf": {
+   "status": "OK",
+   "images": 1288,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "coffee_arabica": {
+   "status": "OK",
+   "images": 20000,
+   "classes": 5,
+   "note": "restored from Drive"
+  },
+  "tea_leafbd": {
+   "status": "OK",
+   "images": 5278,
+   "classes": 7,
+   "note": "restored from Drive"
+  },
+  "tea_bd2": {
+   "status": "OK",
+   "images": 1945,
+   "classes": 3,
+   "note": "restored from Drive"
+  },
+  "groundnut": {
+   "status": "OK",
+   "images": 1720,
+   "classes": 5,
+   "note": "restored from Drive"
+  },
+  "guava": {
+   "status": "OK",
+   "images": 3049,
+   "classes": 9,
+   "note": "restored from Drive"
+  },
+  "papaya": {
+   "status": "OK",
+   "images": 1400,
+   "classes": 6,
+   "note": "restored from Drive"
+  },
+  "pomegranate": {
+   "status": "OK",
+   "images": 5099,
+   "classes": 5,
+   "note": "restored from Drive"
+  },
+  "okra": {
+   "status": "OK",
+   "images": 1495,
+   "classes": 6,
+   "note": "restored from Drive"
+  },
+  "sunflower": {
+   "status": "OK",
+   "images": 2358,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "lentil": {
+   "status": "OK",
+   "images": 5349,
+   "classes": 4,
+   "note": "restored from Drive"
+  },
+  "fresh_rotten": {
+   "status": "OK",
+   "images": 3200,
+   "classes": 16,
+   "note": "restored from Drive"
+  },
+  "fruitnet": {
+   "status": "OK",
+   "images": 16512,
+   "classes": 10,
+   "note": "restored from Drive"
+  },
+  "fruits360": {
+   "status": "OK",
+   "images": 21976,
+   "classes": 30,
+   "note": "restored from Drive"
+  },
+  "plantvillage": {
+   "status": "OK",
+   "images": 54305,
+   "classes": 38,
+   "note": "restored from Drive"
+  },
+  "plantdoc": {
+   "status": "OK",
+   "images": 8836,
+   "classes": 29,
+   "note": "restored from Drive"
+  },
+  "roboflow_lettuce": {
+   "status": "OK",
+   "images": 8035,
+   "classes": 7,
+   "note": "restored from Drive"
+  },
+  "roboflow_olive": {
+   "status": "FAILED",
+   "images": 0,
+   "classes": 0,
+   "note": "RuntimeError('No downloadable version for baraah/olive-s-leaf-diseases-tvce5')"
+  },
+  "neg_openimages_objects": {
+   "status": "OK",
+   "images": 6000,
+   "classes": 1,
+   "note": "restored from Drive"
+  },
+  "neg_openimages_flora": {
+   "status": "OK",
+   "images": 3000,
+   "classes": 1,
+   "note": "restored from Drive"
+  },
+  "neg_polyhaven_textures": {
+   "status": "OK",
+   "images": 2376,
+   "classes": 1,
+   "note": "restored from Drive"
+  },
+  "neg_deepweeds": {
+   "status": "OK",
+   "images": 6000,
+   "classes": 1,
+   "note": "restored from Drive"
+  },
+  "neg_pv_background": {
+   "status": "OK",
+   "images": 1143,
+   "classes": 1,
+   "note": "restored from Drive"
+  },
+  "neg_trees": {
+   "status": "OK",
+   "images": 1367,
+   "classes": 1,
+   "note": "restored from Drive"
+  },
+  "neg_hands": {
+   "status": "OK",
+   "images": 914,
+   "classes": 1,
+   "note": "restored from Drive"
+  },
+  "det_plantdoc": {
+   "status": "OK",
+   "images": 2574,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_tea": {
+   "status": "OK",
+   "images": 2500,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_truss_tomato": {
+   "status": "OK",
+   "images": 2500,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_coffee": {
+   "status": "OK",
+   "images": 2500,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_strawberry": {
+   "status": "OK",
+   "images": 1399,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_grape": {
+   "status": "OK",
+   "images": 2500,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_raspberry": {
+   "status": "OK",
+   "images": 1788,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_litchi": {
+   "status": "OK",
+   "images": 1807,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_banana": {
+   "status": "OK",
+   "images": 2179,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_date": {
+   "status": "OK",
+   "images": 2500,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_wheat_head": {
+   "status": "OK",
+   "images": 2500,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_sdau_wheat": {
+   "status": "OK",
+   "images": 2500,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_rice_panicle": {
+   "status": "OK",
+   "images": 2193,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_insects": {
+   "status": "OK",
+   "images": 995,
+   "classes": 0,
+   "note": "restored from Drive"
+  },
+  "det_pests": {
+   "status": "OK",
+   "images": 711,
+   "classes": 0,
+   "note": "restored from Drive"
+  }
+ },
+ "test_by_crop": {
+  "apple": 0.43451357854932965,
+  "apricot": 1.0,
+  "banana": 0.7925170068027211,
+  "bean": 0.3172666259914582,
+  "bitter_gourd": 1.0,
+  "blueberry": 0.8145161290322581,
+  "bottle_gourd": 1.0,
+  "cashew": 0.9614604462474645,
+  "cassava": 0.9401785714285714,
+  "cauliflower": 0.19866071428571427,
+  "cherry": 0.3389830508474576,
+  "citrus": 0.7028639618138425,
+  "coffee": 0.99,
+  "cotton": 0.976897689768977,
+  "cowpea": 1.0,
+  "cucumber": 1.0,
+  "eggplant": 0.2288353001539251,
+  "fig": 1.0,
+  "grape": 0.6022845275181724,
+  "groundnut": 1.0,
+  "guava": 0.9225352112676056,
+  "lentil": 0.844059405940594,
+  "lettuce": 0.6726998491704375,
+  "loquat": 1.0,
+  "maize": 0.645891472868217,
+  "onion": 0.31859756097560976,
+  "papaya": 0.9813953488372092,
+  "peach": 0.7865168539325843,
+  "pear": 1.0,
+  "pepper": 0.5193661971830986,
+  "persimmon": 1.0,
+  "pomegranate": 0.9878787878787879,
+  "potato": 0.46686746987951805,
+  "raspberry": 0.9166666666666666,
+  "rice": 0.19017763845350052,
+  "soybean": 0.4145141451414514,
+  "squash": 0.9090909090909091,
+  "strawberry": 0.9117647058823529,
+  "sugarcane": 0.9357142857142857,
+  "sunflower": 0.9740634005763689,
+  "tea": 0.38241172551632246,
+  "tomato": 0.24133273300315172,
+  "unknown": 0.9979267449896337,
+  "walnut": 0.9803921568627451,
+  "watermelon": 1.0,
+  "wheat": 0.8627450980392157
+ },
+ "threshold_table": [
+  {
+   "threshold": 0.3,
+   "precision": 0.9219088554382324,
+   "coverage": 0.9852520227432251
+  },
+  {
+   "threshold": 0.35,
+   "precision": 0.9263402223587036,
+   "coverage": 0.9777969717979431
+  },
+  {
+   "threshold": 0.4,
+   "precision": 0.9319701194763184,
+   "coverage": 0.9693965911865234
+  },
+  {
+   "threshold": 0.45,
+   "precision": 0.9367921352386475,
+   "coverage": 0.960888147354126
+  },
+  {
+   "threshold": 0.5,
+   "precision": 0.94281405210495,
+   "coverage": 0.9497056007385254
+  },
+  {
+   "threshold": 0.55,
+   "precision": 0.9496668577194214,
+   "coverage": 0.9363081455230713
+  },
+  {
+   "threshold": 0.6,
+   "precision": 0.9559236764907837,
+   "coverage": 0.9228296875953674
+  },
+  {
+   "threshold": 0.65,
+   "precision": 0.9620486497879028,
+   "coverage": 0.9080817103385925
+  },
+  {
+   "threshold": 0.7,
+   "precision": 0.9679731726646423,
+   "coverage": 0.8930906057357788
+  },
+  {
+   "threshold": 0.75,
+   "precision": 0.9724795818328857,
+   "coverage": 0.8774242401123047
+  },
+  {
+   "threshold": 0.8,
+   "precision": 0.9776841998100281,
+   "coverage": 0.8593809008598328
+  },
+  {
+   "threshold": 0.85,
+   "precision": 0.9834598898887634,
+   "coverage": 0.8361244797706604
+  },
+  {
+   "threshold": 0.9,
+   "precision": 0.9878932237625122,
+   "coverage": 0.805413007736206
+  },
+  {
+   "threshold": 0.95,
+   "precision": 0.9925544857978821,
+   "coverage": 0.7509588599205017
+  }
+ ]
+}

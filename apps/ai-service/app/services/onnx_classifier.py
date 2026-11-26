@@ -115,6 +115,13 @@ class MobileNetV4Classifier:
         tensor = np.expand_dims(chw, axis=0).astype(np.float32)
         return tensor
 
+    @classmethod
+    def _part_of(cls, meta: Dict[str, Any]) -> Optional[str]:
+        part = str(meta.get("plant_part") or "").strip().lower()
+        if part in ("none", "null"):
+            return None
+        return part or cls._part_from_name(meta.get("class_name", ""))
+
     @staticmethod
     def _part_from_name(class_name: str) -> Optional[str]:
         """v2 class names are `crop_part___condition`; v1 PlantVillage names carry no part (treated as leaf)."""
@@ -168,7 +175,7 @@ class MobileNetV4Classifier:
                     is_healthy=meta.get("is_healthy"),
                     severity=meta.get("severity"),
                     treatment=meta.get("treatment"),
-                    plant_part=meta.get("plant_part") or self._part_from_name(meta.get("class_name", "")),
+                    plant_part=self._part_of(meta),
                 )
             )
 

@@ -197,7 +197,7 @@ export async function runEdgeInference(
   }
 
   const part =
-    matchedClass.plant_part && matchedClass.plant_part !== 'leaf'
+    matchedClass.plant_part && !['leaf', 'none'].includes(matchedClass.plant_part)
       ? ` (${matchedClass.plant_part})`
       : '';
 

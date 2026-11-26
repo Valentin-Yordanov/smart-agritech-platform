@@ -1,0 +1,158 @@
+# AgriTech v2 model report
+
+- Classes: 266 (50 crops, parts: bulb, ear, fruit, head, leaf, nut, panicle, plant, stem, tuber)
+- Real-world (field) test top-1: 0.503
+- Test cross_source: n=18101, top-1=0.159, coverage at threshold=0.917, precision at threshold=0.168
+- Test in_source: n=17565, top-1=0.930, coverage at threshold=0.997, precision at threshold=0.933
+- Test official: n=447, top-1=0.481, coverage at threshold=0.906, precision at threshold=0.511
+- Test negatives: n=1447, top-1=0.998, coverage at threshold=0.001, precision at threshold=0.0
+- Lab validation top-1: 0.8753353604006439
+- ECE before/after temperature scaling: 0.079 / 0.270 (T=0.67)
+- Recommended CLASSIFIER_CONF_THRESHOLD: 0.3 (validation precision >= 0.9)
+- Classifier ONNX: 17.4 MB, CPU 17.6 ms (1 thread), 44.3 ms (4 threads)
+- Detector ONNX: 10.7 MB, CPU 101.5 ms (1 thread), classes {'0': 'leaf', '1': 'fruit', '2': 'ear', '3': 'pest'}
+- Detector per-class test: {"leaf": {"images": 494, "map50": 0.9422633923896161, "map50_95": 0.673884204716155}, "fruit": {"images": 1727, "map50": 0.7048799723806458, "map50_95": 0.3976414501976439}, "ear": {"images": 683, "map50": 0.907501523508392, "map50_95": 0.5616487425963207}, "pest": {"images": 157, "map50": 0.7392098690087103, "map50_95": 0.46706338947619097}}
+
+## Weak classes
+- banana_leaf___healthy
+- bean_leaf___healthy
+- citrus_leaf___healthy
+- eggplant_leaf___healthy
+- citrus_leaf___canker
+- cauliflower_leaf___healthy
+- cauliflower_leaf___black_rot
+- bean_leaf___rust
+- eggplant_leaf___mosaic_virus
+- maize_leaf___curvularia_leaf_spot
+- rice_leaf___blast
+- tomato_leaf___verticillium_wilt
+- rice_leaf___tungro
+- rice_leaf___healthy
+- rice_leaf___bacterial_leaf_blight
+- apple_leaf___brown_spot
+- tomato_leaf___bacterial_spot
+- apple_leaf___alternaria_leaf_spot
+- maize_leaf___gray_leaf_spot
+- apple_leaf___healthy
+- onion_leaf___healthy
+- rice_leaf___brown_spot
+- tea_leaf___healthy
+- tea_leaf___helopeltis
+- potato_leaf___healthy
+- cherry_leaf___healthy
+- rice_leaf___leaf_scald
+- rice_leaf___hispa
+- soybean_leaf___septoria_brown_spot
+- tomato_leaf___spider_mites
+- tomato_leaf___early_blight
+- potato_leaf___late_blight
+- tomato_leaf___yellow_leaf_curl_virus
+- tomato_leaf___leaf_mold
+- grape_leaf___black_rot
+- tomato_leaf___healthy
+- soybean_leaf___healthy
+- tomato_leaf___septoria_leaf_spot
+- apple_leaf___scab
+- maize_leaf___fall_armyworm
+- maize_leaf___northern_leaf_blight
+- pepper_leaf___healthy
+- tomato_leaf___late_blight
+- grape_leaf___healthy
+- maize_leaf___common_rust
+- pepper_leaf___bacterial_spot
+- lettuce_leaf___bacterial_leaf_spot
+- lettuce_leaf___downy_mildew
+- apple_leaf___mosaic
+- lettuce_leaf___powdery_mildew
+- apple_leaf___rust
+- tomato_leaf___mosaic_virus
+- soybean_leaf___frogeye_leaf_spot
+- guava_leaf___dot
+- soybean_leaf___semilooper
+- sugarcane_leaf___brown_rust
+- wheat_leaf___healthy
+- sugarcane_leaf___pokkah_boeng
+
+## Top confusions
+- eggplant_leaf___healthy -> eggplant_leaf___cercospora_leaf_spot (732)
+- cauliflower_leaf___black_rot -> cauliflower_leaf___downy_mildew (546)
+- tomato_leaf___bacterial_spot -> tomato_leaf___spotted_wilt_virus (530)
+- rice_leaf___blast -> rice_leaf___stripe_virus (520)
+- cauliflower_leaf___healthy -> cauliflower_leaf___downy_mildew (493)
+- rice_leaf___healthy -> rice_leaf___stripe_virus (465)
+- tomato_leaf___healthy -> tomato_leaf___bacterial_wilt (450)
+- onion_leaf___healthy -> onion_leaf___iris_yellow_spot_virus (416)
+- tomato_leaf___yellow_leaf_curl_virus -> tomato_leaf___mosaic_virus (388)
+- tea_leaf___helopeltis -> tea_leaf___red_rust (383)
+- bean_leaf___healthy -> cowpea_leaf___healthy (339)
+- eggplant_leaf___mosaic_virus -> eggplant_leaf___cercospora_leaf_spot (336)
+- tea_leaf___healthy -> tea_leaf___red_rust (313)
+- bean_leaf___rust -> bean_leaf___mosaic_virus (278)
+- apple_leaf___healthy -> apple_leaf___rust (260)
+- potato_leaf___late_blight -> potato_leaf___viral_disease (249)
+- apple_leaf___alternaria_leaf_spot -> apple_leaf___grey_spot (247)
+- grape_leaf___healthy -> grape_leaf___anthracnose (227)
+- rice_leaf___tungro -> rice_leaf___stripe_virus (198)
+- rice_leaf___brown_spot -> rice_leaf___blast (192)
+- potato_leaf___healthy -> potato_leaf___viral_disease (191)
+- bean_leaf___rust -> cowpea_leaf___septoria_leaf_spot (185)
+- tomato_leaf___spider_mites -> tomato_leaf___bacterial_wilt (184)
+- tomato_leaf___septoria_leaf_spot -> tomato_leaf___bacterial_spot (182)
+- eggplant_leaf___mosaic_virus -> eggplant_leaf___verticillium_wilt (171)
+
+## Dropped (too few images)
+- cauliflower_head___black_rot: 77
+- cherry_leaf___shot_hole: 109
+- citrus_fruit___black_spot: 19
+- citrus_fruit___canker: 78
+- citrus_fruit___greening: 15
+- citrus_fruit___scab: 9
+- citrus_leaf___anthracnose: 100
+- citrus_leaf___bacterial_blight: 105
+- citrus_leaf___leaf_curl_virus: 114
+- citrus_leaf___melanose: 13
+- citrus_leaf___spider_mites: 114
+- coffee_leaf___cercospora_leaf_spot: 104
+- coffee_leaf___healthy: 16
+- cotton_leaf___variegation: 116
+- eggplant_fruit___phomopsis_blight: 146
+- eggplant_leaf___white_mold: 63
+- eggplant_leaf___wilt: 54
+- fig_leaf___rust: 125
+- grape_leaf___bacterial_leaf_spot: 100
+- grape_leaf___erineum_mite: 125
+- groundnut_leaf___rosette_virus: 95
+- groundnut_leaf___rust: 117
+- guava_fruit___scab: 118
+- lettuce_leaf___mosaic_virus: 128
+- loquat_leaf___healthy: 129
+- maize_leaf___holcus_leaf_spot: 108
+- maize_leaf___southern_leaf_blight: 82
+- okra_leaf___alternaria_leaf_spot: 72
+- okra_leaf___cercospora_leaf_spot: 46
+- okra_leaf___downy_mildew: 49
+- okra_leaf___healthy: 50
+- okra_leaf___leaf_curl_virus: 31
+- okra_leaf___phyllosticta_leaf_spot: 45
+- onion_leaf___stemphylium_blight: 90
+- pear_leaf___fire_blight: 95
+- pepper_leaf___mites_thrips: 107
+- pepper_leaf___nutrient_deficiency: 102
+- pepper_leaf___powdery_mildew: 101
+- potato_tuber___black_scurf: 49
+- potato_tuber___brown_rot: 105
+- potato_tuber___common_scab: 59
+- potato_tuber___pink_rot: 56
+- rice_leaf___narrow_brown_spot: 117
+- soybean_leaf___vein_necrosis: 98
+- tomato_fruit___blossom_end_rot: 114
+- tomato_fruit___damaged: 27
+- tomato_fruit___sunscald: 49
+- tomato_leaf___fusarium_wilt: 75
+- tomato_leaf___leaf_miner: 144
+- walnut_leaf___erineum_mite: 98
+
+## Install
+- yolo11n_leaf.onnx, mobilenetv4_plant_disease.onnx, classes.json -> apps/ai-service/app/models/
+- mobilenetv4_plant_disease.onnx, classes.json -> apps/frontend/public/models/
+- Set CLASSIFIER_CONF_THRESHOLD (config.py) and CONFIDENCE_THRESHOLD (edge-inference.ts) to 0.3

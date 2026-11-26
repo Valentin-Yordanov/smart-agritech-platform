@@ -1,358 +1,2670 @@
 {
   "detection_classes": {
-    "0": "leaf"
+    "0": "leaf",
+    "1": "fruit",
+    "2": "ear",
+    "3": "pest"
   },
   "classification_classes": [
     {
       "id": 0,
-      "class_name": "Apple___Apple_scab",
-      "species": "Apple",
-      "disease": "Apple Scab",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Spray captan or myclobutanil at green tip through petal fall. Clear leaf litter in autumn."
-    },
-    {
-      "id": 1,
-      "class_name": "Apple___Black_rot",
-      "species": "Apple",
-      "disease": "Black Rot",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
-    },
-    {
-      "id": 2,
-      "class_name": "Apple___Cedar_apple_rust",
-      "species": "Apple",
-      "disease": "Cedar Apple Rust",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Deploy rust-tolerant hybrids. Apply preventative azoxystrobin/propiconazole upon early pustule emergence."
-    },
-    {
-      "id": 3,
-      "class_name": "Apple___healthy",
+      "class_name": "apple_fruit___healthy",
       "species": "Apple",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 1,
+      "class_name": "apple_fruit___rotten",
+      "species": "Apple",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 2,
+      "class_name": "apple_leaf___alternaria_leaf_spot",
+      "species": "Apple",
+      "disease": "Alternaria Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 3,
+      "class_name": "apple_leaf___black_rot",
+      "species": "Apple",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "leaf"
     },
     {
       "id": 4,
-      "class_name": "Blueberry___healthy",
+      "class_name": "apple_leaf___brown_spot",
+      "species": "Apple",
+      "disease": "Brown Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 5,
+      "class_name": "apple_leaf___frogeye_leaf_spot",
+      "species": "Apple",
+      "disease": "Frogeye Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 6,
+      "class_name": "apple_leaf___grey_spot",
+      "species": "Apple",
+      "disease": "Grey Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 7,
+      "class_name": "apple_leaf___healthy",
+      "species": "Apple",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 8,
+      "class_name": "apple_leaf___mosaic",
+      "species": "Apple",
+      "disease": "Mosaic",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control aphid/whitefly vectors and disinfect tools.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 9,
+      "class_name": "apple_leaf___powdery_mildew",
+      "species": "Apple",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 10,
+      "class_name": "apple_leaf___rust",
+      "species": "Apple",
+      "disease": "Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 11,
+      "class_name": "apple_leaf___scab",
+      "species": "Apple",
+      "disease": "Scab",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply captan or a DMI fungicide from bud break; clear fallen leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 12,
+      "class_name": "apricot_fruit___healthy",
+      "species": "Apricot",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 13,
+      "class_name": "apricot_leaf___healthy",
+      "species": "Apricot",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 14,
+      "class_name": "apricot_leaf___shot_hole",
+      "species": "Apricot",
+      "disease": "Shot Hole",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Prune infected twigs, apply copper at leaf fall and bud swell, and avoid overhead irrigation.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 15,
+      "class_name": "banana_fruit___healthy",
+      "species": "Banana",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 16,
+      "class_name": "banana_fruit___rotten",
+      "species": "Banana",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 17,
+      "class_name": "banana_leaf___cordana_leaf_spot",
+      "species": "Banana",
+      "disease": "Cordana Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 18,
+      "class_name": "banana_leaf___fusarium_wilt",
+      "species": "Banana",
+      "disease": "Fusarium Wilt",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No chemical cure. Remove and destroy infected plants, quarantine the area, use resistant cultivars.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 19,
+      "class_name": "banana_leaf___healthy",
+      "species": "Banana",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 20,
+      "class_name": "banana_leaf___pestalotiopsis_leaf_spot",
+      "species": "Banana",
+      "disease": "Pestalotiopsis Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 21,
+      "class_name": "banana_leaf___sigatoka",
+      "species": "Banana",
+      "disease": "Sigatoka",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and burn spotted leaves, keep drainage and spacing good, and rotate mancozeb with a triazole or strobilurin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 22,
+      "class_name": "banana_leaf___xanthomonas_wilt",
+      "species": "Banana",
+      "disease": "Xanthomonas Wilt",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove infected plants, avoid waterlogging, rotate crops and use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 23,
+      "class_name": "bean_leaf___angular_leaf_spot",
+      "species": "Bean",
+      "disease": "Angular Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 24,
+      "class_name": "bean_leaf___anthracnose",
+      "species": "Bean",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 25,
+      "class_name": "bean_leaf___healthy",
+      "species": "Bean",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 26,
+      "class_name": "bean_leaf___mosaic_virus",
+      "species": "Bean",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 27,
+      "class_name": "bean_leaf___rust",
+      "species": "Bean",
+      "disease": "Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 28,
+      "class_name": "bitter_gourd_leaf___downy_mildew",
+      "species": "Bitter Gourd",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 29,
+      "class_name": "bitter_gourd_leaf___fusarium_wilt",
+      "species": "Bitter Gourd",
+      "disease": "Fusarium Wilt",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove infected plants, avoid waterlogging, rotate crops and use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 30,
+      "class_name": "bitter_gourd_leaf___healthy",
+      "species": "Bitter Gourd",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 31,
+      "class_name": "bitter_gourd_leaf___mosaic_virus",
+      "species": "Bitter Gourd",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 32,
+      "class_name": "blueberry_fruit___healthy",
       "species": "Blueberry",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
     },
     {
-      "id": 5,
-      "class_name": "Cherry_(including_sour)___Powdery_mildew",
-      "species": "Cherry (Including Sour)",
-      "disease": "Powdery Mildew",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
-    },
-    {
-      "id": 6,
-      "class_name": "Cherry_(including_sour)___healthy",
-      "species": "Cherry (Including Sour)",
+      "id": 33,
+      "class_name": "blueberry_leaf___healthy",
+      "species": "Blueberry",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
     },
     {
-      "id": 7,
-      "class_name": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
-      "species": "Corn (Maize)",
-      "disease": "Cercospora Leaf Spot Gray Leaf Spot",
+      "id": 34,
+      "class_name": "bottle_gourd_leaf___anthracnose",
+      "species": "Bottle Gourd",
+      "disease": "Anthracnose",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
     },
     {
-      "id": 8,
-      "class_name": "Corn_(maize)___Common_rust_",
-      "species": "Corn (Maize)",
-      "disease": "Common Rust ",
+      "id": 35,
+      "class_name": "bottle_gourd_leaf___downy_mildew",
+      "species": "Bottle Gourd",
+      "disease": "Downy Mildew",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Deploy rust-tolerant hybrids. Apply preventative azoxystrobin/propiconazole upon early pustule emergence."
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
     },
     {
-      "id": 9,
-      "class_name": "Corn_(maize)___Northern_Leaf_Blight",
+      "id": 36,
+      "class_name": "bottle_gourd_leaf___healthy",
+      "species": "Bottle Gourd",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 37,
+      "class_name": "cashew_leaf___anthracnose",
+      "species": "Cashew",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 38,
+      "class_name": "cashew_leaf___healthy",
+      "species": "Cashew",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 39,
+      "class_name": "cashew_leaf___leaf_miner",
+      "species": "Cashew",
+      "disease": "Leaf Miner",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove mined leaves, use yellow sticky traps and spinosad if needed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 40,
+      "class_name": "cashew_leaf___red_rust",
+      "species": "Cashew",
+      "disease": "Red Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 41,
+      "class_name": "cashew_stem___gummosis",
+      "species": "Cashew",
+      "disease": "Gummosis",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Scrape out the gummy lesion, paint with Bordeaux paste and avoid trunk wounds and waterlogging.",
+      "plant_part": "stem"
+    },
+    {
+      "id": 42,
+      "class_name": "cassava_leaf___bacterial_blight",
+      "species": "Cassava",
+      "disease": "Bacterial Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 43,
+      "class_name": "cassava_leaf___brown_leaf_spot",
+      "species": "Cassava",
+      "disease": "Brown Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 44,
+      "class_name": "cassava_leaf___green_mite",
+      "species": "Cassava",
+      "disease": "Green Mite",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Spray water or horticultural oil on leaf undersides, release predatory mites, use a miticide if severe.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 45,
+      "class_name": "cassava_leaf___healthy",
+      "species": "Cassava",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 46,
+      "class_name": "cassava_leaf___mosaic_disease",
+      "species": "Cassava",
+      "disease": "Mosaic Disease",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "Use virus-free cuttings, rogue infected plants early and control whiteflies.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 47,
+      "class_name": "cauliflower_head___bacterial_spot_rot",
+      "species": "Cauliflower",
+      "disease": "Bacterial Spot Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "head"
+    },
+    {
+      "id": 48,
+      "class_name": "cauliflower_head___downy_mildew",
+      "species": "Cauliflower",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "head"
+    },
+    {
+      "id": 49,
+      "class_name": "cauliflower_head___healthy",
+      "species": "Cauliflower",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "head"
+    },
+    {
+      "id": 50,
+      "class_name": "cauliflower_leaf___black_rot",
+      "species": "Cauliflower",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 51,
+      "class_name": "cauliflower_leaf___downy_mildew",
+      "species": "Cauliflower",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 52,
+      "class_name": "cauliflower_leaf___healthy",
+      "species": "Cauliflower",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 53,
+      "class_name": "cauliflower_leaf___insect_damage",
+      "species": "Cauliflower",
+      "disease": "Insect Damage",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Inspect the plants for the pest, remove damaged leaves and use neem or a targeted insecticide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 54,
+      "class_name": "cherry_fruit___healthy",
+      "species": "Cherry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 55,
+      "class_name": "cherry_leaf___brown_spot",
+      "species": "Cherry",
+      "disease": "Brown Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 56,
+      "class_name": "cherry_leaf___healthy",
+      "species": "Cherry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 57,
+      "class_name": "cherry_leaf___leaf_scorch",
+      "species": "Cherry",
+      "disease": "Leaf Scorch",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, avoid overhead watering and apply captan or a copper fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 58,
+      "class_name": "cherry_leaf___powdery_mildew",
+      "species": "Cherry",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 59,
+      "class_name": "cherry_leaf___purple_leaf_spot",
+      "species": "Cherry",
+      "disease": "Purple Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 60,
+      "class_name": "citrus_fruit___healthy",
+      "species": "Citrus",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 61,
+      "class_name": "citrus_fruit___rotten",
+      "species": "Citrus",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 62,
+      "class_name": "citrus_leaf___black_spot",
+      "species": "Citrus",
+      "disease": "Black Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 63,
+      "class_name": "citrus_leaf___canker",
+      "species": "Citrus",
+      "disease": "Canker",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Prune infected parts in dry weather, disinfect tools and apply copper sprays.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 64,
+      "class_name": "citrus_leaf___greening",
+      "species": "Citrus",
+      "disease": "Greening",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Remove infected trees, control Asian citrus psyllid, plant certified disease-free stock.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 65,
+      "class_name": "citrus_leaf___healthy",
+      "species": "Citrus",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 66,
+      "class_name": "citrus_leaf___nutrient_deficiency",
+      "species": "Citrus",
+      "disease": "Nutrient Deficiency",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Run a soil or leaf test and correct the deficient nutrient with balanced fertiliser.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 67,
+      "class_name": "citrus_leaf___sooty_mould",
+      "species": "Citrus",
+      "disease": "Sooty Mould",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Control the sap-sucking insects producing honeydew; wash leaves with mild soap.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 68,
+      "class_name": "coffee_leaf___leaf_miner",
+      "species": "Coffee",
+      "disease": "Leaf Miner",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove mined leaves, use yellow sticky traps and spinosad if needed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 69,
+      "class_name": "coffee_leaf___leaf_rust",
+      "species": "Coffee",
+      "disease": "Leaf Rust",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Spray copper or triazole fungicide before the rainy season; prune for airflow; plant resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 70,
+      "class_name": "coffee_leaf___phoma_leaf_spot",
+      "species": "Coffee",
+      "disease": "Phoma Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 71,
+      "class_name": "cotton_leaf___bacterial_blight",
+      "species": "Cotton",
+      "disease": "Bacterial Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 72,
+      "class_name": "cotton_leaf___healthy",
+      "species": "Cotton",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 73,
+      "class_name": "cotton_leaf___herbicide_damage",
+      "species": "Cotton",
+      "disease": "Herbicide Damage",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Avoid spray drift, rinse sprayers well and let the plant recover.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 74,
+      "class_name": "cotton_leaf___jassids",
+      "species": "Cotton",
+      "disease": "Jassids",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Use resistant varieties, yellow sticky traps and neem or imidacloprid if needed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 75,
+      "class_name": "cotton_leaf___leaf_curl_virus",
+      "species": "Cotton",
+      "disease": "Leaf Curl Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 76,
+      "class_name": "cotton_leaf___leaf_reddening",
+      "species": "Cotton",
+      "disease": "Leaf Reddening",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Usually stress or nutrient deficiency (magnesium or nitrogen): test the soil and correct it.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 77,
+      "class_name": "cowpea_leaf___bacterial_wilt",
+      "species": "Cowpea",
+      "disease": "Bacterial Wilt",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove infected plants, avoid waterlogging, rotate crops and use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 78,
+      "class_name": "cowpea_leaf___healthy",
+      "species": "Cowpea",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 79,
+      "class_name": "cowpea_leaf___mosaic_virus",
+      "species": "Cowpea",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 80,
+      "class_name": "cowpea_leaf___septoria_leaf_spot",
+      "species": "Cowpea",
+      "disease": "Septoria Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 81,
+      "class_name": "cucumber_fruit___healthy",
+      "species": "Cucumber",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 82,
+      "class_name": "cucumber_leaf___anthracnose",
+      "species": "Cucumber",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 83,
+      "class_name": "cucumber_leaf___downy_mildew",
+      "species": "Cucumber",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 84,
+      "class_name": "cucumber_leaf___healthy",
+      "species": "Cucumber",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 85,
+      "class_name": "date_palm_fruit___healthy",
+      "species": "Date Palm",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 86,
+      "class_name": "eggplant_fruit___fruit_borer",
+      "species": "Eggplant",
+      "disease": "Fruit Borer",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy bored fruits/shoots, use pheromone traps and targeted insecticides.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 87,
+      "class_name": "eggplant_fruit___fruit_cracking",
+      "species": "Eggplant",
+      "disease": "Fruit Cracking",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Water evenly to avoid sudden swelling of fruit.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 88,
+      "class_name": "eggplant_fruit___healthy",
+      "species": "Eggplant",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 89,
+      "class_name": "eggplant_fruit___wet_rot",
+      "species": "Eggplant",
+      "disease": "Wet Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 90,
+      "class_name": "eggplant_leaf___cercospora_leaf_spot",
+      "species": "Eggplant",
+      "disease": "Cercospora Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 91,
+      "class_name": "eggplant_leaf___healthy",
+      "species": "Eggplant",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 92,
+      "class_name": "eggplant_leaf___insect_damage",
+      "species": "Eggplant",
+      "disease": "Insect Damage",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Inspect the plants for the pest, remove damaged leaves and use neem or a targeted insecticide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 93,
+      "class_name": "eggplant_leaf___leaf_spot",
+      "species": "Eggplant",
+      "disease": "Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 94,
+      "class_name": "eggplant_leaf___mosaic_virus",
+      "species": "Eggplant",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 95,
+      "class_name": "eggplant_leaf___verticillium_wilt",
+      "species": "Eggplant",
+      "disease": "Verticillium Wilt",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove infected plants, avoid waterlogging, rotate crops and use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 96,
+      "class_name": "fig_fruit___healthy",
+      "species": "Fig",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 97,
+      "class_name": "fig_leaf___healthy",
+      "species": "Fig",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 98,
+      "class_name": "grape_fruit___healthy",
+      "species": "Grape",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 99,
+      "class_name": "grape_fruit___rotten",
+      "species": "Grape",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 100,
+      "class_name": "grape_leaf___anthracnose",
+      "species": "Grape",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 101,
+      "class_name": "grape_leaf___black_rot",
+      "species": "Grape",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 102,
+      "class_name": "grape_leaf___downy_mildew",
+      "species": "Grape",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 103,
+      "class_name": "grape_leaf___esca",
+      "species": "Grape",
+      "disease": "Esca",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Prune out infected wood in dry weather, protect pruning wounds and remove dead vines.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 104,
+      "class_name": "grape_leaf___healthy",
+      "species": "Grape",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 105,
+      "class_name": "grape_leaf___leaf_blight",
+      "species": "Grape",
+      "disease": "Leaf Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 106,
+      "class_name": "grape_leaf___powdery_mildew",
+      "species": "Grape",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 107,
+      "class_name": "groundnut_leaf___alternaria_leaf_spot",
+      "species": "Groundnut",
+      "disease": "Alternaria Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 108,
+      "class_name": "groundnut_leaf___healthy",
+      "species": "Groundnut",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 109,
+      "class_name": "groundnut_leaf___leaf_spot",
+      "species": "Groundnut",
+      "disease": "Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 110,
+      "class_name": "guava_fruit___anthracnose",
+      "species": "Guava",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 111,
+      "class_name": "guava_fruit___healthy",
+      "species": "Guava",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 112,
+      "class_name": "guava_fruit___rotten",
+      "species": "Guava",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 113,
+      "class_name": "guava_fruit___styler_end_rot",
+      "species": "Guava",
+      "disease": "Styler End Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 114,
+      "class_name": "guava_leaf___anthracnose",
+      "species": "Guava",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 115,
+      "class_name": "guava_leaf___canker",
+      "species": "Guava",
+      "disease": "Canker",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Prune infected parts in dry weather, disinfect tools and apply copper sprays.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 116,
+      "class_name": "guava_leaf___dot",
+      "species": "Guava",
+      "disease": "Dot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected fruit and leaves and spray copper oxychloride during fruit set.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 117,
+      "class_name": "guava_leaf___healthy",
+      "species": "Guava",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 118,
+      "class_name": "guava_leaf___rust",
+      "species": "Guava",
+      "disease": "Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 119,
+      "class_name": "jujube_fruit___healthy",
+      "species": "Jujube",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 120,
+      "class_name": "jujube_fruit___rotten",
+      "species": "Jujube",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 121,
+      "class_name": "lentil_leaf___ascochyta_blight",
+      "species": "Lentil",
+      "disease": "Ascochyta Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 122,
+      "class_name": "lentil_leaf___healthy",
+      "species": "Lentil",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 123,
+      "class_name": "lentil_leaf___powdery_mildew",
+      "species": "Lentil",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 124,
+      "class_name": "lentil_leaf___rust",
+      "species": "Lentil",
+      "disease": "Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 125,
+      "class_name": "lettuce_leaf___anthracnose",
+      "species": "Lettuce",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 126,
+      "class_name": "lettuce_leaf___bacterial_leaf_spot",
+      "species": "Lettuce",
+      "disease": "Bacterial Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Spray fixed copper, avoid overhead irrigation and working with wet plants, use clean seed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 127,
+      "class_name": "lettuce_leaf___downy_mildew",
+      "species": "Lettuce",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 128,
+      "class_name": "lettuce_leaf___healthy",
+      "species": "Lettuce",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 129,
+      "class_name": "lettuce_leaf___powdery_mildew",
+      "species": "Lettuce",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 130,
+      "class_name": "lettuce_leaf___septoria_leaf_spot",
+      "species": "Lettuce",
+      "disease": "Septoria Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 131,
+      "class_name": "loquat_leaf___leaf_spot",
+      "species": "Loquat",
+      "disease": "Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 132,
+      "class_name": "maize_ear___healthy",
+      "species": "Corn (Maize)",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "ear"
+    },
+    {
+      "id": 133,
+      "class_name": "maize_leaf___common_rust",
+      "species": "Corn (Maize)",
+      "disease": "Common Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 134,
+      "class_name": "maize_leaf___curvularia_leaf_spot",
+      "species": "Corn (Maize)",
+      "disease": "Curvularia Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 135,
+      "class_name": "maize_leaf___fall_armyworm",
+      "species": "Corn (Maize)",
+      "disease": "Fall Armyworm",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Scout whorls; apply emamectin benzoate or Bt at early larval stage; encourage natural enemies.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 136,
+      "class_name": "maize_leaf___grasshopper_damage",
+      "species": "Corn (Maize)",
+      "disease": "Grasshopper Damage",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Till to destroy egg pods; use baits or insecticide on heavy infestations.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 137,
+      "class_name": "maize_leaf___gray_leaf_spot",
+      "species": "Corn (Maize)",
+      "disease": "Gray Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 138,
+      "class_name": "maize_leaf___healthy",
+      "species": "Corn (Maize)",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 139,
+      "class_name": "maize_leaf___leaf_beetle_damage",
+      "species": "Corn (Maize)",
+      "disease": "Leaf Beetle Damage",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Hand-pick or use row covers; apply neem or pyrethrin if damage is heavy.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 140,
+      "class_name": "maize_leaf___lethal_necrosis",
+      "species": "Corn (Maize)",
+      "disease": "Lethal Necrosis",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "Rogue infected plants, control thrips and aphid vectors, use certified seed and crop rotation.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 141,
+      "class_name": "maize_leaf___northern_leaf_blight",
       "species": "Corn (Maize)",
       "disease": "Northern Leaf Blight",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
     },
     {
-      "id": 10,
-      "class_name": "Corn_(maize)___healthy",
+      "id": 142,
+      "class_name": "maize_leaf___streak_virus",
       "species": "Corn (Maize)",
+      "disease": "Streak Virus",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Control leafhoppers, avoid late planting next to old maize, use tolerant hybrids.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 143,
+      "class_name": "mango_fruit___healthy",
+      "species": "Mango",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
     },
     {
-      "id": 11,
-      "class_name": "Grape___Black_rot",
-      "species": "Grape",
-      "disease": "Black Rot",
+      "id": 144,
+      "class_name": "onion_bulb___fusarium_basal_rot",
+      "species": "Onion",
+      "disease": "Fusarium Basal Rot",
       "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "bulb"
     },
     {
-      "id": 12,
-      "class_name": "Grape___Esca_(Black_Measles)",
-      "species": "Grape",
-      "disease": "Esca (Black Measles)",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
-    },
-    {
-      "id": 13,
-      "class_name": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
-      "species": "Grape",
-      "disease": "Leaf Blight (Isariopsis Leaf Spot)",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
-    },
-    {
-      "id": 14,
-      "class_name": "Grape___healthy",
-      "species": "Grape",
+      "id": 145,
+      "class_name": "onion_bulb___healthy",
+      "species": "Onion",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "bulb"
     },
     {
-      "id": 15,
-      "class_name": "Orange___Haunglongbing_(Citrus_greening)",
-      "species": "Orange",
-      "disease": "Haunglongbing (Citrus Greening)",
+      "id": 146,
+      "class_name": "onion_leaf___healthy",
+      "species": "Onion",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 147,
+      "class_name": "onion_leaf___iris_yellow_spot_virus",
+      "species": "Onion",
+      "disease": "Iris Yellow Spot Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 148,
+      "class_name": "onion_leaf___purple_blotch",
+      "species": "Onion",
+      "disease": "Purple Blotch",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+      "treatment": "Spray mancozeb or a strobilurin at first lesions, avoid overhead irrigation and rotate crops.",
+      "plant_part": "leaf"
     },
     {
-      "id": 16,
-      "class_name": "Peach___Bacterial_spot",
+      "id": 149,
+      "class_name": "papaya_fruit___healthy",
+      "species": "Papaya",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 150,
+      "class_name": "papaya_leaf___healthy",
+      "species": "Papaya",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 151,
+      "class_name": "papaya_leaf___leaf_curl_virus",
+      "species": "Papaya",
+      "disease": "Leaf Curl Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 152,
+      "class_name": "papaya_leaf___mealybug",
+      "species": "Papaya",
+      "disease": "Mealybug",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Prune for airflow, monitor and apply a targeted insecticide if needed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 153,
+      "class_name": "papaya_leaf___mites",
+      "species": "Papaya",
+      "disease": "Mites",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Spray water or horticultural oil on leaf undersides, release predatory mites, use a miticide if severe.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 154,
+      "class_name": "papaya_leaf___mosaic_virus",
+      "species": "Papaya",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 155,
+      "class_name": "papaya_leaf___ringspot_virus",
+      "species": "Papaya",
+      "disease": "Ringspot Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 156,
+      "class_name": "peach_fruit___healthy",
+      "species": "Peach",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 157,
+      "class_name": "peach_leaf___bacterial_spot",
       "species": "Peach",
       "disease": "Bacterial Spot",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Spray fixed copper mixed with mancozeb. Refrain from overhead irrigation; work only when canopy is dry."
+      "treatment": "Spray fixed copper, avoid overhead irrigation and working with wet plants, use clean seed.",
+      "plant_part": "leaf"
     },
     {
-      "id": 17,
-      "class_name": "Peach___healthy",
+      "id": 158,
+      "class_name": "peach_leaf___healthy",
       "species": "Peach",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
     },
     {
-      "id": 18,
-      "class_name": "Pepper,_bell___Bacterial_spot",
-      "species": "Pepper, Bell",
-      "disease": "Bacterial Spot",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Spray fixed copper mixed with mancozeb. Refrain from overhead irrigation; work only when canopy is dry."
-    },
-    {
-      "id": 19,
-      "class_name": "Pepper,_bell___healthy",
-      "species": "Pepper, Bell",
+      "id": 159,
+      "class_name": "pear_fruit___healthy",
+      "species": "Pear",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
     },
     {
-      "id": 20,
-      "class_name": "Potato___Early_blight",
+      "id": 160,
+      "class_name": "pear_leaf___black_spot",
+      "species": "Pear",
+      "disease": "Black Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 161,
+      "class_name": "pear_leaf___healthy",
+      "species": "Pear",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 162,
+      "class_name": "pepper_fruit___damaged",
+      "species": "Pepper",
+      "disease": "Damaged",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Sort out damaged produce; check for pests and handling or storage damage.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 163,
+      "class_name": "pepper_fruit___healthy",
+      "species": "Pepper",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 164,
+      "class_name": "pepper_leaf___bacterial_spot",
+      "species": "Pepper",
+      "disease": "Bacterial Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Spray fixed copper, avoid overhead irrigation and working with wet plants, use clean seed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 165,
+      "class_name": "pepper_leaf___broad_bean_wilt_virus",
+      "species": "Pepper",
+      "disease": "Broad Bean Wilt Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 166,
+      "class_name": "pepper_leaf___cercospora_leaf_spot",
+      "species": "Pepper",
+      "disease": "Cercospora Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 167,
+      "class_name": "pepper_leaf___healthy",
+      "species": "Pepper",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 168,
+      "class_name": "persimmon_fruit___healthy",
+      "species": "Persimmon",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 169,
+      "class_name": "persimmon_leaf___brown_spot",
+      "species": "Persimmon",
+      "disease": "Brown Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 170,
+      "class_name": "plum_fruit___healthy",
+      "species": "Plum",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 171,
+      "class_name": "pomegranate_fruit___alternaria_fruit_rot",
+      "species": "Pomegranate",
+      "disease": "Alternaria Fruit Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 172,
+      "class_name": "pomegranate_fruit___anthracnose",
+      "species": "Pomegranate",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 173,
+      "class_name": "pomegranate_fruit___bacterial_blight",
+      "species": "Pomegranate",
+      "disease": "Bacterial Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 174,
+      "class_name": "pomegranate_fruit___cercospora_fruit_spot",
+      "species": "Pomegranate",
+      "disease": "Cercospora Fruit Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 175,
+      "class_name": "pomegranate_fruit___healthy",
+      "species": "Pomegranate",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 176,
+      "class_name": "pomegranate_fruit___rotten",
+      "species": "Pomegranate",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 177,
+      "class_name": "potato_leaf___early_blight",
       "species": "Potato",
       "disease": "Early Blight",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Prune lower foliage (12 inches) to prevent splash contamination. Apply chlorothalonil on a 7-10 day cycle."
+      "treatment": "Remove lower infected leaves, mulch, and spray chlorothalonil or mancozeb every 7-10 days.",
+      "plant_part": "leaf"
     },
     {
-      "id": 21,
-      "class_name": "Potato___Late_blight",
-      "species": "Potato",
-      "disease": "Late Blight",
-      "is_healthy": false,
-      "severity": "Critical",
-      "treatment": "URGENT: Rogue out severely infected tissue. Spray translaminar oomycete fungicide (mefenoxam or fluopicolide)."
-    },
-    {
-      "id": 22,
-      "class_name": "Potato___healthy",
+      "id": 178,
+      "class_name": "potato_leaf___healthy",
       "species": "Potato",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
     },
     {
-      "id": 23,
-      "class_name": "Raspberry___healthy",
+      "id": 179,
+      "class_name": "potato_leaf___late_blight",
+      "species": "Potato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "URGENT: remove infected foliage, spray mandipropamid or fluopicolide every 5-7 days in wet weather.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 180,
+      "class_name": "potato_leaf___viral_disease",
+      "species": "Potato",
+      "disease": "Viral Disease",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 181,
+      "class_name": "potato_tuber___bruising",
+      "species": "Potato",
+      "disease": "Bruising",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Handle tubers gently at harvest and in storage.",
+      "plant_part": "tuber"
+    },
+    {
+      "id": 182,
+      "class_name": "potato_tuber___dry_rot",
+      "species": "Potato",
+      "disease": "Dry Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "tuber"
+    },
+    {
+      "id": 183,
+      "class_name": "potato_tuber___healthy",
+      "species": "Potato",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "tuber"
+    },
+    {
+      "id": 184,
+      "class_name": "potato_tuber___soft_rot",
+      "species": "Potato",
+      "disease": "Soft Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "tuber"
+    },
+    {
+      "id": 185,
+      "class_name": "quince_fruit___healthy",
+      "species": "Quince",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 186,
+      "class_name": "raspberry_fruit___healthy",
       "species": "Raspberry",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
     },
     {
-      "id": 24,
-      "class_name": "Soybean___healthy",
+      "id": 187,
+      "class_name": "raspberry_leaf___healthy",
+      "species": "Raspberry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 188,
+      "class_name": "rice_leaf___bacterial_leaf_blight",
+      "species": "Rice",
+      "disease": "Bacterial Leaf Blight",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "No curative spray. Drain fields periodically, balance N with K, use resistant varieties and clean seed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 189,
+      "class_name": "rice_leaf___bacterial_leaf_streak",
+      "species": "Rice",
+      "disease": "Bacterial Leaf Streak",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Spray fixed copper, avoid overhead irrigation and working with wet plants, use clean seed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 190,
+      "class_name": "rice_leaf___blast",
+      "species": "Rice",
+      "disease": "Blast",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Apply tricyclazole or azoxystrobin at first lesions and at booting. Avoid excess nitrogen; use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 191,
+      "class_name": "rice_leaf___brown_spot",
+      "species": "Rice",
+      "disease": "Brown Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 192,
+      "class_name": "rice_leaf___downy_mildew",
+      "species": "Rice",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 193,
+      "class_name": "rice_leaf___healthy",
+      "species": "Rice",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 194,
+      "class_name": "rice_leaf___hispa",
+      "species": "Rice",
+      "disease": "Hispa",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Clip infested leaf tips, and apply insecticide only above economic threshold.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 195,
+      "class_name": "rice_leaf___leaf_scald",
+      "species": "Rice",
+      "disease": "Leaf Scald",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Avoid excess nitrogen, use clean seed and spray a fungicide if lesions spread.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 196,
+      "class_name": "rice_leaf___leaffolder",
+      "species": "Rice",
+      "disease": "Leaffolder",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Avoid excess nitrogen and apply insecticide only above economic threshold.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 197,
+      "class_name": "rice_leaf___stripe_virus",
+      "species": "Rice",
+      "disease": "Stripe Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 198,
+      "class_name": "rice_leaf___tungro",
+      "species": "Rice",
+      "disease": "Tungro",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "Control green leafhopper vectors early, rogue infected hills, synchronise planting and use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 199,
+      "class_name": "rice_panicle___bacterial_panicle_blight",
+      "species": "Rice",
+      "disease": "Bacterial Panicle Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "panicle"
+    },
+    {
+      "id": 200,
+      "class_name": "rice_stem___dead_heart",
+      "species": "Rice",
+      "disease": "Dead Heart",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Control stem borers with pheromone traps and timely insecticide at egg hatch.",
+      "plant_part": "stem"
+    },
+    {
+      "id": 201,
+      "class_name": "rice_stem___sheath_blight",
+      "species": "Rice",
+      "disease": "Sheath Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Reduce plant density and nitrogen; apply validamycin or hexaconazole when sheath lesions appear.",
+      "plant_part": "stem"
+    },
+    {
+      "id": 202,
+      "class_name": "soybean_leaf___bacterial_blight",
+      "species": "Soybean",
+      "disease": "Bacterial Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 203,
+      "class_name": "soybean_leaf___frogeye_leaf_spot",
+      "species": "Soybean",
+      "disease": "Frogeye Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 204,
+      "class_name": "soybean_leaf___healthy",
       "species": "Soybean",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
     },
     {
-      "id": 25,
-      "class_name": "Squash___Powdery_mildew",
+      "id": 205,
+      "class_name": "soybean_leaf___mosaic_virus",
+      "species": "Soybean",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 206,
+      "class_name": "soybean_leaf___rust",
+      "species": "Soybean",
+      "disease": "Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 207,
+      "class_name": "soybean_leaf___semilooper",
+      "species": "Soybean",
+      "disease": "Semilooper",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply Bt or a targeted insecticide when larvae are young.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 208,
+      "class_name": "soybean_leaf___septoria_brown_spot",
+      "species": "Soybean",
+      "disease": "Septoria Brown Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 209,
+      "class_name": "squash_leaf___powdery_mildew",
       "species": "Squash",
       "disease": "Powdery Mildew",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
     },
     {
-      "id": 26,
-      "class_name": "Strawberry___Leaf_scorch",
+      "id": 210,
+      "class_name": "strawberry_fruit___healthy",
+      "species": "Strawberry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 211,
+      "class_name": "strawberry_fruit___rotten",
+      "species": "Strawberry",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 212,
+      "class_name": "strawberry_leaf___healthy",
+      "species": "Strawberry",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 213,
+      "class_name": "strawberry_leaf___leaf_scorch",
       "species": "Strawberry",
       "disease": "Leaf Scorch",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
+      "treatment": "Remove infected leaves, avoid overhead watering and apply captan or a copper fungicide.",
+      "plant_part": "leaf"
     },
     {
-      "id": 27,
-      "class_name": "Strawberry___healthy",
-      "species": "Strawberry",
+      "id": 214,
+      "class_name": "sugarcane_leaf___banded_chlorosis",
+      "species": "Sugarcane",
+      "disease": "Banded Chlorosis",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Check nutrition and drainage; remove severely affected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 215,
+      "class_name": "sugarcane_leaf___brown_rust",
+      "species": "Sugarcane",
+      "disease": "Brown Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 216,
+      "class_name": "sugarcane_leaf___brown_spot",
+      "species": "Sugarcane",
+      "disease": "Brown Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 217,
+      "class_name": "sugarcane_leaf___healthy",
+      "species": "Sugarcane",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
     },
     {
-      "id": 28,
-      "class_name": "Tomato___Bacterial_spot",
+      "id": 218,
+      "class_name": "sugarcane_leaf___pokkah_boeng",
+      "species": "Sugarcane",
+      "disease": "Pokkah Boeng",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove affected shoots and spray carbendazim or copper oxychloride in early stages.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 219,
+      "class_name": "sugarcane_leaf___viral_disease",
+      "species": "Sugarcane",
+      "disease": "Viral Disease",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 220,
+      "class_name": "sugarcane_leaf___yellow_leaf",
+      "species": "Sugarcane",
+      "disease": "Yellow Leaf",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Use virus-free planting material, control aphid vectors and rogue infected stools.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 221,
+      "class_name": "sugarcane_plant___grassy_shoot",
+      "species": "Sugarcane",
+      "disease": "Grassy Shoot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove infected clumps, use hot-water-treated setts and control leafhopper vectors.",
+      "plant_part": "plant"
+    },
+    {
+      "id": 222,
+      "class_name": "sugarcane_stem___sett_rot",
+      "species": "Sugarcane",
+      "disease": "Sett Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "stem"
+    },
+    {
+      "id": 223,
+      "class_name": "sugarcane_stem___smut",
+      "species": "Sugarcane",
+      "disease": "Smut",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove smutted whips before they open, use hot-water-treated setts and resistant varieties.",
+      "plant_part": "stem"
+    },
+    {
+      "id": 224,
+      "class_name": "sunflower_leaf___downy_mildew",
+      "species": "Sunflower",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 225,
+      "class_name": "sunflower_leaf___gray_mold",
+      "species": "Sunflower",
+      "disease": "Gray Mold",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected tissue, ventilate well and apply fenhexamid or a biological Bacillus product.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 226,
+      "class_name": "sunflower_leaf___healthy",
+      "species": "Sunflower",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 227,
+      "class_name": "sunflower_leaf___leaf_scars",
+      "species": "Sunflower",
+      "disease": "Leaf Scars",
+      "is_healthy": false,
+      "severity": "Low",
+      "treatment": "Usually mechanical or insect damage; protect plants and monitor for pests.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 228,
+      "class_name": "tea_leaf___algal_leaf_spot",
+      "species": "Tea",
+      "disease": "Algal Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 229,
+      "class_name": "tea_leaf___brown_blight",
+      "species": "Tea",
+      "disease": "Brown Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 230,
+      "class_name": "tea_leaf___gray_blight",
+      "species": "Tea",
+      "disease": "Gray Blight",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide (copper or mancozeb).",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 231,
+      "class_name": "tea_leaf___green_mirid_bug",
+      "species": "Tea",
+      "disease": "Green Mirid Bug",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Prune for airflow, monitor and apply a targeted insecticide if needed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 232,
+      "class_name": "tea_leaf___healthy",
+      "species": "Tea",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 233,
+      "class_name": "tea_leaf___helopeltis",
+      "species": "Tea",
+      "disease": "Helopeltis",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Prune for airflow, monitor and apply a targeted insecticide if needed.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 234,
+      "class_name": "tea_leaf___red_rust",
+      "species": "Tea",
+      "disease": "Red Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply a triazole or strobilurin fungicide at first pustules and remove heavily infected leaves.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 235,
+      "class_name": "tea_leaf___red_spider_mite",
+      "species": "Tea",
+      "disease": "Red Spider Mite",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Spray water or horticultural oil on leaf undersides, release predatory mites, use a miticide if severe.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 236,
+      "class_name": "tomato_fruit___fruit_borer",
+      "species": "Tomato",
+      "disease": "Fruit Borer",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy bored fruits/shoots, use pheromone traps and targeted insecticides.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 237,
+      "class_name": "tomato_fruit___healthy",
+      "species": "Tomato",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 238,
+      "class_name": "tomato_fruit___rotten",
+      "species": "Tomato",
+      "disease": "Rotten",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove and destroy affected parts, avoid wounds and excess moisture, store produce cool and dry.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 239,
+      "class_name": "tomato_leaf___bacterial_spot",
       "species": "Tomato",
       "disease": "Bacterial Spot",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Spray fixed copper mixed with mancozeb. Refrain from overhead irrigation; work only when canopy is dry."
+      "treatment": "Spray fixed copper, avoid overhead irrigation and working with wet plants, use clean seed.",
+      "plant_part": "leaf"
     },
     {
-      "id": 29,
-      "class_name": "Tomato___Early_blight",
+      "id": 240,
+      "class_name": "tomato_leaf___bacterial_wilt",
+      "species": "Tomato",
+      "disease": "Bacterial Wilt",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove infected plants, avoid waterlogging, rotate crops and use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 241,
+      "class_name": "tomato_leaf___early_blight",
       "species": "Tomato",
       "disease": "Early Blight",
       "is_healthy": false,
       "severity": "Moderate",
-      "treatment": "Prune lower foliage (12 inches) to prevent splash contamination. Apply chlorothalonil on a 7-10 day cycle."
+      "treatment": "Remove lower infected leaves, mulch, and spray chlorothalonil or mancozeb every 7-10 days.",
+      "plant_part": "leaf"
     },
     {
-      "id": 30,
-      "class_name": "Tomato___Late_blight",
-      "species": "Tomato",
-      "disease": "Late Blight",
-      "is_healthy": false,
-      "severity": "Critical",
-      "treatment": "URGENT: Rogue out severely infected tissue. Spray translaminar oomycete fungicide (mefenoxam or fluopicolide)."
-    },
-    {
-      "id": 31,
-      "class_name": "Tomato___Leaf_Mold",
-      "species": "Tomato",
-      "disease": "Leaf Mold",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
-    },
-    {
-      "id": 32,
-      "class_name": "Tomato___Septoria_leaf_spot",
-      "species": "Tomato",
-      "disease": "Septoria Leaf Spot",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
-    },
-    {
-      "id": 33,
-      "class_name": "Tomato___Spider_mites Two-spotted_spider_mite",
-      "species": "Tomato",
-      "disease": "Spider Mites Two-Spotted Spider Mite",
-      "is_healthy": false,
-      "severity": "High",
-      "treatment": "Release biological predators (Phytoseiulus persimilis) or apply horticultural neem oil/abamectin."
-    },
-    {
-      "id": 34,
-      "class_name": "Tomato___Target_Spot",
-      "species": "Tomato",
-      "disease": "Target Spot",
-      "is_healthy": false,
-      "severity": "Moderate",
-      "treatment": "Apply targeted copper-based or systemic fungicide and isolate infected canopy leaves."
-    },
-    {
-      "id": 35,
-      "class_name": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
-      "species": "Tomato",
-      "disease": "Tomato Yellow Leaf Curl Virus",
-      "is_healthy": false,
-      "severity": "Critical",
-      "treatment": "Vector control: Eradicate whiteflies/aphids using imidacloprid or insect screens. Rogue infected plants immediately."
-    },
-    {
-      "id": 36,
-      "class_name": "Tomato___Tomato_mosaic_virus",
-      "species": "Tomato",
-      "disease": "Tomato Mosaic Virus",
-      "is_healthy": false,
-      "severity": "Critical",
-      "treatment": "Vector control: Eradicate whiteflies/aphids using imidacloprid or insect screens. Rogue infected plants immediately."
-    },
-    {
-      "id": 37,
-      "class_name": "Tomato___healthy",
+      "id": 242,
+      "class_name": "tomato_leaf___healthy",
       "species": "Tomato",
       "disease": "None",
       "is_healthy": true,
       "severity": "None",
-      "treatment": "Optimal physiological vigor. Maintain standard irrigation and routine fertigation cycles."
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
     },
     {
-      "id": 38,
+      "id": 243,
+      "class_name": "tomato_leaf___late_blight",
+      "species": "Tomato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "URGENT: remove infected plants, spray mandipropamid or chlorothalonil, keep foliage dry.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 244,
+      "class_name": "tomato_leaf___leaf_mold",
+      "species": "Tomato",
+      "disease": "Leaf Mold",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Lower greenhouse humidity, ventilate and space plants, and spray chlorothalonil or copper.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 245,
+      "class_name": "tomato_leaf___mosaic_virus",
+      "species": "Tomato",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 246,
+      "class_name": "tomato_leaf___septoria_leaf_spot",
+      "species": "Tomato",
+      "disease": "Septoria Leaf Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 247,
+      "class_name": "tomato_leaf___spider_mites",
+      "species": "Tomato",
+      "disease": "Spider Mites",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Spray water or horticultural oil on leaf undersides, release predatory mites, use a miticide if severe.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 248,
+      "class_name": "tomato_leaf___spotted_wilt_virus",
+      "species": "Tomato",
+      "disease": "Spotted Wilt Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 249,
+      "class_name": "tomato_leaf___target_spot",
+      "species": "Tomato",
+      "disease": "Target Spot",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected leaves, improve airflow and apply a protectant fungicide.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 250,
+      "class_name": "tomato_leaf___verticillium_wilt",
+      "species": "Tomato",
+      "disease": "Verticillium Wilt",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Remove infected plants, avoid waterlogging, rotate crops and use resistant varieties.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 251,
+      "class_name": "tomato_leaf___yellow_leaf_curl_virus",
+      "species": "Tomato",
+      "disease": "Yellow Leaf Curl Virus",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Use virus-free planting material, control aphid vectors and rogue infected stools.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 252,
+      "class_name": "walnut_leaf___anthracnose",
+      "species": "Walnut",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 253,
+      "class_name": "walnut_leaf___healthy",
+      "species": "Walnut",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 254,
+      "class_name": "walnut_nut___healthy",
+      "species": "Walnut",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "nut"
+    },
+    {
+      "id": 255,
+      "class_name": "watermelon_fruit___healthy",
+      "species": "Watermelon",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "fruit"
+    },
+    {
+      "id": 256,
+      "class_name": "watermelon_leaf___anthracnose",
+      "species": "Watermelon",
+      "disease": "Anthracnose",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Remove infected parts, avoid overhead irrigation and spray copper or azoxystrobin.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 257,
+      "class_name": "watermelon_leaf___downy_mildew",
+      "species": "Watermelon",
+      "disease": "Downy Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 258,
+      "class_name": "watermelon_leaf___healthy",
+      "species": "Watermelon",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 259,
+      "class_name": "watermelon_leaf___mosaic_virus",
+      "species": "Watermelon",
+      "disease": "Mosaic Virus",
+      "is_healthy": false,
+      "severity": "Critical",
+      "treatment": "No cure. Rogue infected plants, control insect vectors and use certified clean planting material.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 260,
+      "class_name": "wheat_leaf___brown_rust",
+      "species": "Wheat",
+      "disease": "Brown Rust",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Apply triazole or strobilurin fungicide at flag-leaf stage if pustules spread; destroy volunteer wheat.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 261,
+      "class_name": "wheat_leaf___healthy",
+      "species": "Wheat",
+      "disease": "None",
+      "is_healthy": true,
+      "severity": "None",
+      "treatment": "Healthy. Keep regular irrigation, nutrition and weekly scouting.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 262,
+      "class_name": "wheat_leaf___powdery_mildew",
+      "species": "Wheat",
+      "disease": "Powdery Mildew",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Improve airflow; spray sulfur, potassium bicarbonate or a systemic fungicide at first signs.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 263,
+      "class_name": "wheat_leaf___septoria",
+      "species": "Wheat",
+      "disease": "Septoria",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "treatment": "Protect flag leaf with azole + SDHI fungicide; rotate crops and bury infected stubble.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 264,
+      "class_name": "wheat_leaf___yellow_rust",
+      "species": "Wheat",
+      "disease": "Yellow Rust",
+      "is_healthy": false,
+      "severity": "High",
+      "treatment": "Spray a triazole (tebuconazole or propiconazole) at first pustules; grow resistant cultivars.",
+      "plant_part": "leaf"
+    },
+    {
+      "id": 265,
       "class_name": "unknown",
       "species": "Unknown",
       "disease": "Unknown",
       "is_healthy": false,
       "severity": "None",
-      "treatment": "Not a supported plant leaf. Retake the photo of a single leaf in good light."
+      "treatment": "Not a supported crop part. Retake the photo of a single leaf, fruit or ear in good light.",
+      "plant_part": "none"
     }
   ]
 }
