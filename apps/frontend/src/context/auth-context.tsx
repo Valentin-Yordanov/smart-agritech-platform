@@ -45,6 +45,11 @@ export function clearClientAuthToken() {
   }
 }
 
+function redirectAfterAuth() {
+  const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl');
+  window.location.replace(safeCallbackUrl(callbackUrl));
+}
+
 interface AuthContextValue {
   user: User | null;
   isLoading: boolean;
@@ -119,11 +124,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (res.tokens?.accessToken) {
       setClientAuthToken(res.tokens.accessToken);
     }
-    const params = new URLSearchParams(window.location.search);
-    const callbackUrl = params.get('callbackUrl');
-    const destination = safeCallbackUrl(callbackUrl);
-    router.push(destination);
-    router.refresh();
+    redirectAfterAuth();
   };
 
   const register = async (payload: RegisterInput) => {
@@ -135,11 +136,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (res.tokens?.accessToken) {
       setClientAuthToken(res.tokens.accessToken);
     }
-    const params = new URLSearchParams(window.location.search);
-    const callbackUrl = params.get('callbackUrl');
-    const destination = safeCallbackUrl(callbackUrl);
-    router.push(destination);
-    router.refresh();
+    redirectAfterAuth();
   };
 
   const logout = async () => {

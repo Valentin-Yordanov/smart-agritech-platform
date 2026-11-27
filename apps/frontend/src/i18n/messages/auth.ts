@@ -34,6 +34,8 @@ export const auth = defineMessages({
   'auth.pw.fair': ['Fair', 'Средна'],
   'auth.pw.good': ['Good', 'Добра'],
   'auth.pw.strong': ['Strong', 'Силна'],
+  'auth.pw.show': ['Show password', 'Покажи паролата'],
+  'auth.pw.hide': ['Hide password', 'Скрий паролата'],
   'auth.register.submit': ['Create Account', 'Създай акаунт'],
   'auth.register.submitting': ['Creating account...', 'Създаване на акаунт...'],
   'auth.register.success': ['Account created successfully', 'Акаунтът е създаден успешно'],
