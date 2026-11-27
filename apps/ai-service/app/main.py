@@ -52,6 +52,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 def create_app() -> FastAPI:
     """FastAPI application factory."""
     settings = get_settings()
+    is_prod = settings.ENV.lower() == "production"
 
     app = FastAPI(
         title=settings.PROJECT_NAME,
@@ -60,9 +61,10 @@ def create_app() -> FastAPI:
             "Competition-Grade High-Performance AI Vision Microservice for Plant Disease "
             "Localization and Diagnosis. Optimized for Sub-100ms CPU Inference via ONNX Runtime."
         ),
-        docs_url="/docs",
-        redoc_url="/redoc",
-        openapi_url="/openapi.json",
+        # Interactive docs only outside production so the route map is not public
+        docs_url=None if is_prod else "/docs",
+        redoc_url=None if is_prod else "/redoc",
+        openapi_url=None if is_prod else "/openapi.json",
         lifespan=lifespan,
     )
 
@@ -110,7 +112,7 @@ def create_app() -> FastAPI:
             "service": settings.PROJECT_NAME,
             "version": settings.VERSION,
             "status": "online",
-            "docs": "/docs",
+            "docs": "disabled" if is_prod else "/docs",
             "api_v1": settings.API_V1_STR,
         }
 

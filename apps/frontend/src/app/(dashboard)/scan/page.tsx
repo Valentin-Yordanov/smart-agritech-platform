@@ -361,6 +361,7 @@ export default function ScanPage() {
             filename: selectedFile.name,
             mimeType: selectedFile.type,
             folder: 'scans',
+            size: selectedFile.size,
           },
         }
       );

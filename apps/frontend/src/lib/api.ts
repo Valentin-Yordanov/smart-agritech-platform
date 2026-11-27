@@ -75,6 +75,9 @@ export async function apiFetch<T>(
   const data = isJson ? await response.json() : await response.text();
 
   if (!response.ok) {
+    if (response.status === 429) {
+      throw new ApiError("Too many attempts. Please wait a minute and try again.", 429, data);
+    }
     const message =
       typeof data === "object" && data !== null && "message" in data
         ? Array.isArray((data as { message: unknown }).message)

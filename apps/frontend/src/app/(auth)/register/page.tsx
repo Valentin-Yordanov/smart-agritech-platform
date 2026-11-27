@@ -3,15 +3,17 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Sprout, Loader2, ArrowLeft } from 'lucide-react';
+import { Sprout, Loader2, ArrowLeft, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from 'cn';
 import { useAuth } from '@/context/auth-context';
 import { ApiError } from '@/lib/api';
+import { safeCallbackUrl } from '@/lib/safe-redirect';
 import { useI18n } from '@/i18n/language-provider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PasswordStrength, isStrongPassword } from '@/components/auth/password-strength';
 import {
   Card,
   CardContent,
@@ -28,6 +30,7 @@ export default function RegisterPage() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
 
   // If already logged in, redirect immediately away from register
@@ -35,25 +38,25 @@ export default function RegisterPage() {
     if (user) {
       const params = new URLSearchParams(window.location.search);
       const callbackUrl = params.get('callbackUrl');
-      const destination =
-        callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')
-          ? callbackUrl
-          : '/dashboard';
+      const destination = safeCallbackUrl(callbackUrl);
       router.replace(destination);
     }
   }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (submitting) return;
+    if (submitting || !isStrongPassword(password)) return;
     setSubmitting(true);
+    setErrors([]);
     try {
-      await register({ fullName, email, password });
+      await register({ fullName: fullName.trim(), email: email.trim(), password });
       toast.success(t('auth.register.success'));
     } catch (err) {
-      const message =
-        err instanceof ApiError ? err.message : t('auth.register.failed');
-      toast.error(message);
+      // Show every field message the API returned instead of one generic toast
+      const raw = err instanceof ApiError ? (err.data as { message?: unknown } | undefined)?.message : undefined;
+      const list = Array.isArray(raw) ? raw.map(String) : [err instanceof ApiError ? err.message : t('auth.register.failed')];
+      setErrors(list);
+      toast.error(list[0] ?? t('auth.register.failed'));
     } finally {
       setSubmitting(false);
     }
@@ -88,6 +91,19 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
+              {errors.length > 0 && (
+                <div role="alert" className="flex gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                  <div className="min-w-0">
+                    <p className="font-semibold">{t('auth.register.fixErrors')}</p>
+                    <ul className="mt-1 list-disc space-y-0.5 pl-4">
+                      {errors.map((message) => (
+                        <li key={message}>{message}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
               <div className="space-y-1.5">
                 <Label htmlFor="fullName">{t('auth.fullName')}</Label>
                 <Input
@@ -97,6 +113,9 @@ export default function RegisterPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   disabled={submitting}
+                  autoComplete="name"
+                  minLength={2}
+                  maxLength={80}
                   required
                 />
               </div>
@@ -109,6 +128,8 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={submitting}
+                  autoComplete="email"
+                  maxLength={254}
                   required
                 />
               </div>
@@ -118,19 +139,23 @@ export default function RegisterPage() {
                   id="password"
                   type="password"
                   placeholder={t('auth.register.passwordPlaceholder')}
-                  minLength={8}
+                  minLength={10}
+                  maxLength={72}
+                  autoComplete="new-password"
+                  aria-describedby="password-rules"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={submitting}
                   required
                 />
+                <PasswordStrength id="password-rules" password={password} />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4 pt-2">
               <Button
                 type="submit"
                 className="w-full bg-emerald-700 text-white hover:bg-emerald-800"
-                disabled={submitting}
+                disabled={submitting || !isStrongPassword(password)}
               >
                 {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {submitting ? t('auth.register.submitting') : t('auth.register.submit')}

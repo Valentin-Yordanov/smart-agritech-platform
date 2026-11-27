@@ -33,8 +33,9 @@ class Settings(BaseSettings):
     PORT: int = 8000
 
     # CORS Settings
-    CORS_ORIGINS: List[str] = ["*"]
-    CORS_ALLOW_CREDENTIALS: bool = True
+    # Server-to-server only: browsers never call this service directly
+    CORS_ORIGINS: List[str] = []
+    CORS_ALLOW_CREDENTIALS: bool = False
     CORS_ALLOW_METHODS: List[str] = ["*"]
     CORS_ALLOW_HEADERS: List[str] = ["*"]
 
@@ -86,6 +87,7 @@ class Settings(BaseSettings):
     LATENCY_BUDGET_MS: float = 100.0  # Competition benchmark target
 
     # Groq & ChromaDB RAG Configuration
+    INTERNAL_API_KEY: str = Field(default="", description="Shared secret the backend sends as X-Internal-API-Key")
     GROQ_API_KEY: str = Field(default="", description="Groq Cloud API Key for LLM advisory")
     GROQ_MODEL: str = Field(default="openai/gpt-oss-120b", description="Fast inference LLM model")
     CHROMA_PERSIST_DIR: Path = BASE_DIR / "data" / "chroma_db"

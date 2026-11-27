@@ -1,13 +1,15 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Matches, Max, Min } from 'class-validator';
+import { UPLOAD_KEY_PATTERN } from '../../../common/security';
 
 export class CreateDiagnosisJobDto {
   @ApiProperty({
-    description: 'Storage key, relative path, or URL for the plant, crop, or foliage image to analyze',
-    example: 'uploads/scans/tomato-early-blight-sample.jpg',
+    description: 'Storage key returned by POST /storage/upload-url',
+    example: 'uploads/scans/6b568fd6-5e58-4bc2-8d7d-5a82fa2c10b2-leaf.jpg',
   })
   @IsString()
   @IsNotEmpty()
+  @Matches(UPLOAD_KEY_PATTERN, { message: 'imageKey must be a key issued by the upload-url endpoint.' })
   imageKey: string;
 
   @ApiPropertyOptional({
@@ -33,12 +35,4 @@ export class CreateDiagnosisJobDto {
   @Min(-180)
   @Max(180)
   longitude?: number;
-
-  @ApiPropertyOptional({
-    description: 'Optional ID of the user requesting the diagnosis. Defaults to demo/system user if omitted.',
-    example: 'd3b07384-d113-46c4-b81b-5e92be9c3b87',
-  })
-  @IsOptional()
-  @IsString()
-  userId?: string;
 }

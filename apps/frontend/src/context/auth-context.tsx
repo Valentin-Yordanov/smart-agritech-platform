@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
+import { safeCallbackUrl } from '@/lib/safe-redirect';
 import { AuthResponse, User } from '@/types/api';
 
 interface LoginInput {
@@ -120,10 +121,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     const params = new URLSearchParams(window.location.search);
     const callbackUrl = params.get('callbackUrl');
-    const destination =
-      callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')
-        ? callbackUrl
-        : '/dashboard';
+    const destination = safeCallbackUrl(callbackUrl);
     router.push(destination);
     router.refresh();
   };
@@ -139,10 +137,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     const params = new URLSearchParams(window.location.search);
     const callbackUrl = params.get('callbackUrl');
-    const destination =
-      callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')
-        ? callbackUrl
-        : '/dashboard';
+    const destination = safeCallbackUrl(callbackUrl);
     router.push(destination);
     router.refresh();
   };

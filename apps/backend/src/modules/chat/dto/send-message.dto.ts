@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
 
 export class SendMessageDto {
   @ApiProperty({
@@ -10,6 +10,7 @@ export class SendMessageDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(1)
+  @MaxLength(2000, { message: 'Message must be at most 2000 characters long.' })
   content!: string;
 
   @ApiPropertyOptional({

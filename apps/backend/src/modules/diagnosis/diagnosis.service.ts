@@ -1,4 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Role } from '@prisma/client';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -36,41 +37,11 @@ export class DiagnosisService {
   ) {}
 
   /**
-   * Ensures a valid user exists for foreign key integrity.
-   * If a userId is supplied, verifies it. Otherwise, finds the first user or creates a default demo user.
-   */
-  private async resolveUserId(userId?: string): Promise<string> {
-    if (userId) {
-      const existingUser = await this.prisma.user.findUnique({ where: { id: userId } });
-      if (existingUser) {
-        return existingUser.id;
-      }
-    }
-
-    // Fallback: look for an existing user or create a persistent demo user
-    const firstUser = await this.prisma.user.findFirst();
-    if (firstUser) {
-      return firstUser.id;
-    }
-
-    const demoUser = await this.prisma.user.upsert({
-      where: { email: 'demo.farmer@agritech.local' },
-      update: {},
-      create: {
-        email: 'demo.farmer@agritech.local',
-        fullName: 'Demo Agronomist',
-        passwordHash: '$2a$10$wT5f/6vRzJb9sDqJbZ1kIe1Hh8L6j0rB5eU4yC7a9qXwFvK3mY2e.', // Placeholder bcrypt
-      },
-    });
-
-    return demoUser.id;
-  }
-
-  /**
    * Creates a pending Diagnosis record in Prisma and enqueues the inference job into BullMQ.
    */
-  async enqueueDiagnosis(dto: CreateDiagnosisJobDto, userId?: string): Promise<EnqueueResponse> {
-    const assignedUserId = await this.resolveUserId(userId || dto.userId);
+  async enqueueDiagnosis(dto: CreateDiagnosisJobDto, userId: string): Promise<EnqueueResponse> {
+    // Owner always comes from the verified JWT, never from the request body
+    const assignedUserId = userId;
 
     // Create the pending Diagnosis entry with initial baseline values
     const pendingDiagnosis = await this.prisma.diagnosis.create({
@@ -125,7 +96,7 @@ export class DiagnosisService {
   /**
    * Retrieves diagnosis details by ID.
    */
-  async getDiagnosisById(id: string) {
+  async getDiagnosisById(id: string, requester: { id: string; role: Role }) {
     const diagnosis = await this.prisma.diagnosis.findUnique({
       where: { id },
       include: {
@@ -133,13 +104,13 @@ export class DiagnosisService {
           select: {
             id: true,
             fullName: true,
-            email: true,
           },
         },
       },
     });
 
-    if (!diagnosis) {
+    // Someone else's scan answers 404, so IDs from the public outbreak map reveal nothing
+    if (!diagnosis || (diagnosis.userId !== requester.id && requester.role !== Role.ADMIN)) {
       throw new NotFoundException(`Diagnosis record with ID "${id}" was not found.`);
     }
 

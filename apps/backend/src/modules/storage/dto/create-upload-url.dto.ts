@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsNotEmpty, IsString, Matches } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsString, Matches, Max, MaxLength, Min } from 'class-validator';
+
+export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
 export class CreateUploadUrlDto {
   @ApiProperty({
@@ -8,6 +10,7 @@ export class CreateUploadUrlDto {
   })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(200)
   filename: string;
 
   @ApiProperty({
@@ -16,7 +19,7 @@ export class CreateUploadUrlDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Matches(/^image\/(jpeg|jpg|png|webp)$/i, {
+  @Matches(/^image\/(jpeg|png|webp)$/, {
     message: 'Mime type must be an image format: image/jpeg, image/png, or image/webp.',
   })
   mimeType: string;
@@ -31,4 +34,13 @@ export class CreateUploadUrlDto {
     message: 'Folder must be either "scans", "leaves" (legacy), or "community" (for social feed).',
   })
   folder: 'scans' | 'leaves' | 'community';
+
+  @ApiProperty({
+    description: 'Exact file size in bytes (max 10 MB); it is signed into the URL so larger uploads are rejected by R2',
+    example: 482133,
+  })
+  @IsInt()
+  @Min(1)
+  @Max(MAX_UPLOAD_BYTES, { message: 'Image must be 10 MB or smaller.' })
+  size: number;
 }

@@ -9,6 +9,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -24,6 +25,7 @@ export class DiagnosisController {
 
   @Post('queue')
   @UseGuards(JwtAuthGuard)
+  @Throttle({ default: { limit: 10, ttl: 60_000 } })
   @HttpCode(HttpStatus.ACCEPTED)
   @ApiOperation({
     summary: 'Queue crop/plant diagnosis job for asynchronous AI inference (Authenticated)',
@@ -47,7 +49,7 @@ export class DiagnosisController {
     @Body() dto: CreateDiagnosisJobDto,
     @CurrentUser() user: AuthenticatedUser,
   ): Promise<EnqueueResponse> {
-    return await this.diagnosisService.enqueueDiagnosis(dto, user?.id);
+    return await this.diagnosisService.enqueueDiagnosis(dto, user.id);
   }
 
   @Get('outbreaks')
@@ -83,6 +85,7 @@ export class DiagnosisController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Get diagnosis status and results by ID',
     description: 'Returns diagnosis processing status, identified species, disease, confidence, and treatment plan.',
@@ -98,7 +101,10 @@ export class DiagnosisController {
     description: 'Diagnosis details retrieved successfully.',
   })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Diagnosis record not found.' })
-  async getDiagnosisById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return await this.diagnosisService.getDiagnosisById(id);
+  async getDiagnosisById(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @CurrentUser() user: AuthenticatedUser,
+  ) {
+    return await this.diagnosisService.getDiagnosisById(id, user);
   }
 }

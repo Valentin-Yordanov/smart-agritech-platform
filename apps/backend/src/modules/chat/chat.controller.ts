@@ -10,6 +10,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -93,6 +94,7 @@ export class ChatController {
   }
 
   @Post('threads/:id/messages')
+  @Throttle({ default: { limit: 15, ttl: 60_000 } })
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Send inquiry to agronomic AI advisor (RAG)',

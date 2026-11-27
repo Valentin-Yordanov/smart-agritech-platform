@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { cn } from 'cn';
 import { useAuth } from '@/context/auth-context';
 import { ApiError } from '@/lib/api';
+import { safeCallbackUrl } from '@/lib/safe-redirect';
 import { useI18n } from '@/i18n/language-provider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,10 +35,7 @@ export default function LoginPage() {
     if (user) {
       const params = new URLSearchParams(window.location.search);
       const callbackUrl = params.get('callbackUrl');
-      const destination =
-        callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')
-          ? callbackUrl
-          : '/dashboard';
+      const destination = safeCallbackUrl(callbackUrl);
       router.replace(destination);
     }
   }, [user, router]);
@@ -92,6 +90,7 @@ export default function LoginPage() {
                 <Input
                   id="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="valentin@agritech.local"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -104,6 +103,7 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type="password"
+                  autoComplete="current-password"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

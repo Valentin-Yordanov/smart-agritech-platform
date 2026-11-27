@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUrl, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -22,6 +22,7 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(10)
+  @MaxLength(10000)
   content!: string;
 
   @ApiPropertyOptional({
@@ -29,6 +30,11 @@ export class CreatePostDto {
     example: 'https://pub-placeholder.r2.dev/uploads/leaf-blight-sample.jpg',
   })
   @IsOptional()
-  @IsUrl({}, { message: 'imageUrl must be a valid URL' })
+  @IsUrl({ protocols: ['https'], require_protocol: true }, { message: 'imageUrl must be a valid https URL' })
+  @MaxLength(500)
+  // Only images uploaded through our presigned flow, never arbitrary third-party links
+  @Matches(/\/uploads\/community\/[0-9a-f-]{36}-[a-z0-9._-]+$/, {
+    message: 'imageUrl must point to an image uploaded through the community upload flow.',
+  })
   imageUrl?: string;
 }

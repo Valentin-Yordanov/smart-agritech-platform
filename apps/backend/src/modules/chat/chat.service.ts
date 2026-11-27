@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ChatMessage, ChatThread } from '@prisma/client';
+import { internalAiHeaders } from '../../common/security';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateThreadDto } from './dto/create-thread.dto';
 import { SendMessageDto } from './dto/send-message.dto';
@@ -143,8 +144,9 @@ export class ChatService {
     // 2. Fetch diagnosis context if provided
     let diagnosisContext: DiagnosisContextPayload | undefined = undefined;
     if (dto.diagnosisId) {
-      const diag = await this.prisma.diagnosis.findUnique({
-        where: { id: dto.diagnosisId },
+      // Only the caller's own scan can be used as context
+      const diag = await this.prisma.diagnosis.findFirst({
+        where: { id: dto.diagnosisId, userId },
       });
 
       if (diag) {
@@ -187,7 +189,9 @@ export class ChatService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...internalAiHeaders(this.configService),
         },
+        signal: AbortSignal.timeout(60000),
         body: JSON.stringify({
           query: dto.content,
           history,
@@ -198,9 +202,7 @@ export class ChatService {
       if (!response.ok) {
         const errorText = await response.text();
         this.logger.error(`AI Microservice error (${response.status}): ${errorText}`);
-        throw new BadGatewayException(
-          `AI Agronomic Advisory service error: ${response.statusText}`,
-        );
+        throw new BadGatewayException('The AI advisor is temporarily unavailable. Please try again.');
       }
 
       ragResponse = (await response.json()) as RAGApiResponse;
@@ -210,9 +212,7 @@ export class ChatService {
       }
       const message = err instanceof Error ? err.message : String(err);
       this.logger.error(`Failed to reach AI Microservice: ${message}`);
-      throw new BadGatewayException(
-        `Unable to connect to AI Agronomic Advisory microservice: ${message}`,
-      );
+      throw new BadGatewayException('The AI advisor is temporarily unavailable. Please try again.');
     }
 
     // 6. Persist AI assistant message and update thread timestamp

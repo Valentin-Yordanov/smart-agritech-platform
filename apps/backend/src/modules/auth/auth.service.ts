@@ -4,6 +4,7 @@ import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import type { Response } from 'express';
+import { requireSecret } from '../../common/security';
 import { SafeUser, UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -13,6 +14,11 @@ export interface AuthTokens {
   accessToken: string;
   refreshToken: string;
 }
+
+const BCRYPT_ROUNDS = 12;
+
+// Compared against when the email is unknown so both login failures take the same time
+const DUMMY_HASH = bcrypt.hashSync('timing-equalizer-not-a-real-password', BCRYPT_ROUNDS);
 
 export interface AuthResult {
   user: SafeUser;
@@ -33,24 +39,18 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {
-    this.accessSecret = this.configService.get<string>(
-      'JWT_ACCESS_SECRET',
-      'production-grade-super-secret-key-32-chars-long',
-    );
-    this.refreshSecret = this.configService.get<string>(
-      'JWT_REFRESH_SECRET',
-      'production-grade-super-refresh-key-32-chars-long',
-    );
+    this.accessSecret = requireSecret(this.configService, 'JWT_ACCESS_SECRET');
+    this.refreshSecret = requireSecret(this.configService, 'JWT_REFRESH_SECRET');
     this.accessExpiresIn = this.configService.get<string>('JWT_EXPIRES_IN', '15m');
     this.refreshExpiresIn = this.configService.get<string>('JWT_REFRESH_EXPIRES_IN', '7d');
     this.isProduction = this.configService.get<string>('NODE_ENV') === 'production';
   }
 
   /**
-   * Hashes plain text password with 10 salt rounds.
+   * Hashes plain text password with bcrypt.
    */
   async hashPassword(password: string): Promise<string> {
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(BCRYPT_ROUNDS);
     return bcrypt.hash(password, salt);
   }
 
@@ -97,7 +97,7 @@ export class AuthService {
   async register(dto: RegisterDto): Promise<AuthResult> {
     const existing = await this.usersService.findByEmail(dto.email);
     if (existing) {
-      throw new ConflictException(`User with email "${dto.email}" is already registered.`);
+      throw new ConflictException('An account with this email already exists.');
     }
 
     const passwordHash = await this.hashPassword(dto.password);
@@ -109,7 +109,7 @@ export class AuthService {
     });
 
     const tokens = await this.generateTokens(user);
-    this.logger.log(`User ${user.id} (${user.email}) registered successfully.`);
+    this.logger.log(`User ${user.id} registered successfully.`);
 
     return {
       user: this.usersService.sanitizeUser(user),
@@ -121,18 +121,15 @@ export class AuthService {
    * Authenticates user credentials and issues tokens.
    */
   async login(dto: LoginDto): Promise<AuthResult> {
+    // One generic message for unknown email and wrong password prevents account enumeration
     const user = await this.usersService.findByEmail(dto.email);
-    if (!user) {
-      throw new UnauthorizedException('Invalid email or password.');
-    }
-
-    const passwordMatches = await this.comparePasswords(dto.password, user.passwordHash);
-    if (!passwordMatches) {
-      throw new UnauthorizedException('Invalid email or password.');
+    const passwordMatches = await this.comparePasswords(dto.password, user?.passwordHash ?? DUMMY_HASH);
+    if (!user || !passwordMatches) {
+      throw new UnauthorizedException('Incorrect email or password. Please try again.');
     }
 
     const tokens = await this.generateTokens(user);
-    this.logger.log(`User ${user.id} (${user.email}) logged in successfully.`);
+    this.logger.log(`User ${user.id} logged in successfully.`);
 
     return {
       user: this.usersService.sanitizeUser(user),

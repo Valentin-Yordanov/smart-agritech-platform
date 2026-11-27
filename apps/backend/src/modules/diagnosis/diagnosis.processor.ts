@@ -2,8 +2,8 @@ import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Job } from 'bullmq';
-import * as fs from 'fs';
 import * as path from 'path';
+import { internalAiHeaders, isProductionEnv, UPLOAD_KEY_PATTERN } from '../../common/security';
 import { PrismaService } from '../../prisma/prisma.service';
 import { DIAGNOSIS_QUEUE_NAME } from './diagnosis.service';
 import { Prisma } from '@prisma/client';
@@ -76,21 +76,15 @@ export class DiagnosisProcessor extends WorkerHost {
   }
 
   /**
-   * Resolves the image bytes from an HTTP URL, Cloudflare R2 public bucket, local file path, or synthetic fallback.
+   * Resolves image bytes from the configured R2 bucket only. Arbitrary URLs and file paths are
+   * rejected so a job payload can never make the server fetch internal hosts or read local files.
    */
   private async resolveImageBuffer(imageKey: string): Promise<Buffer> {
-    // 1. If imageKey is a direct HTTP/HTTPS URL
-    if (imageKey.startsWith('http://') || imageKey.startsWith('https://')) {
-      this.logger.debug(`Fetching image from remote URL: ${imageKey}`);
-      const res = await fetch(imageKey);
-      if (!res.ok) {
-        throw new Error(`Failed to fetch image from remote URL: ${res.statusText}`);
-      }
-      const arrayBuf = await res.arrayBuffer();
-      return Buffer.from(arrayBuf);
+    if (!UPLOAD_KEY_PATTERN.test(imageKey)) {
+      throw new Error('Rejected image key that was not issued by the upload-url endpoint.');
     }
 
-    // 2. Check Cloudflare R2 public URL if configured
+    // 1. Cloudflare R2 public URL if configured
     const r2PublicDomain = (
       this.configService.get<string>('R2_PUBLIC_DOMAIN') ||
       this.configService.get<string>('R2_PUBLIC_URL') ||
@@ -104,7 +98,7 @@ export class DiagnosisProcessor extends WorkerHost {
       const cleanKey = imageKey.replace(/^\/+/, '');
       const remoteUrl = `${r2PublicDomain}/${cleanKey}`;
       this.logger.debug(`Fetching uploaded image from Cloudflare R2: ${remoteUrl}`);
-      const res = await fetch(remoteUrl);
+      const res = await fetch(remoteUrl, { redirect: 'error', signal: AbortSignal.timeout(20000) });
       if (!res.ok) {
         throw new Error(
           `Failed to fetch image from R2 (${remoteUrl}): ${res.status} ${res.statusText}`,
@@ -114,21 +108,11 @@ export class DiagnosisProcessor extends WorkerHost {
       return Buffer.from(arrayBuf);
     }
 
-    // 3. Check direct absolute or relative filesystem path
-    const candidatePaths = [
-      imageKey,
-      path.resolve(process.cwd(), imageKey),
-      path.resolve(process.cwd(), '..', '..', imageKey),
-    ];
-
-    for (const p of candidatePaths) {
-      if (fs.existsSync(p)) {
-        this.logger.debug(`Resolved local image file at: ${p}`);
-        return await fs.promises.readFile(p);
-      }
+    if (isProductionEnv()) {
+      throw new Error('R2_PUBLIC_DOMAIN is not configured; cannot load uploaded image.');
     }
 
-    // 4. Fallback: Minimal valid JPEG binary buffer for simulated keys in dev/test
+    // 2. Development fallback: minimal valid JPEG for simulated keys without R2
     this.logger.warn(
       `Image file "${imageKey}" not found on disk or remote. Using simulated valid crop specimen buffer.`,
     );
@@ -164,6 +148,7 @@ export class DiagnosisProcessor extends WorkerHost {
       this.logger.debug(`Dispatching inference request to AI microservice at ${aiServiceUrl}`);
       const response = await fetch(aiServiceUrl, {
         method: 'POST',
+        headers: internalAiHeaders(this.configService),
         body: formData,
         signal: AbortSignal.timeout(60000), 
       });

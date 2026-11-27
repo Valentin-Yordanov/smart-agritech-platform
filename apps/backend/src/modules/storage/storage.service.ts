@@ -47,9 +47,15 @@ export class StorageService {
     filename: string,
     mimeType: string,
     folder: 'scans' | 'leaves' | 'community',
+    size: number,
   ): Promise<PresignedUrlResponse> {
-    // Sanitize original filename (remove special chars/spaces)
-    const sanitizedFilename = filename.toLowerCase().replace(/[^a-z0-9.-]/g, '_');
+    // Keep only safe characters (no slashes, so no path traversal) and cap the length
+    const sanitizedFilename =
+      filename
+        .toLowerCase()
+        .replace(/[^a-z0-9.-]/g, '_')
+        .replace(/\.{2,}/g, '.')
+        .slice(-100) || 'image';
     const uniqueId = randomUUID();
     const fileKey = `uploads/${folder}/${uniqueId}-${sanitizedFilename}`;
 
@@ -57,6 +63,8 @@ export class StorageService {
       Bucket: this.bucketName,
       Key: fileKey,
       ContentType: mimeType,
+      // Signed into the URL: R2 rejects a body whose length differs
+      ContentLength: size,
     });
 
     // Generate signed URL with 300 seconds (5 minutes) expiration

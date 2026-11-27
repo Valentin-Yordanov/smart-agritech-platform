@@ -1,4 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateUploadUrlDto } from './dto/create-upload-url.dto';
@@ -12,6 +13,7 @@ export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
   @Post('upload-url')
+  @Throttle({ default: { limit: 20, ttl: 60_000 } })
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Generate presigned upload URL for Cloudflare R2 / S3',
@@ -31,6 +33,6 @@ export class StorageController {
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Authentication required.' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Validation failed.' })
   async getUploadUrl(@Body() dto: CreateUploadUrlDto): Promise<PresignedUrlResponse> {
-    return this.storageService.getPresignedUploadUrl(dto.filename, dto.mimeType, dto.folder);
+    return this.storageService.getPresignedUploadUrl(dto.filename, dto.mimeType, dto.folder, dto.size);
   }
 }

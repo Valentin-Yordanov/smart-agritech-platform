@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { requireSecret } from '../../../common/security';
 import { UsersService } from '../../users/users.service';
 import { AuthenticatedUser } from '../interfaces/authenticated-user.interface';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
@@ -24,10 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
   ) {
-    const secret = configService.get<string>(
-      'JWT_ACCESS_SECRET',
-      'production-grade-super-secret-key-32-chars-long',
-    );
+    const secret = requireSecret(configService, 'JWT_ACCESS_SECRET');
     super({
       jwtFromRequest: cookieOrBearerExtractor,
       ignoreExpiration: false,

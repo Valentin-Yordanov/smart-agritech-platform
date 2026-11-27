@@ -166,6 +166,7 @@ export default function CommunityFeedPage() {
               filename: imageFile.name,
               mimeType: imageFile.type,
               folder: 'community',
+              size: imageFile.size,
             },
           }
         );

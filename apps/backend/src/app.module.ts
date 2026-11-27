@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -18,6 +20,9 @@ import { AppService } from './app.service';
       isGlobal: true,
       envFilePath: ['.env'],
     }),
+
+    // Global rate limit per client IP; stricter limits are set per route with @Throttle
+    ThrottlerModule.forRoot([{ name: 'default', ttl: 60_000, limit: 120 }]),
 
     // BullMQ Redis connection configuration with Upstash & TLS support
     BullModule.forRootAsync({
@@ -99,6 +104,6 @@ import { AppService } from './app.service';
     ChatModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}

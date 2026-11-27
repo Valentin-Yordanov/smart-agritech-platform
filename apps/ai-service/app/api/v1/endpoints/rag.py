@@ -22,6 +22,7 @@ class RAGChatRequest(BaseModel):
     )
     history: List[Dict[str, str]] = Field(
         default_factory=list,
+        max_length=40,
         description="Prior conversation turns in format [{'role': 'user'|'assistant', 'content': str}]",
     )
     diagnosis_context: Optional[Dict[str, Any]] = Field(
