@@ -20,6 +20,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useI18n } from '@/i18n/language-provider';
 import {
   Card,
   CardContent,
@@ -32,6 +33,8 @@ function CommunityThreadDetailContent() {
   const postId = params?.id;
   const router = useRouter();
   const { user } = useAuth();
+  const { t, tr, lang } = useI18n();
+  const dateLocale = lang === 'bg' ? 'bg-BG' : undefined;
 
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,7 +60,7 @@ function CommunityThreadDetailContent() {
           const msg =
             err instanceof ApiError
               ? err.message
-              : 'Failed to load discussion thread';
+              : t('thread.err.load');
           toast.error(msg);
           setPost(null);
         }
@@ -71,6 +74,7 @@ function CommunityThreadDetailContent() {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   const handleAddComment = async (e: React.FormEvent) => {
@@ -78,7 +82,7 @@ function CommunityThreadDetailContent() {
     if (!postId || !commentText.trim() || submitting) return;
 
     if (!user) {
-      toast.error('Please sign in to post a comment.');
+      toast.error(t('thread.err.signIn'));
       return;
     }
 
@@ -101,10 +105,10 @@ function CommunityThreadDetailContent() {
           : prev
       );
       setCommentText('');
-      toast.success('Comment added');
+      toast.success(t('thread.commentAdded'));
     } catch (err) {
       const msg =
-        err instanceof ApiError ? err.message : 'Failed to submit comment';
+        err instanceof ApiError ? err.message : t('thread.err.comment');
       toast.error(msg);
     } finally {
       setSubmitting(false);
@@ -125,10 +129,10 @@ function CommunityThreadDetailContent() {
             }
           : prev
       );
-      toast.success('Comment deleted');
+      toast.success(t('thread.commentDeleted'));
     } catch (err) {
       const msg =
-        err instanceof ApiError ? err.message : 'Failed to delete comment';
+        err instanceof ApiError ? err.message : t('thread.err.deleteComment');
       toast.error(msg);
     } finally {
       setDeletingCommentId(null);
@@ -140,11 +144,11 @@ function CommunityThreadDetailContent() {
     setDeletingPost(true);
     try {
       await apiFetch(`/community/posts/${post.id}`, { method: 'DELETE' });
-      toast.success('Discussion deleted');
+      toast.success(t('thread.postDeleted'));
       router.push('/community');
     } catch (err) {
       const msg =
-        err instanceof ApiError ? err.message : 'Failed to delete post';
+        err instanceof ApiError ? err.message : t('thread.err.deletePost');
       toast.error(msg);
       setDeletingPost(false);
     }
@@ -168,12 +172,12 @@ function CommunityThreadDetailContent() {
           className={cn(buttonVariants({ variant: 'ghost' }), 'gap-2')}
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Community Hub
+          {t('thread.back')}
         </Link>
-        <Card className="border-slate-200 py-12 text-center">
+        <Card className="border-border py-12 text-center">
           <CardContent>
             <p className="text-base font-semibold text-slate-800">
-              Discussion not found
+              {t('thread.notFound')}
             </p>
           </CardContent>
         </Card>
@@ -197,7 +201,7 @@ function CommunityThreadDetailContent() {
           )}
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Community Hub
+          {t('thread.back')}
         </Link>
 
         {canDeletePost && (
@@ -213,13 +217,13 @@ function CommunityThreadDetailContent() {
             ) : (
               <Trash2 className="mr-2 h-3.5 w-3.5" />
             )}
-            Delete Post
+            {t('thread.deletePost')}
           </Button>
         )}
       </div>
 
       {/* Main Post Card */}
-      <Card className="border-slate-200">
+      <Card className="border-border">
         <CardHeader className="space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
@@ -233,14 +237,14 @@ function CommunityThreadDetailContent() {
                   'text-[11px] font-semibold',
                   post.author.role !== 'USER'
                     ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
-                    : 'border-slate-200 bg-slate-100 text-slate-700'
+                    : 'border-border bg-slate-100 text-slate-700'
                 )}
               >
-                {post.author.role}
+                {tr(`role.${post.author.role}`, post.author.role)}
               </Badge>
             </div>
             <span className="text-xs text-slate-500">
-              {new Date(post.createdAt).toLocaleString()}
+              {new Date(post.createdAt).toLocaleString(dateLocale)}
             </span>
           </div>
 
@@ -255,7 +259,7 @@ function CommunityThreadDetailContent() {
           </p>
 
           {post.imageUrl && (
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-950">
+            <div className="overflow-hidden rounded-xl border border-border bg-slate-950">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={post.imageUrl}
@@ -271,19 +275,19 @@ function CommunityThreadDetailContent() {
       <div className="space-y-4">
         <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
           <MessageSquare className="h-5 w-5 text-emerald-600" />
-          Peer &amp; Specialist Replies ({comments.length})
+          {t('thread.replies', { count: comments.length })}
         </h2>
 
         {/* Comment Submission Form */}
         {user ? (
           <form
             onSubmit={handleAddComment}
-            className="space-y-3 rounded-xl border border-slate-200 bg-white p-4"
+            className="space-y-3 rounded-xl border border-border bg-card p-4"
           >
             <Textarea
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              placeholder="Share agronomic feedback, recommended active ingredients, or field experience..."
+              placeholder={t('thread.replyPlaceholder')}
               rows={3}
               minLength={2}
               required
@@ -300,33 +304,33 @@ function CommunityThreadDetailContent() {
                 ) : (
                   <Send className="mr-2 h-4 w-4" />
                 )}
-                Post Reply
+                {t('thread.postReply')}
               </Button>
             </div>
           </form>
         ) : (
-          <Card className="border-slate-200 bg-slate-50 p-4 text-center text-sm text-slate-600">
+          <Card className="border-border bg-muted/60 p-4 text-center text-sm text-slate-600">
             <Link
               href="/login"
               className="font-semibold text-emerald-700 hover:underline"
             >
-              Sign in
+              {t('thread.signInPrefix')}
             </Link>{' '}
-            to join this agronomic discussion.
+            {t('thread.signInSuffix')}
           </Card>
         )}
 
         {/* Comment List */}
         {comments.length === 0 ? (
           <p className="py-6 text-center text-sm text-slate-500">
-            No replies yet. Be the first to respond.
+            {t('thread.noReplies')}
           </p>
         ) : (
           <div className="space-y-3">
             {comments.map((comment) => {
               const isOwnComment = user?.id === comment.authorId;
               return (
-                <Card key={comment.id} className="border-slate-200">
+                <Card key={comment.id} className="border-border">
                   <CardContent className="space-y-2 pt-4">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
@@ -339,13 +343,13 @@ function CommunityThreadDetailContent() {
                             'text-[10px] font-semibold',
                             comment.author.role !== 'USER'
                               ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
-                              : 'border-slate-200 bg-slate-100 text-slate-700'
+                              : 'border-border bg-slate-100 text-slate-700'
                           )}
                         >
-                          {comment.author.role}
+                          {tr(`role.${comment.author.role}`, comment.author.role)}
                         </Badge>
                         <span className="text-xs text-slate-400">
-                          {new Date(comment.createdAt).toLocaleString()}
+                          {new Date(comment.createdAt).toLocaleString(dateLocale)}
                         </span>
                       </div>
 
@@ -356,7 +360,7 @@ function CommunityThreadDetailContent() {
                           size="icon-sm"
                           onClick={() => handleDeleteComment(comment.id)}
                           disabled={deletingCommentId === comment.id}
-                          title="Delete comment"
+                          title={t('thread.deleteComment')}
                           className="text-slate-400 hover:bg-red-50 hover:text-red-600"
                         >
                           {deletingCommentId === comment.id ? (

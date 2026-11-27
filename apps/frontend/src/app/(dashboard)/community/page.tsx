@@ -24,6 +24,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useI18n } from '@/i18n/language-provider';
 import {
   Card,
   CardContent,
@@ -49,6 +50,8 @@ interface PresignedUploadResponse {
 
 export default function CommunityFeedPage() {
   const { user } = useAuth();
+  const { t, tr, lang } = useI18n();
+  const dateLocale = lang === 'bg' ? 'bg-BG' : undefined;
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
@@ -101,7 +104,7 @@ export default function CommunityFeedPage() {
           const msg =
             err instanceof ApiError
               ? err.message
-              : 'Failed to load community discussions';
+              : t('com.err.load');
           toast.error(msg);
         }
       } finally {
@@ -114,6 +117,7 @@ export default function CommunityFeedPage() {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, debouncedSearch, refreshTick]);
 
   // Cleanup preview object URL
@@ -128,11 +132,11 @@ export default function CommunityFeedPage() {
   const handleImageChange = (file: File | undefined | null) => {
     if (!file) return;
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      toast.error('Please upload a JPEG, PNG, or WebP image.');
+      toast.error(t('com.err.format'));
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
-      toast.error('Image must be smaller than 10MB.');
+      toast.error(t('com.err.size'));
       return;
     }
     if (imagePreview) {
@@ -145,7 +149,7 @@ export default function CommunityFeedPage() {
   const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      toast.error('Please sign in to start a discussion.');
+      toast.error(t('com.signInToStartShort'));
       return;
     }
 
@@ -173,7 +177,7 @@ export default function CommunityFeedPage() {
         });
 
         if (!uploadRes.ok) {
-          throw new Error(`Image upload failed (${uploadRes.status})`);
+          throw new Error(t('com.err.upload', { status: uploadRes.status }));
         }
         imageUrl = presigned.publicUrl;
       }
@@ -187,19 +191,19 @@ export default function CommunityFeedPage() {
         },
       });
 
-      toast.success('Discussion published to Community Hub');
+      toast.success(t('com.published'));
       setDialogOpen(false);
       setTitle('');
       setContent('');
       setImageFile(null);
       setImagePreview(null);
       setPage(1);
-      setRefreshTick((t) => t + 1);
+      setRefreshTick((tick) => tick + 1);
     } catch (err) {
       const msg =
         err instanceof ApiError || err instanceof Error
           ? err.message
-          : 'Failed to publish post';
+          : t('com.err.publish');
       toast.error(msg);
     } finally {
       setSubmitting(false);
@@ -213,11 +217,10 @@ export default function CommunityFeedPage() {
         <div>
           <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-slate-900">
             <Users className="h-6 w-6 text-emerald-600" />
-            Agronomist Community Hub
+            {t('com.title')}
           </h1>
           <p className="text-sm text-slate-600">
-            Share field observations, compare pathology findings, and crowdsource
-            IPM strategies ({total} discussions)
+            {t('com.subtitle', { total })}
           </p>
         </div>
 
@@ -225,7 +228,7 @@ export default function CommunityFeedPage() {
           type="button"
           onClick={() => {
             if (!user) {
-              toast.error('Sign in to start a new discussion');
+              toast.error(t('com.signInToStart'));
               return;
             }
             setDialogOpen(true);
@@ -233,7 +236,7 @@ export default function CommunityFeedPage() {
           className="bg-emerald-600 hover:bg-emerald-700"
         >
           <Plus className="mr-2 h-4 w-4" />
-          New Discussion
+          {t('com.newDiscussion')}
         </Button>
       </div>
 
@@ -243,8 +246,8 @@ export default function CommunityFeedPage() {
         <Input
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search field reports by crop, disease, or keyword..."
-          className="bg-white pl-10"
+          placeholder={t('com.searchPlaceholder')}
+          className="bg-card pl-10"
         />
       </div>
 
@@ -256,16 +259,16 @@ export default function CommunityFeedPage() {
           <Skeleton className="h-44 w-full rounded-xl" />
         </div>
       ) : posts.length === 0 ? (
-        <Card className="border-slate-200 py-12 text-center">
+        <Card className="border-border py-12 text-center">
           <CardContent className="space-y-4">
             <div className="space-y-1">
               <p className="text-base font-semibold text-slate-800">
-                No discussions found
+                {t('com.noneFound')}
               </p>
               <p className="text-sm text-slate-500">
                 {debouncedSearch
-                  ? `No posts matched "${debouncedSearch}". Try a broader keyword.`
-                  : 'Be the first grower or agronomist to share a field report.'}
+                  ? t('com.noMatch', { query: debouncedSearch })
+                  : t('com.beFirst')}
               </p>
             </div>
             {debouncedSearch ? (
@@ -275,7 +278,7 @@ export default function CommunityFeedPage() {
                 size="sm"
                 onClick={() => setSearchInput('')}
               >
-                Clear Search
+                {t('com.clearSearch')}
               </Button>
             ) : (
               <Button
@@ -283,7 +286,7 @@ export default function CommunityFeedPage() {
                 size="sm"
                 onClick={() => {
                   if (!user) {
-                    toast.error('Sign in to start a new discussion');
+                    toast.error(t('com.signInToStart'));
                     return;
                   }
                   setDialogOpen(true);
@@ -291,7 +294,7 @@ export default function CommunityFeedPage() {
                 className="bg-emerald-700 text-white hover:bg-emerald-800"
               >
                 <Plus className="mr-2 h-4 w-4" />
-                Start First Discussion
+                {t('com.startFirst')}
               </Button>
             )}
           </CardContent>
@@ -306,7 +309,7 @@ export default function CommunityFeedPage() {
                 href={`/community/${post.id}`}
                 className="block"
               >
-                <Card className="border-slate-200 transition-colors hover:border-emerald-300">
+                <Card className="border-border transition-colors hover:border-emerald-300">
                   <CardHeader className="pb-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
@@ -319,14 +322,14 @@ export default function CommunityFeedPage() {
                             'text-[11px] font-semibold',
                             isSpecialist
                               ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
-                              : 'border-slate-200 bg-slate-100 text-slate-700'
+                              : 'border-border bg-slate-100 text-slate-700'
                           )}
                         >
-                          {post.author.role}
+                          {tr(`role.${post.author.role}`, post.author.role)}
                         </Badge>
                       </div>
                       <span className="text-xs text-slate-500">
-                        {new Date(post.createdAt).toLocaleDateString(undefined, {
+                        {new Date(post.createdAt).toLocaleDateString(dateLocale, {
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric',
@@ -344,7 +347,7 @@ export default function CommunityFeedPage() {
                     </CardDescription>
 
                     {post.imageUrl && (
-                      <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
+                      <div className="overflow-hidden rounded-lg border border-border bg-slate-100">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={post.imageUrl}
@@ -359,10 +362,9 @@ export default function CommunityFeedPage() {
                     <div className="flex items-center gap-1.5">
                       <MessageSquare className="h-3.5 w-3.5 text-emerald-600" />
                       <span>
-                        {post._count?.comments ?? 0}{' '}
                         {(post._count?.comments ?? 0) === 1
-                          ? 'comment'
-                          : 'comments'}
+                          ? t('com.commentOne', { count: 1 })
+                          : t('com.commentMany', { count: post._count?.comments ?? 0 })}
                       </span>
                     </div>
                   </CardFooter>
@@ -375,9 +377,9 @@ export default function CommunityFeedPage() {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-slate-200 pt-4">
+        <div className="flex items-center justify-between border-t border-border pt-4">
           <p className="text-xs text-slate-500">
-            Page {page} of {totalPages}
+            {t('com.page', { page, total: totalPages })}
           </p>
           <div className="flex items-center gap-2">
             <Button
@@ -388,7 +390,7 @@ export default function CommunityFeedPage() {
               disabled={page <= 1 || loading}
             >
               <ChevronLeft className="mr-1 h-4 w-4" />
-              Previous
+              {t('com.previous')}
             </Button>
             <Button
               type="button"
@@ -397,7 +399,7 @@ export default function CommunityFeedPage() {
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages || loading}
             >
-              Next
+              {t('com.next')}
               <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
           </div>
@@ -408,20 +410,19 @@ export default function CommunityFeedPage() {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Start New Discussion</DialogTitle>
+            <DialogTitle>{t('com.dialogTitle')}</DialogTitle>
             <DialogDescription>
-              Share crop symptoms, field trial results, or pest sightings with
-              the community.
+              {t('com.dialogText')}
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleCreatePost} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="post-title">Title</Label>
+              <Label htmlFor="post-title">{t('com.fieldTitle')}</Label>
               <Input
                 id="post-title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g., Early Blight progression in greenhouse tomatoes"
+                placeholder={t('com.titlePlaceholder')}
                 minLength={5}
                 maxLength={150}
                 required
@@ -429,12 +430,12 @@ export default function CommunityFeedPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="post-content">Details</Label>
+              <Label htmlFor="post-content">{t('com.fieldDetails')}</Label>
               <Textarea
                 id="post-content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="Describe symptoms, humidity levels, and treatments already attempted..."
+                placeholder={t('com.detailsPlaceholder')}
                 rows={5}
                 minLength={10}
                 required
@@ -442,14 +443,14 @@ export default function CommunityFeedPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="post-image">Field Image (Optional)</Label>
+              <Label htmlFor="post-image">{t('com.fieldImage')}</Label>
               <div className="flex items-center gap-3">
                 <label
                   htmlFor="post-image"
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-muted/60 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100"
                 >
                   <ImagePlus className="h-4 w-4 text-emerald-600" />
-                  {imageFile ? imageFile.name : 'Attach photo'}
+                  {imageFile ? imageFile.name : t('com.attachPhoto')}
                 </label>
                 <input
                   id="post-image"
@@ -463,6 +464,7 @@ export default function CommunityFeedPage() {
                     type="button"
                     variant="ghost"
                     size="icon-sm"
+                    aria-label={t('com.removeImage')}
                     onClick={() => {
                       setImageFile(null);
                       setImagePreview(null);
@@ -473,11 +475,11 @@ export default function CommunityFeedPage() {
                 )}
               </div>
               {imagePreview && (
-                <div className="mt-2 overflow-hidden rounded-lg border border-slate-200">
+                <div className="mt-2 overflow-hidden rounded-lg border border-border">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={imagePreview}
-                    alt="Attachment preview"
+                    alt={t('com.previewAlt')}
                     className="max-h-40 w-full object-cover"
                   />
                 </div>
@@ -491,7 +493,7 @@ export default function CommunityFeedPage() {
                 onClick={() => setDialogOpen(false)}
                 disabled={submitting}
               >
-                Cancel
+                {t('common.cancel')}
               </Button>
               <Button
                 type="submit"
@@ -501,7 +503,7 @@ export default function CommunityFeedPage() {
                 {submitting && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Publish Discussion
+                {t('com.publish')}
               </Button>
             </DialogFooter>
           </form>

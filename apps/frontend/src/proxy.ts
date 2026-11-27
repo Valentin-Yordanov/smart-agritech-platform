@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const PROTECTED_PREFIXES = ['/dashboard', '/scan', '/advisor'];
 
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
 
   const isProtected = PROTECTED_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
@@ -19,7 +19,7 @@ export function proxy(request: NextRequest) {
 
   if (!token) {
     const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('callbackUrl', pathname);
+    loginUrl.searchParams.set('callbackUrl', pathname + search);
     return NextResponse.redirect(loginUrl);
   }
 

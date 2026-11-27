@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import { RawDetection } from '@/types/api';
+import { useI18n } from '@/i18n/language-provider';
 
 interface DetectionCanvasProps {
   imageUrl: string;
@@ -12,8 +13,9 @@ interface DetectionCanvasProps {
 export function DetectionCanvas({
   imageUrl,
   detections,
-  alt = 'Scanned plant specimen',
+  alt,
 }: DetectionCanvasProps) {
+  const { t, crop, condition } = useI18n();
   const imgRef = useRef<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -106,8 +108,10 @@ export function DetectionCanvas({
       // Confidence badge label
       const namePart =
         det.disease && det.disease !== 'None'
-          ? det.disease
-          : det.species || det.class_name || 'Specimen';
+          ? condition(det.disease)
+          : det.species
+            ? crop(det.species)
+            : det.class_name || t('scan.specimen');
       const confPct = `${(det.confidence * 100).toFixed(1)}%`;
       const label = `${namePart} · ${confPct}`;
 
@@ -128,7 +132,7 @@ export function DetectionCanvas({
       ctx.textBaseline = 'middle';
       ctx.fillText(label, badgeX + padX, badgeY + badgeH / 2);
     }
-  }, [detections]);
+  }, [detections, t, crop, condition]);
 
   useEffect(() => {
     const img = imgRef.current;
@@ -149,13 +153,13 @@ export function DetectionCanvas({
   }, [drawDetections, imageUrl]);
 
   return (
-    <div className="relative flex w-full items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-950">
+    <div className="relative flex w-full items-center justify-center overflow-hidden rounded-xl border border-border bg-slate-950">
       <div className="relative inline-block max-w-full">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           ref={imgRef}
           src={imageUrl}
-          alt={alt}
+          alt={alt ?? t('scan.altImage')}
           onLoad={drawDetections}
           className="block max-h-115 w-auto max-w-full object-contain select-none"
         />

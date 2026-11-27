@@ -33,12 +33,10 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useI18n } from '@/i18n/language-provider';
+import type { MessageKey } from '@/i18n/messages';
 
-const QUICK_PROMPTS = [
-  'Organic & biological treatment options?',
-  'How do I prevent spread to neighboring crops?',
-  'Safe pre-harvest interval & chemical rotation?',
-];
+const QUICK_PROMPT_KEYS: MessageKey[] = ['advisor.q1', 'advisor.q2', 'advisor.q3'];
 
 function dedupeById<T extends { id: string }>(items: T[]): T[] {
   return Array.from(new Map(items.map((item) => [item.id, item])).values());
@@ -59,6 +57,7 @@ interface BackendDiagnosisResponse {
 }
 
 function AdvisorChatContent() {
+  const { t, lang, crop, condition } = useI18n();
   const searchParams = useSearchParams();
   const initialDiagnosisId = searchParams.get('diagnosisId');
 
@@ -78,7 +77,7 @@ function AdvisorChatContent() {
     null
   );
 
-  const [prompt, setPrompt] = useState('');
+  const [prompt, setPrompt] = useState(() => searchParams.get('q') ?? '');
   const [sending, setSending] = useState(false);
   const [creatingThread, setCreatingThread] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -99,7 +98,7 @@ function AdvisorChatContent() {
       } catch (err) {
         if (active) {
           const msg =
-            err instanceof ApiError ? err.message : 'Failed to load chat threads';
+            err instanceof ApiError ? err.message : t('advisor.err.threads');
           toast.error(msg);
         }
       } finally {
@@ -112,6 +111,7 @@ function AdvisorChatContent() {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Hydrate diagnosis context if ?diagnosisId= is present
@@ -131,8 +131,8 @@ function AdvisorChatContent() {
             userId: '',
             status: res.status,
             imageUrl: res.imageUrl,
-            speciesName: res.speciesName ?? res.species ?? 'Unknown Species',
-            diseaseName: res.diseaseName ?? res.disease ?? 'Unknown Condition',
+            speciesName: res.speciesName ?? res.species ?? t('scan.unknownSpecies'),
+            diseaseName: res.diseaseName ?? res.disease ?? t('scan.unknownCondition'),
             confidence: res.confidence ?? 0,
             isHealthy: res.isHealthy ?? false,
             rawDetections: null,
@@ -144,7 +144,7 @@ function AdvisorChatContent() {
         }
       } catch {
         if (active) {
-          toast.error('Could not load linked diagnosis context');
+          toast.error(t('advisor.err.context'));
           setDiagnosisContext(null);
         }
       }
@@ -153,6 +153,7 @@ function AdvisorChatContent() {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeDiagnosisId]);
 
   // Load messages whenever activeThreadId changes
@@ -179,7 +180,7 @@ function AdvisorChatContent() {
           const msg =
             err instanceof ApiError
               ? err.message
-              : 'Failed to load conversation history';
+              : t('advisor.err.history');
           toast.error(msg);
         }
       } finally {
@@ -192,6 +193,7 @@ function AdvisorChatContent() {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeThreadId]);
 
   // Auto-scroll to newest message
@@ -203,11 +205,11 @@ function AdvisorChatContent() {
     setCreatingThread(true);
     try {
       const title = diagnosisContext
-        ? `${diagnosisContext.speciesName} — ${diagnosisContext.diseaseName}`.slice(
+        ? `${crop(diagnosisContext.speciesName ?? '')} — ${condition(diagnosisContext.diseaseName ?? '')}`.slice(
             0,
             80
           )
-        : `Agronomy Consultation ${new Date().toLocaleDateString()}`;
+        : t('advisor.threadTitle', { date: new Date().toLocaleDateString(lang === 'bg' ? 'bg-BG' : 'en-US') });
       const newThread = await apiFetch<ChatThread>('/chat/threads', {
         method: 'POST',
         body: { title },
@@ -218,7 +220,7 @@ function AdvisorChatContent() {
       setMobileSidebarOpen(false);
     } catch (err) {
       const msg =
-        err instanceof ApiError ? err.message : 'Could not create thread';
+        err instanceof ApiError ? err.message : t('advisor.err.createThread');
       toast.error(msg);
     } finally {
       setCreatingThread(false);
@@ -232,15 +234,15 @@ function AdvisorChatContent() {
     e.stopPropagation();
     try {
       await apiFetch(`/chat/threads/${threadId}`, { method: 'DELETE' });
-      setThreads((prev) => prev.filter((t) => t.id !== threadId));
+      setThreads((prev) => prev.filter((thread) => thread.id !== threadId));
       if (activeThreadId === threadId) {
         setActiveThreadId(null);
         setMessages([]);
       }
-      toast.success('Consultation deleted');
+      toast.success(t('advisor.deleted'));
     } catch (err) {
       const msg =
-        err instanceof ApiError ? err.message : 'Failed to delete consultation';
+        err instanceof ApiError ? err.message : t('advisor.err.delete');
       toast.error(msg);
     }
   };
@@ -263,7 +265,7 @@ function AdvisorChatContent() {
           content.length > 40 ? `${content.slice(0, 40)}...` : content;
         const created = await apiFetch<ChatThread>('/chat/threads', {
           method: 'POST',
-          body: { title: autoTitle.length >= 2 ? autoTitle : 'Agronomy Inquiry' },
+          body: { title: autoTitle.length >= 2 ? autoTitle : t('advisor.inquiryTitle') },
         });
         targetThreadId = created.id;
         skipNextLoadThreadIdRef.current = created.id;
@@ -312,7 +314,7 @@ function AdvisorChatContent() {
       const msg =
         err instanceof ApiError
           ? err.message
-          : 'Failed to reach AI Agronomic Advisor';
+          : t('advisor.err.reach');
       toast.error(msg);
     } finally {
       setSending(false);
@@ -325,17 +327,17 @@ function AdvisorChatContent() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-7.5rem)] overflow-hidden rounded-xl border border-slate-200 bg-white">
+    <div className="flex h-[calc(100vh-7.5rem)] overflow-hidden rounded-xl border border-border bg-card">
       {/* Left Sidebar: Consultation Threads */}
       <aside
         className={cn(
-          'flex w-72 shrink-0 flex-col border-r border-slate-200 bg-slate-50',
+          'flex w-72 shrink-0 flex-col border-r border-border bg-muted/60',
           mobileSidebarOpen
             ? 'fixed inset-y-14 left-0 z-40 lg:static'
             : 'hidden lg:flex'
         )}
       >
-        <div className="border-b border-slate-200 p-4">
+        <div className="border-b border-border p-4">
           <Button
             type="button"
             onClick={handleNewConsultation}
@@ -347,7 +349,7 @@ function AdvisorChatContent() {
             ) : (
               <Plus className="mr-2 h-4 w-4" />
             )}
-            New Consultation
+            {t('advisor.newConsultation')}
           </Button>
         </div>
 
@@ -360,8 +362,7 @@ function AdvisorChatContent() {
             </div>
           ) : threads.length === 0 ? (
             <div className="px-3 py-8 text-center text-xs text-slate-500">
-              No past consultations yet. Start a new chat or select a quick
-              prompt.
+              {t('advisor.noThreads')}
             </div>
           ) : (
             <div className="space-y-1.5">
@@ -393,7 +394,7 @@ function AdvisorChatContent() {
                     <button
                       type="button"
                       onClick={(e) => handleDeleteThread(e, thread.id)}
-                      title="Delete consultation"
+                      title={t('advisor.deleteThread')}
                       className="rounded p-1 text-slate-400 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-100 hover:text-red-600"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -407,15 +408,16 @@ function AdvisorChatContent() {
       </aside>
 
       {/* Main Chat Viewport */}
-      <div className="flex min-w-0 flex-1 flex-col bg-white">
+      <div className="flex min-w-0 flex-1 flex-col bg-card">
         {/* Top Bar */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+        <div className="flex items-center justify-between border-b border-border px-4 py-3">
           <div className="flex items-center gap-2.5">
             <Button
               type="button"
               variant="ghost"
               size="icon"
               className="lg:hidden"
+              aria-label={t('advisor.toggleSidebar')}
               onClick={() => setMobileSidebarOpen((prev) => !prev)}
             >
               {mobileSidebarOpen ? (
@@ -429,10 +431,10 @@ function AdvisorChatContent() {
             </div>
             <div>
               <h1 className="text-sm font-bold text-slate-900">
-                RAG Agronomic Advisor
+                {t('advisor.title')}
               </h1>
               <p className="text-xs text-slate-500">
-                ChromaDB Knowledge Retrieval + GPT-OSS-120B Clinical Advisory
+                {t('advisor.subtitle')}
               </p>
             </div>
           </div>
@@ -442,12 +444,12 @@ function AdvisorChatContent() {
         {diagnosisContext && (
           <div className="flex items-center justify-between gap-4 border-b border-emerald-200 bg-emerald-50 px-4 py-3">
             <div className="flex min-w-0 items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-emerald-200 bg-white">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-emerald-200 bg-card">
                 {diagnosisContext.imageUrl.startsWith('http') ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src={diagnosisContext.imageUrl}
-                    alt={diagnosisContext.speciesName ?? 'Scanned crop specimen'}
+                    alt={diagnosisContext.speciesName ? crop(diagnosisContext.speciesName) : t('advisor.altCrop')}
                     className="h-full w-full object-cover"
                   />
                 ) : (
@@ -457,8 +459,8 @@ function AdvisorChatContent() {
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="truncate text-sm font-semibold text-slate-900">
-                    {diagnosisContext.speciesName} —{' '}
-                    {diagnosisContext.diseaseName}
+                    {crop(diagnosisContext.speciesName ?? '')} —{' '}
+                    {condition(diagnosisContext.diseaseName ?? '')}
                   </span>
                   <Badge
                     className={cn(
@@ -473,12 +475,13 @@ function AdvisorChatContent() {
                     ) : (
                       <AlertTriangle className="h-3 w-3" />
                     )}
-                    {((diagnosisContext.confidence ?? 0) * 100).toFixed(1)}%
-                    Confidence
+                    {t('advisor.confidence', {
+                      percent: ((diagnosisContext.confidence ?? 0) * 100).toFixed(1),
+                    })}
                   </Badge>
                 </div>
                 <p className="text-xs text-slate-600">
-                  Linked vision scan context active for targeted IPM guidance
+                  {t('advisor.contextActive')}
                 </p>
               </div>
             </div>
@@ -487,7 +490,7 @@ function AdvisorChatContent() {
               variant="ghost"
               size="icon"
               onClick={handleDismissDiagnosis}
-              title="Clear diagnosis context"
+              title={t('advisor.clearContext')}
               className="shrink-0 text-slate-500 hover:text-slate-900"
             >
               <X className="h-4 w-4" />
@@ -508,23 +511,22 @@ function AdvisorChatContent() {
                 <Sparkles className="h-7 w-7" />
               </div>
               <h2 className="text-lg font-bold text-slate-900">
-                Ask the Senior AI Agronomist
+                {t('advisor.emptyTitle')}
               </h2>
               <p className="mt-1 max-w-md text-sm text-slate-500">
-                Get evidence-based treatment plans, organic biocontrols, FRAC
-                rotations, and pre-harvest intervals grounded in verified guides.
+                {t('advisor.emptyText')}
               </p>
 
               <div className="mt-6 flex flex-wrap justify-center gap-2">
-                {QUICK_PROMPTS.map((chip) => (
+                {QUICK_PROMPT_KEYS.map((chipKey) => (
                   <button
-                    key={chip}
+                    key={chipKey}
                     type="button"
-                    onClick={() => handleSendMessage(chip)}
+                    onClick={() => handleSendMessage(t(chipKey))}
                     disabled={sending}
                     className="rounded-full border border-emerald-200 bg-emerald-50/70 px-4 py-2 text-xs font-medium text-emerald-900 transition-colors hover:bg-emerald-100"
                   >
-                    {chip}
+                    {t(chipKey)}
                   </button>
                 ))}
               </div>
@@ -548,7 +550,7 @@ function AdvisorChatContent() {
                         'max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed md:max-w-[75%]',
                         isUser
                           ? 'bg-emerald-600 text-white'
-                          : 'border border-slate-200 bg-slate-50 text-slate-900'
+                          : 'border border-border bg-muted/60 text-slate-900'
                       )}
                     >
                       {isUser ? (
@@ -559,7 +561,7 @@ function AdvisorChatContent() {
                             remarkPlugins={[remarkGfm]}
                             components={{
                               table: ({ children }) => (
-                                <div className="my-3 overflow-x-auto rounded-lg border border-slate-200">
+                                <div className="my-3 overflow-x-auto rounded-lg border border-border">
                                   <table className="w-full border-collapse text-left text-xs">
                                     {children}
                                   </table>
@@ -571,12 +573,12 @@ function AdvisorChatContent() {
                                 </thead>
                               ),
                               th: ({ children }) => (
-                                <th className="border-b border-slate-200 px-3 py-2 text-left font-semibold">
+                                <th className="border-b border-border px-3 py-2 text-left font-semibold">
                                   {children}
                                 </th>
                               ),
                               td: ({ children }) => (
-                                <td className="border-t border-slate-200 px-3 py-2 text-left align-top">
+                                <td className="border-t border-border px-3 py-2 text-left align-top">
                                   {children}
                                 </td>
                               ),
@@ -592,7 +594,7 @@ function AdvisorChatContent() {
                       <div className="mt-2 flex flex-wrap items-center gap-1.5">
                         <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500">
                           <BookOpen className="h-3 w-3" />
-                          Sources:
+                          {t('advisor.sources')}
                         </span>
                         {sources.map((src, idx) => (
                           <Badge
@@ -611,9 +613,9 @@ function AdvisorChatContent() {
 
               {sending && (
                 <div className="flex items-start">
-                  <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                  <div className="flex items-center gap-2 rounded-2xl border border-border bg-muted/60 px-4 py-3 text-sm text-slate-600">
                     <Loader2 className="h-4 w-4 animate-spin text-emerald-600" />
-                    <span>Consulting agronomic knowledge base...</span>
+                    <span>{t('advisor.consulting')}</span>
                   </div>
                 </div>
               )}
@@ -628,7 +630,7 @@ function AdvisorChatContent() {
             e.preventDefault();
             void handleSendMessage();
           }}
-          className="border-t border-slate-200 bg-slate-50 p-4"
+          className="border-t border-border bg-muted/60 p-4"
         >
           <div className="flex items-end gap-2">
             <Textarea
@@ -641,9 +643,9 @@ function AdvisorChatContent() {
                 }
               }}
               rows={2}
-              placeholder="Ask about organic treatments, fungicide rotation, or symptoms (Enter to send, Shift+Enter for newline)..."
+              placeholder={t('advisor.placeholder')}
               disabled={sending}
-              className="min-h-[44px] max-h-32 flex-1 resize-none bg-white"
+              className="min-h-[44px] max-h-32 flex-1 resize-none bg-card"
             />
             <Button
               type="submit"

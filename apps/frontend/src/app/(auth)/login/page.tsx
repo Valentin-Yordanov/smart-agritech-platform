@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { cn } from 'cn';
 import { useAuth } from '@/context/auth-context';
 import { ApiError } from '@/lib/api';
+import { useI18n } from '@/i18n/language-provider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,6 +23,7 @@ import {
 
 export default function LoginPage() {
   const { user, login } = useAuth();
+  const { t } = useI18n();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,10 +48,10 @@ export default function LoginPage() {
     setSubmitting(true);
     try {
       await login({ email, password });
-      toast.success('Welcome back to Smart AgriTech');
+      toast.success(t('auth.login.welcome'));
     } catch (err) {
       const message =
-        err instanceof ApiError ? err.message : 'Invalid email or password';
+        err instanceof ApiError ? err.message : t('auth.login.invalid');
       toast.error(message);
     } finally {
       setSubmitting(false);
@@ -57,7 +59,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-4">
         <Link
           href="/"
@@ -67,26 +69,26 @@ export default function LoginPage() {
           )}
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Home
+          {t('auth.backHome')}
         </Link>
 
-        <Card className="border-slate-200 bg-white">
+        <Card className="border-border bg-card">
           <CardHeader className="space-y-2 text-center">
             <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700">
               <Sprout className="h-5 w-5" />
             </div>
             <CardTitle className="text-xl font-bold text-slate-900">
-              Sign in to Smart AgriTech
+              {t('auth.login.title')}
             </CardTitle>
             <CardDescription>
-              Access AI crop diagnostics, RAG advisory, and outbreak maps
+              {t('auth.login.description')}
             </CardDescription>
           </CardHeader>
 
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               <div className="space-y-1.5">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('auth.email')}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -98,7 +100,7 @@ export default function LoginPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('auth.password')}</Label>
                 <Input
                   id="password"
                   type="password"
@@ -117,15 +119,15 @@ export default function LoginPage() {
                 disabled={submitting}
               >
                 {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {submitting ? 'Signing in...' : 'Sign In'}
+                {submitting ? t('auth.login.submitting') : t('auth.login.submit')}
               </Button>
               <p className="text-center text-sm text-slate-600">
-                Don&apos;t have an account?{' '}
+                {t('auth.login.noAccount')}{' '}
                 <Link
                   href="/register"
                   className="font-semibold text-emerald-700 hover:underline"
                 >
-                  Create one
+                  {t('auth.login.createOne')}
                 </Link>
               </p>
             </CardFooter>

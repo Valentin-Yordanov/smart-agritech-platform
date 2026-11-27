@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { cn } from 'cn';
 import { useAuth } from '@/context/auth-context';
 import { ApiError } from '@/lib/api';
+import { useI18n } from '@/i18n/language-provider';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,6 +23,7 @@ import {
 
 export default function RegisterPage() {
   const { user, register } = useAuth();
+  const { t } = useI18n();
   const router = useRouter();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -47,10 +49,10 @@ export default function RegisterPage() {
     setSubmitting(true);
     try {
       await register({ fullName, email, password });
-      toast.success('Account created successfully');
+      toast.success(t('auth.register.success'));
     } catch (err) {
       const message =
-        err instanceof ApiError ? err.message : 'Registration failed';
+        err instanceof ApiError ? err.message : t('auth.register.failed');
       toast.error(message);
     } finally {
       setSubmitting(false);
@@ -58,7 +60,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-4">
         <Link
           href="/"
@@ -68,26 +70,26 @@ export default function RegisterPage() {
           )}
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Home
+          {t('auth.backHome')}
         </Link>
 
-        <Card className="border-slate-200 bg-white">
+        <Card className="border-border bg-card">
           <CardHeader className="space-y-2 text-center">
             <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700">
               <Sprout className="h-5 w-5" />
             </div>
             <CardTitle className="text-xl font-bold text-slate-900">
-              Create AgriTech Account
+              {t('auth.register.title')}
             </CardTitle>
             <CardDescription>
-              Join agronomists and growers using AI-assisted crop protection
+              {t('auth.register.description')}
             </CardDescription>
           </CardHeader>
 
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               <div className="space-y-1.5">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="fullName">{t('auth.fullName')}</Label>
                 <Input
                   id="fullName"
                   type="text"
@@ -99,7 +101,7 @@ export default function RegisterPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('auth.email')}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -111,11 +113,11 @@ export default function RegisterPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('auth.password')}</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Min 8 characters"
+                  placeholder={t('auth.register.passwordPlaceholder')}
                   minLength={8}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -131,15 +133,15 @@ export default function RegisterPage() {
                 disabled={submitting}
               >
                 {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {submitting ? 'Creating account...' : 'Create Account'}
+                {submitting ? t('auth.register.submitting') : t('auth.register.submit')}
               </Button>
               <p className="text-center text-sm text-slate-600">
-                Already registered?{' '}
+                {t('auth.register.already')}{' '}
                 <Link
                   href="/login"
                   className="font-semibold text-emerald-700 hover:underline"
                 >
-                  Sign in
+                  {t('auth.register.signIn')}
                 </Link>
               </p>
             </CardFooter>

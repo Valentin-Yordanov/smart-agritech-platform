@@ -491,3 +491,42 @@ export const KNOWLEDGE_GUIDES: AgronomyGuide[] = [
 export function getGuideBySlug(slug: string): AgronomyGuide | undefined {
   return KNOWLEDGE_GUIDES.find((guide) => guide.slug === slug);
 }
+
+export type CropGroup = 'Vegetables' | 'Field crops' | 'Orchard & vine' | 'Tropical';
+
+export const CROP_GROUPS: CropGroup[] = ['Vegetables', 'Field crops', 'Orchard & vine', 'Tropical'];
+
+const CROP_GROUP_BY_HOST: Record<string, CropGroup> = {
+  Tomato: 'Vegetables',
+  Potato: 'Vegetables',
+  'Bell Pepper': 'Vegetables',
+  'Corn (Maize)': 'Field crops',
+  Rice: 'Field crops',
+  Wheat: 'Field crops',
+  Apple: 'Orchard & vine',
+  Grapevine: 'Orchard & vine',
+  Citrus: 'Orchard & vine',
+  Cassava: 'Tropical',
+  Banana: 'Tropical',
+  Coffee: 'Tropical',
+};
+
+export function getCropGroup(guide: AgronomyGuide): CropGroup {
+  return CROP_GROUP_BY_HOST[guide.hostCrop] ?? 'Field crops';
+}
+
+export function getDiseaseName(guide: AgronomyGuide): string {
+  return guide.title.split('—')[1]?.trim() || guide.title;
+}
+
+export function getRelatedGuides(guide: AgronomyGuide, limit = 3): AgronomyGuide[] {
+  const group = getCropGroup(guide);
+  return KNOWLEDGE_GUIDES.filter((g) => g.slug !== guide.slug)
+    .map((g) => ({
+      g,
+      score: (getCropGroup(g) === group ? 2 : 0) + (g.pathogenType === guide.pathogenType ? 1 : 0),
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(({ g }) => g);
+}

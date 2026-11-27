@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useI18n } from '@/i18n/language-provider';
+import type { MessageKey } from '@/i18n/messages';
 
 export interface OutbreakPoint {
   id: string;
@@ -25,30 +27,32 @@ const BULGARIA_CENTER: [number, number] = [42.7339, 25.4858];
 function getMarkerStyle(point: OutbreakPoint): {
   color: string;
   fillColor: string;
-  label: string;
+  labelKey: MessageKey;
 } {
   if (point.isHealthy) {
     return {
       color: '#047857',
       fillColor: '#10b981',
-      label: 'Healthy Baseline',
+      labelKey: 'map.healthy',
     };
   }
   if (point.confidence < 0.7) {
     return {
       color: '#b45309',
       fillColor: '#f59e0b',
-      label: 'Low-Confidence Alert',
+      labelKey: 'map.low',
     };
   }
   return {
     color: '#b91c1c',
     fillColor: '#ef4444',
-    label: 'Confirmed Pathogen',
+    labelKey: 'map.confirmed',
   };
 }
 
 export default function OutbreakMap({ points }: OutbreakMapProps) {
+  const { t, lang, crop, condition } = useI18n();
+
   return (
     <MapContainer
       center={BULGARIA_CENTER}
@@ -82,7 +86,7 @@ export default function OutbreakMap({ points }: OutbreakMapProps) {
                     className="inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
                     style={{ backgroundColor: style.fillColor }}
                   >
-                    {style.label}
+                    {t(style.labelKey)}
                   </span>
                   <span className="text-[11px] font-medium text-slate-500">
                     {(point.confidence * 100).toFixed(1)}%
@@ -91,16 +95,16 @@ export default function OutbreakMap({ points }: OutbreakMapProps) {
 
                 <div>
                   <p className="text-sm font-bold text-slate-900">
-                    {point.speciesName}
+                    {crop(point.speciesName)}
                   </p>
                   <p className="text-xs font-medium text-slate-700">
-                    {point.diseaseName}
+                    {condition(point.diseaseName)}
                   </p>
                 </div>
 
                 <p className="text-[11px] text-slate-500">
-                  Detected:{' '}
-                  {new Date(point.createdAt).toLocaleString(undefined, {
+                  {t('map.detected')}{' '}
+                  {new Date(point.createdAt).toLocaleString(lang === 'bg' ? 'bg-BG' : 'en-GB', {
                     month: 'short',
                     day: 'numeric',
                     hour: '2-digit',
@@ -112,7 +116,7 @@ export default function OutbreakMap({ points }: OutbreakMapProps) {
                   href={`/advisor?diagnosisId=${point.id}`}
                   className="inline-block text-xs font-semibold text-emerald-700 hover:underline"
                 >
-                  Consult AI Agronomist &rarr;
+                  {t('map.consult')}
                 </Link>
               </div>
             </Popup>
