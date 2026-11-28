@@ -57,11 +57,24 @@ export interface ChatThread {
   messages?: ChatMessage[];
 }
 
+export interface ChatAttachment {
+  key: string;
+  name: string;
+  mime: string;
+  size: number;
+  kind: 'image' | 'document';
+  status: 'pending' | 'readable' | 'unreadable';
+  summary: string;
+  // Short-lived signed URL, only returned to the thread owner
+  url?: string;
+}
+
 export interface ChatMessage {
   id: string;
   threadId: string;
   role: 'user' | 'assistant';
   content: string;
+  attachments?: ChatAttachment[] | null;
   createdAt: string;
 }
 

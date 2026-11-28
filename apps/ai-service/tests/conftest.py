@@ -3,3 +3,4 @@
 import os
 
 os.environ.setdefault("ENV", "test")
+os.environ["INTERNAL_API_KEY"] = ""

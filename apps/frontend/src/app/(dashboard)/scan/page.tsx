@@ -21,6 +21,7 @@ import {
 import { toast } from 'sonner';
 import { cn } from 'cn';
 import { apiFetch, ApiError } from '@/lib/api';
+import { uploadFile, UploadError } from '@/lib/upload';
 import { runEdgeInference } from '@/lib/edge-inference';
 import { Diagnosis, DiagnosisStatus, RawDetection } from '@/types/api';
 import { DetectionCanvas } from '@/components/scan/detection-canvas';
@@ -53,11 +54,6 @@ type ScanStage =
   | 'completed'
   | 'failed';
 
-interface PresignedUploadResponse {
-  uploadUrl: string;
-  fileKey: string;
-  publicUrl: string;
-}
 
 interface QueueDiagnosisResponse {
   diagnosisId?: string;
@@ -353,30 +349,11 @@ export default function ScanPage() {
     try {
       // Stage 1: Presigned URL & direct PUT upload
       setStage('uploading');
-      const presigned = await apiFetch<PresignedUploadResponse>(
-        '/storage/upload-url',
-        {
-          method: 'POST',
-          body: {
-            filename: selectedFile.name,
-            mimeType: selectedFile.type,
-            folder: 'scans',
-            size: selectedFile.size,
-          },
-        }
-      );
-
-      const uploadResponse = await fetch(presigned.uploadUrl, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': selectedFile.type,
-        },
-        body: selectedFile,
+      const presigned = await uploadFile(selectedFile, 'scans').catch((err: unknown) => {
+        throw err instanceof UploadError
+          ? new Error(t('scan.toast.storageFailed', { status: err.status }))
+          : err;
       });
-
-      if (!uploadResponse.ok) {
-        throw new Error(t('scan.toast.storageFailed', { status: uploadResponse.status }));
-      }
 
       // Stage 2: Enqueue BullMQ job
       setStage('localizing');

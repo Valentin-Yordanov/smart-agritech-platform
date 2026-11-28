@@ -5,24 +5,33 @@ import { ConfigService } from '@nestjs/config';
 const logger = new Logger('Security');
 const devFallbacks = new Map<string, string>();
 
-export const isProductionEnv = (): boolean => process.env.NODE_ENV === 'production';
+export const isProductionEnv = (): boolean =>
+  process.env.NODE_ENV === 'production';
 
 /**
  * Production refuses to boot without a strong secret. Development gets a random per-process
  * value instead of a hardcoded one, so a forgotten env var can never yield forgeable tokens.
  */
-export function requireSecret(config: ConfigService, name: string, minLength = 32): string {
+export function requireSecret(
+  config: ConfigService,
+  name: string,
+  minLength = 32,
+): string {
   const value = config.get<string>(name);
   if (value && value.length >= minLength) {
     return value;
   }
 
   if (isProductionEnv()) {
-    throw new Error(`${name} must be set to at least ${minLength} characters in production.`);
+    throw new Error(
+      `${name} must be set to at least ${minLength} characters in production.`,
+    );
   }
 
   if (!devFallbacks.has(name)) {
-    logger.warn(`${name} is missing or too short; using a random development-only value.`);
+    logger.warn(
+      `${name} is missing or too short; using a random development-only value.`,
+    );
     devFallbacks.set(name, randomBytes(48).toString('base64url'));
   }
   return devFallbacks.get(name)!;
@@ -30,7 +39,9 @@ export function requireSecret(config: ConfigService, name: string, minLength = 3
 
 export const INTERNAL_KEY_HEADER = 'X-Internal-API-Key';
 
-export function internalAiHeaders(config: ConfigService): Record<string, string> {
+export function internalAiHeaders(
+  config: ConfigService,
+): Record<string, string> {
   const key = config.get<string>('INTERNAL_API_KEY');
   return key ? { [INTERNAL_KEY_HEADER]: key } : {};
 }
@@ -38,3 +49,29 @@ export function internalAiHeaders(config: ConfigService): Record<string, string>
 // Only keys produced by StorageService.getPresignedUploadUrl are accepted for diagnosis jobs
 export const UPLOAD_KEY_PATTERN =
   /^uploads\/(scans|leaves|community)\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-[a-z0-9._-]{1,120}$/;
+
+const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
+
+// Private chat uploads are namespaced by owner: uploads/chat/<userId>/<uuid>-<name>
+export const CHAT_KEY_PATTERN = new RegExp(
+  `^uploads/chat/${UUID}/${UUID}-[a-z0-9._-]{1,120}$`,
+);
+
+export const isOwnedChatKey = (key: string, userId: string): boolean =>
+  CHAT_KEY_PATTERN.test(key) && key.startsWith(`uploads/chat/${userId}/`);
+
+export const IMAGE_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+] as const;
+export const DOCUMENT_MIME_TYPES = [
+  'application/pdf',
+  'text/plain',
+  'text/csv',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+] as const;
+export const CHAT_MIME_TYPES: readonly string[] = [
+  ...IMAGE_MIME_TYPES,
+  ...DOCUMENT_MIME_TYPES,
+];

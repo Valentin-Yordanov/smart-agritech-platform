@@ -90,6 +90,18 @@ class Settings(BaseSettings):
     INTERNAL_API_KEY: str = Field(default="", description="Shared secret the backend sends as X-Internal-API-Key")
     GROQ_API_KEY: str = Field(default="", description="Groq Cloud API Key for LLM advisory")
     GROQ_MODEL: str = Field(default="openai/gpt-oss-120b", description="Fast inference LLM model")
+    GROQ_VISION_MODEL: str = Field(default="qwen/qwen3.8-27b", description="Multimodal model used only when images are attached")
+
+    # Chat attachments: Groq rejects base64 image payloads above 4 MB per request, so keep a safety margin
+    ATTACHMENT_MAX_FILES: int = 4
+    ATTACHMENT_MAX_IMAGES: int = 3
+    ATTACHMENT_MAX_BYTES: int = 10 * 1024 * 1024
+    ATTACHMENT_IMAGE_MAX_SIDE: int = 1280
+    ATTACHMENT_IMAGE_B64_BUDGET: int = int(3.5 * 1024 * 1024)
+    ATTACHMENT_PDF_MAX_PAGES: int = 20
+    ATTACHMENT_TEXT_MAX_CHARS: int = 12_000
+    ATTACHMENT_DOCX_MAX_UNCOMPRESSED: int = 25 * 1024 * 1024
+
     CHROMA_PERSIST_DIR: Path = BASE_DIR / "data" / "chroma_db"
     CHROMA_COLLECTION_NAME: str = "agronomy_knowledge"
     EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"

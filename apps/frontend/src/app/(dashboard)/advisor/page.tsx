@@ -19,6 +19,7 @@ import {
   Sprout,
   ShieldCheck,
   AlertTriangle,
+  Paperclip,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from 'cn';
@@ -35,6 +36,13 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useI18n } from '@/i18n/language-provider';
 import type { MessageKey } from '@/i18n/messages';
+import { CHAT_ACCEPT } from '@/lib/upload';
+import {
+  AttachmentChips,
+  MessageAttachments,
+  releasePreviews,
+  useChatAttachments,
+} from '@/components/advisor/chat-attachments';
 
 const QUICK_PROMPT_KEYS: MessageKey[] = ['advisor.q1', 'advisor.q2', 'advisor.q3'];
 
@@ -81,7 +89,11 @@ function AdvisorChatContent() {
   const [sending, setSending] = useState(false);
   const [creatingThread, setCreatingThread] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [sendingFiles, setSendingFiles] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const attachments = useChatAttachments();
 
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const tempCounterRef = useRef(0);
   const skipNextLoadThreadIdRef = useRef<string | null>(null);
@@ -248,21 +260,28 @@ function AdvisorChatContent() {
   };
 
   const handleSendMessage = async (textOverride?: string) => {
-    const content = (textOverride ?? prompt).trim();
-    if (!content || sending) return;
+    const typed = (textOverride ?? prompt).trim();
+    const withFiles = !textOverride && attachments.items.length > 0;
+    if ((!typed && !withFiles) || sending || attachments.uploading || attachments.hasErrors) return;
+
+    const files = withFiles ? attachments.take() : [];
+    const content = typed || t('advisor.defaultPrompt');
 
     setSending(true);
+    setSendingFiles(files.length > 0);
     if (!textOverride) {
       setPrompt('');
     }
 
     let targetThreadId = activeThreadId;
+    let sent = false;
 
     try {
       // Auto-create thread if none is selected
       if (!targetThreadId) {
+        const titleSource = typed || files[0]?.file.name || content;
         const autoTitle =
-          content.length > 40 ? `${content.slice(0, 40)}...` : content;
+          titleSource.length > 40 ? `${titleSource.slice(0, 40)}...` : titleSource;
         const created = await apiFetch<ChatThread>('/chat/threads', {
           method: 'POST',
           body: { title: autoTitle.length >= 2 ? autoTitle : t('advisor.inquiryTitle') },
@@ -281,6 +300,18 @@ function AdvisorChatContent() {
         threadId: targetThreadId,
         role: 'user',
         content,
+        attachments: files.length
+          ? files.map((f) => ({
+              key: f.key ?? f.id,
+              name: f.file.name,
+              mime: f.mime,
+              size: f.file.size,
+              kind: f.kind,
+              status: 'pending' as const,
+              summary: '',
+              url: f.previewUrl,
+            }))
+          : null,
         createdAt: '',
       };
       setMessages((prev) => dedupeById([...prev, optimisticUserMsg]));
@@ -290,11 +321,16 @@ function AdvisorChatContent() {
         {
           method: 'POST',
           body: {
-            content,
+            content: typed,
+            language: lang,
+            ...(files.length
+              ? { attachments: files.map((f) => ({ key: f.key, name: f.file.name })) }
+              : {}),
             ...(activeDiagnosisId ? { diagnosisId: activeDiagnosisId } : {}),
           },
         }
       );
+      sent = true;
 
       setMessages((prev) =>
         dedupeById([
@@ -318,8 +354,24 @@ function AdvisorChatContent() {
       toast.error(msg);
     } finally {
       setSending(false);
+      setSendingFiles(false);
+      if (files.length) {
+        // Uploaded files stay reusable after a failed send, so the user can simply retry
+        if (sent) {
+          releasePreviews(files);
+        } else {
+          setMessages((prev) => prev.filter((m) => !m.id.startsWith('temp-')));
+          attachments.restore(files);
+        }
+      }
     }
   };
+
+  const canSend =
+    (prompt.trim().length > 0 || attachments.items.length > 0) &&
+    !sending &&
+    !attachments.uploading &&
+    !attachments.hasErrors;
 
   const handleDismissDiagnosis = () => {
     setActiveDiagnosisId(null);
@@ -553,6 +605,9 @@ function AdvisorChatContent() {
                           : 'border border-border bg-muted/60 text-slate-900'
                       )}
                     >
+                      {msg.attachments && msg.attachments.length > 0 && (
+                        <MessageAttachments attachments={msg.attachments} isUser={isUser} />
+                      )}
                       {isUser ? (
                         <p className="whitespace-pre-wrap">{msg.content}</p>
                       ) : (
@@ -615,7 +670,7 @@ function AdvisorChatContent() {
                 <div className="flex items-start">
                   <div className="flex items-center gap-2 rounded-2xl border border-border bg-muted/60 px-4 py-3 text-sm text-slate-600">
                     <Loader2 className="h-4 w-4 animate-spin text-emerald-600" />
-                    <span>{t('advisor.consulting')}</span>
+                    <span>{t(sendingFiles ? 'advisor.reading' : 'advisor.consulting')}</span>
                   </div>
                 </div>
               )}
@@ -630,9 +685,56 @@ function AdvisorChatContent() {
             e.preventDefault();
             void handleSendMessage();
           }}
-          className="border-t border-border bg-muted/60 p-4"
+          onDragEnter={(e) => {
+            if (e.dataTransfer.types.includes('Files')) {
+              e.preventDefault();
+              setDragging(true);
+            }
+          }}
+          onDragOver={(e) => {
+            if (e.dataTransfer.types.includes('Files')) e.preventDefault();
+          }}
+          onDragLeave={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setDragging(false);
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            setDragging(false);
+            if (!sending && e.dataTransfer.files.length) attachments.addFiles(e.dataTransfer.files);
+          }}
+          className="relative border-t border-border bg-muted/60 p-4"
         >
+          {dragging && (
+            <div className="pointer-events-none absolute inset-1.5 z-10 flex items-center justify-center rounded-lg border-2 border-dashed border-emerald-500 bg-emerald-50/90 text-sm font-semibold text-emerald-800">
+              <Paperclip className="mr-2 h-4 w-4" />
+              {t('advisor.dropHere')}
+            </div>
+          )}
+          <AttachmentChips items={attachments.items} onRemove={attachments.remove} disabled={sending} />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept={CHAT_ACCEPT}
+            multiple
+            hidden
+            onChange={(e) => {
+              if (e.target.files?.length) attachments.addFiles(e.target.files);
+              e.target.value = '';
+            }}
+          />
           <div className="flex items-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={sending || attachments.items.length >= 4}
+              aria-label={t('advisor.attach')}
+              title={t('advisor.attachHint')}
+              className="h-11 w-11 shrink-0 bg-card"
+            >
+              <Paperclip className="h-4 w-4" />
+            </Button>
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
@@ -649,7 +751,7 @@ function AdvisorChatContent() {
             />
             <Button
               type="submit"
-              disabled={!prompt.trim() || sending}
+              disabled={!canSend}
               className="h-11 bg-emerald-700 px-4 text-white hover:bg-emerald-800"
             >
               {sending ? (

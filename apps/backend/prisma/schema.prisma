@@ -16,34 +16,34 @@ enum Role {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  email        String        @unique
+  id           String   @id @default(uuid())
+  email        String   @unique
   passwordHash String
   fullName     String
-  role         Role          @default(USER)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  diagnoses    Diagnosis[]
-  chatThreads  ChatThread[]
-  posts        Post[]
-  comments     Comment[]
+  diagnoses   Diagnosis[]
+  chatThreads ChatThread[]
+  posts       Post[]
+  comments    Comment[]
 }
 
 model Diagnosis {
-  id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  imageUrl         String
-  speciesName      String
-  diseaseName      String
-  confidence       Float
-  isHealthy        Boolean
-  rawDetections    Json
-  latitude         Float?
-  longitude        Float?
-  treatmentPlan    Json?
-  createdAt        DateTime @default(now())
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  imageUrl      String
+  speciesName   String
+  diseaseName   String
+  confidence    Float
+  isHealthy     Boolean
+  rawDetections Json
+  latitude      Float?
+  longitude     Float?
+  treatmentPlan Json?
+  createdAt     DateTime @default(now())
 
   @@index([diseaseName])
   @@index([latitude, longitude])
@@ -60,12 +60,14 @@ model ChatThread {
 }
 
 model ChatMessage {
-  id        String     @id @default(uuid())
-  threadId  String
-  thread    ChatThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
-  role      String
-  content   String
-  createdAt DateTime   @default(now())
+  id          String     @id @default(uuid())
+  threadId    String
+  thread      ChatThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  role        String
+  content     String
+  // [{ key, name, mime, size, kind, status, summary }] for files attached to a user turn
+  attachments Json?
+  createdAt   DateTime   @default(now())
 }
 
 model Post {

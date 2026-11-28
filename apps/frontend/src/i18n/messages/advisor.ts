@@ -44,4 +44,26 @@ export const advisor = defineMessages({
   'advisor.err.delete': ['Failed to delete consultation', 'Консултацията не можа да бъде изтрита'],
   'advisor.err.reach': ['Failed to reach AI Agronomic Advisor', 'ИИ агрономическият съветник не е достъпен'],
   'advisor.deleted': ['Consultation deleted', 'Консултацията е изтрита'],
+
+  'advisor.attach': ['Attach files', 'Прикачи файлове'],
+  'advisor.attachHint': [
+    'Photos (JPG, PNG, WEBP) or documents (PDF, TXT, CSV, DOCX), up to 4 files, 10 MB each',
+    'Снимки (JPG, PNG, WEBP) или документи (PDF, TXT, CSV, DOCX), до 4 файла, по 10 MB',
+  ],
+  'advisor.dropHere': ['Drop files to attach', 'Пуснете файловете, за да ги прикачите'],
+  'advisor.removeFile': ['Remove {name}', 'Премахни {name}'],
+  'advisor.reading': ['Reading your files...', 'Прочитане на файловете...'],
+  'advisor.uploading': ['Uploading {percent}%', 'Качване {percent}%'],
+  'advisor.uploadFailed': ['Upload failed', 'Неуспешно качване'],
+  'advisor.unreadable':['Could not be read', 'Не може да се прочете'],
+  'advisor.defaultPrompt': ['Please analyse the attached file(s).', 'Моля, анализирайте прикачените файлове.'],
+  'advisor.err.fileType': [
+    '{name}: unsupported type. Use JPG, PNG, WEBP, PDF, TXT, CSV or DOCX.',
+    '{name}: неподдържан формат. Използвайте JPG, PNG, WEBP, PDF, TXT, CSV или DOCX.',
+  ],
+  'advisor.err.fileSize': ['{name} is larger than 10 MB.', '{name} е по-голям от 10 MB.'],
+  'advisor.err.fileEmpty': ['{name} is empty.', '{name} е празен.'],
+  'advisor.err.maxFiles': ['You can attach up to 4 files per message.', 'Може да прикачите до 4 файла към едно съобщение.'],
+  'advisor.err.maxImages': ['You can attach up to 3 photos per message.', 'Може да прикачите до 3 снимки към едно съобщение.'],
+  'advisor.err.upload': ['Could not upload {name}.', '{name} не можа да бъде качен.'],
 });

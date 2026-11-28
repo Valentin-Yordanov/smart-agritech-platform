@@ -17,6 +17,7 @@ import { toast } from 'sonner';
 import { cn } from 'cn';
 import { useAuth } from '@/context/auth-context';
 import { apiFetch, ApiError } from '@/lib/api';
+import { uploadFile, UploadError } from '@/lib/upload';
 import { PaginatedResponse, Post } from '@/types/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -41,12 +42,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-
-interface PresignedUploadResponse {
-  uploadUrl: string;
-  fileKey: string;
-  publicUrl: string;
-}
 
 export default function CommunityFeedPage() {
   const { user } = useAuth();
@@ -158,28 +153,11 @@ export default function CommunityFeedPage() {
       let imageUrl: string | undefined;
 
       if (imageFile) {
-        const presigned = await apiFetch<PresignedUploadResponse>(
-          '/storage/upload-url',
-          {
-            method: 'POST',
-            body: {
-              filename: imageFile.name,
-              mimeType: imageFile.type,
-              folder: 'community',
-              size: imageFile.size,
-            },
-          }
-        );
-
-        const uploadRes = await fetch(presigned.uploadUrl, {
-          method: 'PUT',
-          headers: { 'Content-Type': imageFile.type },
-          body: imageFile,
+        const presigned = await uploadFile(imageFile, 'community').catch((err: unknown) => {
+          throw err instanceof UploadError
+            ? new Error(t('com.err.upload', { status: err.status }))
+            : err;
         });
-
-        if (!uploadRes.ok) {
-          throw new Error(t('com.err.upload', { status: uploadRes.status }));
-        }
         imageUrl = presigned.publicUrl;
       }
 

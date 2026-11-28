@@ -1,7 +1,21 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import type { AuthenticatedUser } from '../auth/interfaces/authenticated-user.interface';
 import { CreateUploadUrlDto } from './dto/create-upload-url.dto';
 import { PresignedUrlResponse, StorageService } from './storage.service';
 
@@ -17,22 +31,39 @@ export class StorageController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Generate presigned upload URL for Cloudflare R2 / S3',
-    description: 'Generates a short-lived presigned PUT URL allowing clients to upload images directly to object storage.',
+    description:
+      'Generates a short-lived presigned PUT URL allowing clients to upload images directly to object storage.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Presigned upload URL generated successfully.',
     schema: {
       example: {
-        uploadUrl: 'https://placeholder-account-id.r2.cloudflarestorage.com/agritech-uploads/uploads/scans/abc-123.jpg?...',
+        uploadUrl:
+          'https://placeholder-account-id.r2.cloudflarestorage.com/agritech-uploads/uploads/scans/abc-123.jpg?...',
         fileKey: 'uploads/scans/abc-123.jpg',
         publicUrl: 'https://pub-placeholder.r2.dev/uploads/scans/abc-123.jpg',
       },
     },
   })
-  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Authentication required.' })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Validation failed.' })
-  async getUploadUrl(@Body() dto: CreateUploadUrlDto): Promise<PresignedUrlResponse> {
-    return this.storageService.getPresignedUploadUrl(dto.filename, dto.mimeType, dto.folder, dto.size);
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Authentication required.',
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Validation failed.',
+  })
+  async getUploadUrl(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() dto: CreateUploadUrlDto,
+  ): Promise<PresignedUrlResponse> {
+    return this.storageService.getPresignedUploadUrl(
+      user.id,
+      dto.filename,
+      dto.mimeType,
+      dto.folder,
+      dto.size,
+    );
   }
 }
